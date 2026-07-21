@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Bible Kids Adventure</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(lightblue, lightyellow);
+    }
+
+    .language-box {
+      background-color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 320px;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #2d5b87;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      margin-top: 15px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .english-button {
+      background-color: #ffd966;
+    }
+
+    .cantonese-button {
+      background-color: #93c47d;
+    }
+
+    #message {
+      min-height: 24px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="language-box">
+
+    <h1>Bible Kids Adventure</h1>
+
+    <p>Choose your language</p>
+    <p>請選擇語言</p>
+
+    <button
+      class="english-button"
+      onclick="chooseEnglish()">
+      English
+    </button>
+
+    <button
+      class="cantonese-button"
+      onclick="chooseCantonese()">
+      廣東話
+    </button>
+
+    <p id="message"></p>
+
+  </main>
+
+  <script>
+    function chooseEnglish() {
+      document.documentElement.lang = "en";
+      document.getElementById("message").textContent =
+        "Welcome! Your adventure is about to begin.";
+    }
+
+    function chooseCantonese() {
+      document.documentElement.lang = "zh-HK";
+      document.getElementById("message").textContent =
+        "歡迎！你嘅聖經冒險即將開始。";
+    }
+  </script>
+
+</body>
+
+</html>
