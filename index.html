@@ -3,7 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Bible Kids Adventure</title>
 
@@ -12,316 +16,479 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
+      min-height: 100%;
+    }
+
+    body {
       font-family: Georgia, "Times New Roman", serif;
-      color: #2d3528;
-      background-color: #f6e8be;
+      color: #2f3a2d;
+      background-color: #9fd3df;
+      overflow-x: hidden;
     }
 
     .game-screen {
       position: relative;
       min-height: 100vh;
       overflow: hidden;
+
       background:
         linear-gradient(
           to bottom,
-          #9ed8e5 0%,
-          #cce7dc 52%,
-          #8fbd69 53%,
-          #5f8c48 100%
+          #9fd8e8 0%,
+          #d8eee5 48%,
+          #9ac96d 49%,
+          #65984f 100%
         );
+
+      transition:
+        transform 1.2s ease,
+        filter 1.2s ease;
     }
 
     .sun {
       position: absolute;
       top: 55px;
-      right: 9%;
-      width: 105px;
-      height: 105px;
+      left: 8%;
+      width: 100px;
+      height: 100px;
+
+      border: 5px solid #d69838;
       border-radius: 50%;
-      background-color: #f4c95d;
-      border: 5px solid #d89d3a;
+
+      background-color: #f6cb62;
     }
 
     .cloud {
       position: absolute;
-      width: 150px;
-      height: 42px;
-      border-radius: 50px;
-      background-color: rgba(255, 255, 255, 0.84);
+      width: 160px;
+      height: 45px;
+
+      border-radius: 60px;
+
+      background-color: rgba(255, 255, 255, 0.88);
     }
 
     .cloud::before,
     .cloud::after {
       content: "";
       position: absolute;
+
       border-radius: 50%;
+
       background-color: inherit;
     }
 
     .cloud::before {
-      width: 58px;
-      height: 58px;
-      left: 25px;
-      top: -25px;
+      width: 65px;
+      height: 65px;
+      left: 22px;
+      top: -28px;
     }
 
     .cloud::after {
-      width: 78px;
-      height: 78px;
+      width: 80px;
+      height: 80px;
       right: 18px;
-      top: -38px;
+      top: -40px;
     }
 
     .cloud-one {
-      top: 95px;
-      left: 7%;
-      transform: rotate(-2deg);
+      top: 100px;
+      right: 17%;
+      transform: rotate(2deg);
     }
 
     .cloud-two {
-      top: 175px;
-      right: 22%;
-      transform: scale(0.72) rotate(3deg);
+      top: 220px;
+      left: 15%;
+      transform: scale(0.7) rotate(-2deg);
     }
 
     .mountain {
       position: absolute;
-      bottom: 33%;
+      bottom: 31%;
+
       width: 0;
       height: 0;
-      border-left: 270px solid transparent;
-      border-right: 270px solid transparent;
-      border-bottom: 320px solid #718b67;
+
+      border-left: 300px solid transparent;
+      border-right: 300px solid transparent;
+      border-bottom: 330px solid #6d8765;
     }
 
-    .mountain-one {
-      left: -150px;
+    .mountain-left {
+      left: -180px;
     }
 
-    .mountain-two {
-      right: -170px;
-      border-bottom-color: #657f5e;
+    .mountain-right {
+      right: -190px;
+      border-bottom-color: #607a5c;
     }
 
     .hill {
       position: absolute;
-      bottom: -110px;
-      width: 760px;
-      height: 390px;
+      bottom: -150px;
+
+      width: 850px;
+      height: 430px;
+
       border-radius: 50%;
-      background-color: #6fa553;
-      border-top: 5px solid #4f7d3d;
+
+      background-color: #6ea14e;
     }
 
     .hill-left {
-      left: -260px;
+      left: -330px;
       transform: rotate(5deg);
     }
 
     .hill-right {
-      right: -290px;
-      background-color: #5f9349;
+      right: -330px;
       transform: rotate(-5deg);
+
+      background-color: #5f9348;
     }
 
-    .river {
+    .path {
       position: absolute;
-      bottom: -110px;
-      left: 46%;
-      width: 190px;
-      height: 420px;
-      background-color: #7bc5d6;
-      border-left: 5px solid rgba(52, 123, 145, 0.45);
-      border-right: 5px solid rgba(52, 123, 145, 0.45);
-      transform: rotate(7deg);
-      clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%);
+      left: 50%;
+      bottom: -120px;
+
+      width: 250px;
+      height: 520px;
+
+      background-color: #d8bc83;
+
+      transform: translateX(-50%);
+
+      clip-path: polygon(
+        42% 0,
+        58% 0,
+        100% 100%,
+        0 100%
+      );
+    }
+
+    .logo {
+      position: absolute;
+      top: 28px;
+      right: 34px;
+      z-index: 20;
+
+      width: 230px;
+      padding: 12px 16px;
+
+      border: 4px solid #60452c;
+      border-radius: 14px 9px 15px 10px;
+
+      background-color: #f4df9e;
+
+      box-shadow: 6px 7px 0 rgba(62, 45, 29, 0.28);
+
+      transform: rotate(1deg);
+    }
+
+    .logo-small {
+      display: block;
+
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 2px;
+
+      color: #6e4b2d;
+    }
+
+    .logo-big {
+      display: block;
+
+      margin-top: 3px;
+
+      font-size: 31px;
+      font-weight: bold;
+      line-height: 0.95;
+
+      color: #7d4723;
+
+      text-shadow: 2px 2px 0 #f6c65d;
     }
 
     .content {
       position: relative;
       z-index: 10;
-      width: min(92%, 900px);
+
+      width: min(92%, 760px);
+
       margin: 0 auto;
-      padding-top: 90px;
+      padding-top: 180px;
+
       text-align: center;
     }
 
-    .logo {
-      display: inline-block;
-      transform: rotate(-1deg);
-      margin-bottom: 10px;
-      padding: 12px 26px;
-      background-color: #f7df9d;
-      border: 5px solid #654b2f;
-      border-radius: 18px 10px 20px 12px;
-      box-shadow: 8px 9px 0 rgba(61, 47, 31, 0.25);
-    }
-
-    .logo h1 {
+    .main-title {
       margin: 0;
-      font-size: clamp(38px, 7vw, 76px);
+
+      font-size: clamp(46px, 8vw, 78px);
       line-height: 0.95;
-      color: #704220;
-      letter-spacing: -2px;
-      text-shadow: 2px 2px 0 #f2c15c;
+
+      color: #5d3d25;
+
+      text-shadow:
+        3px 3px 0 #f1d47d,
+        6px 6px 0 rgba(64, 45, 30, 0.16);
     }
 
     .tagline {
-      max-width: 570px;
-      margin: 26px auto 20px;
-      font-size: clamp(20px, 3vw, 29px);
+      max-width: 580px;
+
+      margin: 24px auto 18px;
+
+      font-family: Arial, sans-serif;
+      font-size: clamp(19px, 3vw, 27px);
       font-weight: bold;
       line-height: 1.4;
-      color: #263f36;
+
+      color: #294536;
     }
 
-    .language-title {
-      margin-top: 28px;
-      margin-bottom: 16px;
-      font-size: 18px;
+    .language-label {
+      margin-top: 32px;
+      margin-bottom: 15px;
+
       font-family: Arial, sans-serif;
-      letter-spacing: 0.5px;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .language-buttons {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+
       gap: 18px;
     }
 
     .language-button,
     .start-button {
-      border: 4px solid #533b25;
+      border: 4px solid #563e28;
+
+      font-family: Arial, sans-serif;
       font-weight: bold;
+
       cursor: pointer;
+
       transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        background-color 0.16s ease;
     }
 
     .language-button {
-      min-width: 155px;
+      min-width: 165px;
+
       padding: 15px 25px;
-      border-radius: 8px 14px 7px 12px;
-      background-color: #e7bd69;
-      box-shadow: 5px 6px 0 #533b25;
-      color: #392b1f;
+
+      border-radius: 8px 14px 9px 12px;
+
+      background-color: #dfad5d;
+
+      box-shadow: 5px 6px 0 #563e28;
+
+      color: #382a1e;
       font-size: 19px;
     }
 
-    .language-button:nth-child(2) {
-      transform: rotate(1deg);
-      background-color: #d9a95b;
-    }
+    .language-button:hover {
+      transform: translateY(-4px) rotate(-1deg);
 
-    .language-button:hover,
-    .start-button:hover {
-      transform: translateY(-3px) rotate(-1deg);
-      box-shadow: 7px 9px 0 #533b25;
+      box-shadow: 7px 9px 0 #563e28;
     }
 
     .language-button.selected {
-      background-color: #fff1b5;
+      background-color: #fff0b4;
+
       outline: 5px solid rgba(255, 255, 255, 0.65);
     }
 
     .welcome-message {
-      min-height: 35px;
-      margin: 28px 0 15px;
-      font-size: 21px;
+      min-height: 32px;
+
+      margin: 26px 0 15px;
+
+      font-family: Arial, sans-serif;
+      font-size: 20px;
       font-weight: bold;
+
+      color: #2b4335;
     }
 
     .start-button {
       display: none;
-      margin: 10px auto;
-      padding: 16px 34px;
-      border-radius: 12px 7px 14px 9px;
-      background-color: #ce6a45;
-      box-shadow: 6px 7px 0 #533b25;
+
+      margin: 10px auto 0;
+
+      padding: 17px 36px;
+
+      border-radius: 13px 8px 14px 9px;
+
+      background-color: #cc6845;
+
+      box-shadow: 6px 7px 0 #563e28;
+
       color: white;
       font-size: 21px;
     }
 
-    .ark {
+    .start-button:hover {
+      transform: translateY(-4px) scale(1.02);
+
+      box-shadow: 8px 10px 0 #563e28;
+    }
+
+    .small-character {
       position: absolute;
-      right: 6%;
-      bottom: 11%;
-      z-index: 7;
-      width: 190px;
-      transform: rotate(-4deg);
+      left: 50%;
+      bottom: 70px;
+      z-index: 9;
+
+      width: 80px;
+      height: 150px;
+
+      transform: translateX(-50%);
     }
 
-    .ark-cabin {
-      width: 90px;
-      height: 58px;
-      margin-left: 48px;
-      background-color: #bb7c43;
-      border: 5px solid #563a26;
-      border-bottom: none;
-    }
+    .character-head {
+      width: 52px;
+      height: 52px;
 
-    .ark-window {
-      width: 22px;
-      height: 22px;
-      margin: 16px auto;
+      margin: 0 auto;
+
+      border: 4px solid #4b3425;
       border-radius: 50%;
-      background-color: #8bc6d6;
-      border: 4px solid #563a26;
+
+      background-color: #d59b68;
     }
 
-    .ark-body {
-      width: 190px;
-      height: 75px;
-      background-color: #9c6034;
-      border: 5px solid #563a26;
-      border-radius: 7px 7px 70px 70px;
-      clip-path: polygon(0 0, 100% 0, 84% 100%, 18% 100%);
+    .character-body {
+      width: 68px;
+      height: 76px;
+
+      margin: -2px auto 0;
+
+      border: 4px solid #4b3425;
+      border-radius: 18px 18px 8px 8px;
+
+      background-color: #4e7f94;
     }
 
-    .small-note {
-      position: absolute;
-      left: 20px;
-      bottom: 15px;
-      z-index: 20;
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      color: rgba(29, 48, 37, 0.72);
+    .character-legs {
+      display: flex;
+      justify-content: center;
+
+      gap: 8px;
+
+      margin-top: -2px;
     }
 
-    @media (max-width: 700px) {
-      .content {
-        padding-top: 55px;
+    .leg {
+      width: 16px;
+      height: 38px;
+
+      border: 4px solid #4b3425;
+      border-top: none;
+
+      background-color: #654b39;
+    }
+
+    body::after {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+
+      pointer-events: none;
+
+      background-color: #fff4c9;
+
+      opacity: 0;
+
+      transition: opacity 1.2s ease;
+    }
+
+    body.leaving::after {
+      opacity: 1;
+    }
+
+    body.leaving .game-screen {
+      transform: scale(1.12);
+
+      filter:
+        brightness(1.3)
+        blur(2px);
+    }
+
+    body.leaving .small-character {
+      animation: walkForward 1.2s ease forwards;
+    }
+
+    @keyframes walkForward {
+      0% {
+        transform:
+          translateX(-50%)
+          translateY(0)
+          scale(1);
       }
 
+      100% {
+        transform:
+          translateX(-50%)
+          translateY(-120px)
+          scale(0.6);
+      }
+    }
+
+    @media (max-width: 760px) {
       .logo {
-        padding: 12px 16px;
+        top: 18px;
+        right: 16px;
+
+        width: 170px;
       }
 
-      .ark {
-        right: -30px;
-        bottom: 6%;
-        transform: scale(0.7) rotate(-4deg);
+      .logo-big {
+        font-size: 23px;
+      }
+
+      .content {
+        padding-top: 155px;
+      }
+
+      .main-title {
+        font-size: 48px;
       }
 
       .sun {
         width: 75px;
         height: 75px;
-        top: 25px;
-        right: 5%;
+
+        top: 35px;
+        left: 5%;
       }
 
       .cloud-one {
-        left: -35px;
+        right: -45px;
       }
 
-      .mountain {
-        opacity: 0.8;
+      .small-character {
+        bottom: 35px;
+
+        transform:
+          translateX(-50%)
+          scale(0.8);
       }
     }
   </style>
@@ -332,27 +499,41 @@
   <main class="game-screen">
 
     <div class="sun"></div>
+
     <div class="cloud cloud-one"></div>
     <div class="cloud cloud-two"></div>
 
-    <div class="mountain mountain-one"></div>
-    <div class="mountain mountain-two"></div>
+    <div class="mountain mountain-left"></div>
+    <div class="mountain mountain-right"></div>
 
     <div class="hill hill-left"></div>
     <div class="hill hill-right"></div>
-    <div class="river"></div>
+
+    <div class="path"></div>
+
+    <div class="logo">
+      <span class="logo-small">BIBLE KIDS</span>
+      <span class="logo-big">ADVENTURE</span>
+    </div>
 
     <section class="content">
 
-      <div class="logo">
-        <h1>Bible Kids<br>Adventure</h1>
-      </div>
+      <h1 class="main-title">
+        Begin Your Journey
+      </h1>
 
-      <p class="tagline" id="tagline">
-        Explore the Bible. Begin your adventure.
+      <p
+        class="tagline"
+        id="tagline"
+      >
+        Explore the Bible and discover a world of faith,
+        courage and adventure.
       </p>
 
-      <p class="language-title" id="languageTitle">
+      <p
+        class="language-label"
+        id="languageLabel"
+      >
         Choose your language · 請選擇語言
       </p>
 
@@ -361,38 +542,49 @@
         <button
           class="language-button"
           id="englishButton"
-          onclick="chooseLanguage('en')">
+          onclick="chooseLanguage('en')"
+        >
           English
         </button>
 
         <button
           class="language-button"
           id="cantoneseButton"
-          onclick="chooseLanguage('zh-HK')">
+          onclick="chooseLanguage('zh-HK')"
+        >
           廣東話
         </button>
 
       </div>
 
-      <p class="welcome-message" id="welcomeMessage"></p>
+      <p
+        class="welcome-message"
+        id="welcomeMessage"
+      ></p>
 
       <button
         class="start-button"
         id="startButton"
-        onclick="startAdventure()">
+        onclick="startAdventure()"
+      >
         Start Adventure
       </button>
 
     </section>
 
-    <div class="ark" aria-hidden="true">
-      <div class="ark-cabin">
-        <div class="ark-window"></div>
-      </div>
-      <div class="ark-body"></div>
-    </div>
+    <div
+      class="small-character"
+      aria-hidden="true"
+    >
+      <div class="character-head"></div>
 
-    <p class="small-note">Bible Kids Adventure · Early prototype</p>
+      <div class="character-body"></div>
+
+      <div class="character-legs">
+        <div class="leg"></div>
+        <div class="leg"></div>
+      </div>
+    </div>
 
   </main>
 
@@ -411,6 +603,9 @@
       const tagline =
         document.getElementById("tagline");
 
+      const languageLabel =
+        document.getElementById("languageLabel");
+
       const welcomeMessage =
         document.getElementById("welcomeMessage");
 
@@ -426,7 +621,10 @@
         englishButton.classList.add("selected");
 
         tagline.textContent =
-          "Explore the Bible. Begin your adventure.";
+          "Explore the Bible and discover a world of faith, courage and adventure.";
+
+        languageLabel.textContent =
+          "Choose your language";
 
         welcomeMessage.textContent =
           "Welcome, young explorer.";
@@ -439,7 +637,10 @@
         cantoneseButton.classList.add("selected");
 
         tagline.textContent =
-          "探索聖經，展開屬於你嘅冒險。";
+          "探索聖經，發現一個充滿信心、勇氣同冒險嘅世界。";
+
+        languageLabel.textContent =
+          "請選擇語言";
 
         welcomeMessage.textContent =
           "歡迎你，小小探險家。";
@@ -457,21 +658,31 @@
     }
 
     function startAdventure() {
-      if (selectedLanguage === "en") {
-        alert("Your adventure begins soon!");
-      } else {
-        alert("你嘅冒險即將開始！");
+      if (!selectedLanguage) {
+        return;
       }
+
+      document.body.classList.add("leaving");
+
+      setTimeout(function () {
+        window.location.href = "character.html";
+      }, 1200);
     }
 
-    window.addEventListener("load", function () {
-      const savedLanguage =
-        localStorage.getItem("bibleKidsLanguage");
+    window.addEventListener(
+      "load",
+      function () {
+        const savedLanguage =
+          localStorage.getItem("bibleKidsLanguage");
 
-      if (savedLanguage) {
-        chooseLanguage(savedLanguage);
+        if (
+          savedLanguage === "en" ||
+          savedLanguage === "zh-HK"
+        ) {
+          chooseLanguage(savedLanguage);
+        }
       }
-    });
+    );
   </script>
 
 </body>
