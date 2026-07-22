@@ -6,12 +6,16 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
   >
 
   <title>Bible Kids Adventure</title>
 
   <style>
+    /* =========================
+       基本設定
+    ========================== */
+
     * {
       box-sizing: border-box;
     }
@@ -19,178 +23,545 @@
     html,
     body {
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       margin: 0;
-      overflow: hidden;
     }
 
     body {
+      min-height: 100vh;
+      min-height: 100svh;
+
+      overflow-x: hidden;
+
       font-family:
         Arial,
+        "Noto Sans TC",
         "Microsoft JhengHei",
         sans-serif;
+
+      background-color: #b8d98e;
     }
 
-    .game-screen {
+    button {
+      font: inherit;
+    }
+
+    /* =========================
+       整個首頁
+    ========================== */
+
+    .page {
       position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-
-      transition:
-        transform 1s ease,
-        filter 1s ease;
-    }
-
-    /*
-      真正的背景圖片。
-      object-fit: fill 會將圖片拉到整個畫面。
-    */
-    .background-picture {
-      position: absolute;
-      top: 0;
-      left: 0;
 
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
 
-      object-fit: fill;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      user-select: none;
-      pointer-events: none;
+      padding:
+        max(24px, env(safe-area-inset-top))
+        max(24px, env(safe-area-inset-right))
+        max(24px, env(safe-area-inset-bottom))
+        max(24px, env(safe-area-inset-left));
+
+      overflow: hidden;
+
+      background-image:
+        linear-gradient(
+          rgba(20, 45, 28, 0.06),
+          rgba(20, 45, 28, 0.12)
+        ),
+        url("images/home-background.png");
+
+      /*
+        cover 會填滿畫面，
+        但唔會將圖片壓扁或拉長。
+      */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      transition:
+        transform 1.1s ease,
+        filter 1.1s ease;
     }
 
-    /*
-      背景圖片上的透明按鈕
-    */
-    .image-button {
-      position: absolute;
-      z-index: 10;
+    /* =========================
+       右上角 Logo
+    ========================== */
 
-      padding: 0;
+    .brand {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      z-index: 5;
+
+      padding: 11px 18px 13px;
+
+      border: 3px solid #5b3b20;
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #9c6433,
+          #633a1e
+        );
+
+      box-shadow:
+        0 6px 0 #422814,
+        0 10px 20px rgba(45, 28, 15, 0.28);
+
+      color: white;
+      text-align: center;
+
+      transform: rotate(1deg);
+    }
+
+    .brand-small {
+      display: block;
+
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      line-height: 1;
+
+      color: #fff4cf;
+    }
+
+    .brand-large {
+      display: block;
+
+      margin-top: 5px;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: 900;
+      line-height: 1;
+
+      color: #ffd66d;
+
+      text-shadow:
+        2px 2px 0 #543018;
+    }
+
+    /* =========================
+       中央內容卡
+    ========================== */
+
+    .welcome-panel {
+      position: relative;
+      z-index: 3;
+
+      width: min(92vw, 620px);
+
+      padding: clamp(25px, 5vw, 46px);
+
+      border: 2px solid rgba(108, 73, 34, 0.55);
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 250, 220, 0.93),
+          rgba(245, 226, 173, 0.9)
+        );
+
+      box-shadow:
+        0 14px 35px rgba(50, 40, 22, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+      text-align: center;
+
+      backdrop-filter: blur(4px);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+
+      font-size: clamp(13px, 2vw, 16px);
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      color: #6e512d;
+    }
+
+    .main-title {
       margin: 0;
 
-      border: 0;
-      border-radius: 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(43px, 7vw, 72px);
+      font-weight: 900;
+      line-height: 0.96;
 
-      background: transparent;
-      color: transparent;
+      color: #57361f;
+
+      text-shadow:
+        2px 3px 0 #efc66e;
+    }
+
+    .description {
+      max-width: 480px;
+
+      margin: 20px auto 26px;
+
+      font-size: clamp(16px, 2.5vw, 20px);
+      font-weight: 650;
+      line-height: 1.55;
+
+      color: #354b36;
+    }
+
+    .language-label {
+      margin: 0 0 13px;
+
+      font-size: 16px;
+      font-weight: 800;
+
+      color: #4c3c28;
+    }
+
+    /* =========================
+       語言按鈕
+    ========================== */
+
+    .language-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 14px;
+
+      width: 100%;
+      max-width: 440px;
+
+      margin: 0 auto;
+    }
+
+    .language-button {
+      min-height: 58px;
+
+      padding: 12px 18px;
+
+      border: 3px solid #65431f;
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #fff4ca,
+          #e8c576
+        );
+
+      box-shadow:
+        0 5px 0 #5b3b1d;
+
+      color: #352718;
+      font-size: 18px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .language-button:hover {
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 8px 0 #5b3b1d;
+    }
+
+    .language-button:active {
+      transform: translateY(3px);
+
+      box-shadow:
+        0 2px 0 #5b3b1d;
+    }
+
+    .language-button.selected {
+      background:
+        linear-gradient(
+          to bottom,
+          #fffef1,
+          #ffe59a
+        );
+
+      outline: 4px solid rgba(255, 255, 255, 0.9);
+      outline-offset: 3px;
+
+      box-shadow:
+        0 5px 0 #5b3b1d,
+        0 0 20px rgba(255, 226, 117, 0.9);
+    }
+
+    /* =========================
+       歡迎文字
+    ========================== */
+
+    .welcome-message {
+      min-height: 28px;
+
+      margin: 23px 0 12px;
+
+      font-size: 17px;
+      font-weight: 750;
+
+      color: #405237;
+    }
+
+    /* =========================
+       Start 按鈕
+    ========================== */
+
+    .start-button {
+      width: min(100%, 330px);
+      min-height: 67px;
+
+      padding: 15px 24px;
+
+      border: 4px solid #4e351d;
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #91b83f,
+          #527b27
+        );
+
+      box-shadow:
+        0 7px 0 #3f2c18,
+        0 12px 24px rgba(44, 54, 23, 0.28);
+
+      color: white;
+      font-size: clamp(20px, 3vw, 25px);
+      font-weight: 900;
+
+      text-shadow:
+        1px 2px 0 rgba(49, 61, 23, 0.7);
 
       cursor: pointer;
 
       transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
-        outline 0.2s ease;
+        filter 0.2s ease;
     }
 
-    .image-button:hover {
-      transform: scale(1.03);
+    .start-button:hover:not(:disabled) {
+      transform:
+        translateY(-4px)
+        scale(1.02);
 
       box-shadow:
-        inset 0 0 0 5px rgba(255, 255, 255, 0.35),
-        0 0 24px rgba(255, 240, 170, 0.8);
+        0 11px 0 #3f2c18,
+        0 16px 28px rgba(44, 54, 23, 0.32);
+
+      filter: brightness(1.08);
     }
 
-    .image-button.selected {
-      outline: 5px solid white;
-      outline-offset: 2px;
+    .start-button:active:not(:disabled) {
+      transform: translateY(3px);
 
       box-shadow:
-        0 0 25px rgba(255, 240, 170, 0.95);
+        0 3px 0 #3f2c18;
     }
 
-    /*
-      English 按鈕
-    */
-    #englishButton {
-      left: 32.7%;
-      top: 51.5%;
-
-      width: 17%;
-      height: 9.5%;
+    .start-button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      filter: grayscale(0.35);
     }
 
-    /*
-      廣東話按鈕
-    */
-    #cantoneseButton {
-      left: 50.5%;
-      top: 51.5%;
+    /* =========================
+       小提示
+    ========================== */
 
-      width: 17%;
-      height: 9.5%;
+    .small-note {
+      margin: 16px 0 0;
+
+      font-size: 13px;
+      line-height: 1.4;
+
+      color: #695b43;
     }
 
-    /*
-      開始冒險按鈕
-    */
-    #startButton {
-      left: 38.2%;
-      top: 64.1%;
+    /* =========================
+       轉場動畫
+    ========================== */
 
-      width: 23.7%;
-      height: 10.7%;
-
-      border-radius: 25px;
-    }
-
-    /*
-      轉場白色畫面
-    */
     body::after {
       content: "";
 
       position: fixed;
       inset: 0;
-      z-index: 999;
+      z-index: 100;
 
-      background: #fff5d6;
-
-      opacity: 0;
       pointer-events: none;
 
-      transition: opacity 1s ease;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255, 255, 230, 0.98),
+          rgba(255, 244, 195, 1)
+        );
+
+      opacity: 0;
+
+      transition: opacity 1.1s ease;
     }
 
     body.leaving::after {
       opacity: 1;
     }
 
-    body.leaving .game-screen {
-      transform: scale(1.08);
+    body.leaving .page {
+      transform: scale(1.1);
 
       filter:
         brightness(1.25)
         blur(2px);
     }
 
-    /*
-      未選語言時搖動
-    */
-    .shake {
-      animation: shake 0.45s ease;
+    body.leaving .welcome-panel {
+      animation: panelLeave 1.1s ease forwards;
     }
 
-    @keyframes shake {
-      0% {
-        transform: translateX(0);
+    @keyframes panelLeave {
+      from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
       }
 
-      25% {
-        transform: translateX(-8px);
+      to {
+        opacity: 0;
+        transform: translateY(-15px) scale(0.96);
+      }
+    }
+
+    /* =========================
+       手機版
+    ========================== */
+
+    @media (max-width: 700px) {
+      .page {
+        align-items: flex-start;
+
+        padding-top:
+          max(95px, env(safe-area-inset-top));
+
+        /*
+          手機畫面裁走左右景物，
+          但圖片比例保持正常。
+        */
+        background-position: 52% center;
       }
 
-      50% {
-        transform: translateX(8px);
+      .brand {
+        top: 18px;
+        right: 50%;
+
+        padding: 8px 14px 10px;
+
+        transform:
+          translateX(50%)
+          rotate(0deg);
       }
 
-      75% {
-        transform: translateX(-5px);
+      .brand-small {
+        font-size: 11px;
       }
 
-      100% {
-        transform: translateX(0);
+      .brand-large {
+        font-size: 20px;
+      }
+
+      .welcome-panel {
+        width: min(94vw, 520px);
+
+        padding: 25px 19px 28px;
+
+        border-radius: 19px;
+      }
+
+      .main-title {
+        font-size: clamp(40px, 12vw, 58px);
+      }
+
+      .description {
+        margin-top: 17px;
+        margin-bottom: 22px;
+
+        font-size: 16px;
+      }
+
+      .language-options {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .language-button {
+        min-height: 54px;
+      }
+
+      .start-button {
+        min-height: 61px;
+      }
+    }
+
+    /* =========================
+       極矮螢幕
+    ========================== */
+
+    @media (max-height: 650px) and (min-width: 701px) {
+      .page {
+        align-items: flex-start;
+        overflow-y: auto;
+      }
+
+      .welcome-panel {
+        margin-top: 70px;
+        margin-bottom: 30px;
+        padding: 25px 34px;
+      }
+
+      .main-title {
+        font-size: 50px;
+      }
+
+      .description {
+        margin-top: 14px;
+        margin-bottom: 18px;
+      }
+
+      .welcome-message {
+        margin-top: 17px;
+      }
+
+      .start-button {
+        min-height: 58px;
+      }
+    }
+
+    /* =========================
+       減少動畫設定
+    ========================== */
+
+    @media (prefers-reduced-motion: reduce) {
+      .page,
+      body::after,
+      .welcome-panel,
+      .language-button,
+      .start-button {
+        transition: none;
+        animation: none;
       }
     }
   </style>
@@ -198,69 +569,199 @@
 
 <body>
 
-  <main class="game-screen">
+  <main class="page">
 
-    <!-- 背景圖片 -->
-    <img
-      class="background-picture"
-      src="images/home-background.png"
-      alt=""
+    <!-- 右上角 Logo -->
+    <div
+      class="brand"
+      aria-label="Bible Kids Adventure"
     >
+      <span class="brand-small">
+        BIBLE KIDS
+      </span>
 
-    <!-- English -->
-    <button
-      type="button"
-      class="image-button"
-      id="englishButton"
-      aria-label="Choose English"
-      onclick="chooseLanguage('en')"
-    >
-      English
-    </button>
+      <span class="brand-large">
+        ADVENTURE
+      </span>
+    </div>
 
-    <!-- 廣東話 -->
-    <button
-      type="button"
-      class="image-button"
-      id="cantoneseButton"
-      aria-label="選擇廣東話"
-      onclick="chooseLanguage('zh-HK')"
-    >
-      廣東話
-    </button>
+    <!-- 中央內容 -->
+    <section class="welcome-panel">
 
-    <!-- 開始冒險 -->
-    <button
-      type="button"
-      class="image-button"
-      id="startButton"
-      aria-label="開始冒險"
-      onclick="startAdventure()"
-    >
-      開始冒險
-    </button>
+      <p
+        class="eyebrow"
+        id="eyebrow"
+      >
+        A journey of faith
+      </p>
+
+      <h1
+        class="main-title"
+        id="mainTitle"
+      >
+        Begin Your Journey
+      </h1>
+
+      <p
+        class="description"
+        id="description"
+      >
+        Explore the Bible and discover a world of faith,
+        courage and adventure.
+      </p>
+
+      <p
+        class="language-label"
+        id="languageLabel"
+      >
+        Choose your language · 請選擇語言
+      </p>
+
+      <div class="language-options">
+
+        <button
+          type="button"
+          class="language-button"
+          id="englishButton"
+          onclick="chooseLanguage('en')"
+        >
+          English
+        </button>
+
+        <button
+          type="button"
+          class="language-button"
+          id="cantoneseButton"
+          onclick="chooseLanguage('zh-HK')"
+        >
+          廣東話
+        </button>
+
+      </div>
+
+      <p
+        class="welcome-message"
+        id="welcomeMessage"
+        aria-live="polite"
+      >
+        Please choose a language to continue.
+      </p>
+
+      <button
+        type="button"
+        class="start-button"
+        id="startButton"
+        onclick="startAdventure()"
+        disabled
+      >
+        Start Adventure
+      </button>
+
+      <p
+        class="small-note"
+        id="smallNote"
+      >
+        Follow the path and begin your Bible adventure.
+      </p>
+
+    </section>
 
   </main>
 
   <script>
+    /*
+      記錄玩家選擇的語言
+    */
     let selectedLanguage = "";
 
+    const englishButton =
+      document.getElementById("englishButton");
+
+    const cantoneseButton =
+      document.getElementById("cantoneseButton");
+
+    const startButton =
+      document.getElementById("startButton");
+
+    const eyebrow =
+      document.getElementById("eyebrow");
+
+    const mainTitle =
+      document.getElementById("mainTitle");
+
+    const description =
+      document.getElementById("description");
+
+    const languageLabel =
+      document.getElementById("languageLabel");
+
+    const welcomeMessage =
+      document.getElementById("welcomeMessage");
+
+    const smallNote =
+      document.getElementById("smallNote");
+
+    /*
+      選擇語言
+    */
     function chooseLanguage(language) {
       selectedLanguage = language;
-
-      const englishButton =
-        document.getElementById("englishButton");
-
-      const cantoneseButton =
-        document.getElementById("cantoneseButton");
 
       englishButton.classList.remove("selected");
       cantoneseButton.classList.remove("selected");
 
+      startButton.disabled = false;
+
       if (language === "en") {
+        document.documentElement.lang = "en";
+
         englishButton.classList.add("selected");
+
+        eyebrow.textContent =
+          "A journey of faith";
+
+        mainTitle.textContent =
+          "Begin Your Journey";
+
+        description.textContent =
+          "Explore the Bible and discover a world of faith, courage and adventure.";
+
+        languageLabel.textContent =
+          "Choose your language";
+
+        welcomeMessage.textContent =
+          "Welcome, young explorer.";
+
+        startButton.textContent =
+          "Start Adventure";
+
+        smallNote.textContent =
+          "Follow the path and begin your Bible adventure.";
       } else {
+        document.documentElement.lang = "zh-HK";
+
         cantoneseButton.classList.add("selected");
+
+        eyebrow.textContent =
+          "信心嘅旅程";
+
+        mainTitle.textContent =
+          "展開你嘅旅程";
+
+        description.textContent =
+          "探索聖經，發現一個充滿信心、勇氣同冒險嘅世界。";
+
+        languageLabel.textContent =
+          "請選擇語言";
+
+        welcomeMessage.textContent =
+          "歡迎你，小小探險家。";
+
+        startButton.textContent =
+          "開始冒險";
+
+        smallNote.textContent =
+          "沿住小路，展開你嘅聖經冒險。";
       }
 
       localStorage.setItem(
@@ -269,43 +770,48 @@
       );
     }
 
+    /*
+      開始冒險
+    */
     function startAdventure() {
-      const englishButton =
-        document.getElementById("englishButton");
-
-      const cantoneseButton =
-        document.getElementById("cantoneseButton");
-
       if (!selectedLanguage) {
-        englishButton.classList.add("shake");
-        cantoneseButton.classList.add("shake");
-
-        setTimeout(function () {
-          englishButton.classList.remove("shake");
-          cantoneseButton.classList.remove("shake");
-        }, 500);
-
         return;
       }
+
+      if (
+        document.body.classList.contains("leaving")
+      ) {
+        return;
+      }
+
+      startButton.disabled = true;
 
       document.body.classList.add("leaving");
 
       setTimeout(function () {
         window.location.href = "character.html";
-      }, 1000);
+      }, 1100);
     }
 
-    window.addEventListener("load", function () {
-      const savedLanguage =
-        localStorage.getItem("bibleKidsLanguage");
+    /*
+      載入之前保存嘅語言
+    */
+    window.addEventListener(
+      "load",
+      function () {
+        const savedLanguage =
+          localStorage.getItem(
+            "bibleKidsLanguage"
+          );
 
-      if (
-        savedLanguage === "en" ||
-        savedLanguage === "zh-HK"
-      ) {
-        chooseLanguage(savedLanguage);
+        if (
+          savedLanguage === "en" ||
+          savedLanguage === "zh-HK"
+        ) {
+          chooseLanguage(savedLanguage);
+        }
       }
-    });
+    );
   </script>
 
 </body>
