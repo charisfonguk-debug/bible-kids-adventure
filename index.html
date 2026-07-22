@@ -39,7 +39,7 @@
         "Microsoft JhengHei",
         sans-serif;
 
-      background-color: #b8d98e;
+      background-color: #9dc47d;
     }
 
     button {
@@ -47,7 +47,7 @@
     }
 
     /* =========================
-       整個首頁
+       首頁背景
     ========================== */
 
     .page {
@@ -62,23 +62,23 @@
       justify-content: center;
 
       padding:
-        max(24px, env(safe-area-inset-top))
+        max(30px, env(safe-area-inset-top))
         max(24px, env(safe-area-inset-right))
-        max(24px, env(safe-area-inset-bottom))
+        max(30px, env(safe-area-inset-bottom))
         max(24px, env(safe-area-inset-left));
 
       overflow: hidden;
 
       background-image:
         linear-gradient(
-          rgba(20, 45, 28, 0.06),
-          rgba(20, 45, 28, 0.12)
+          rgba(24, 48, 28, 0.04),
+          rgba(24, 48, 28, 0.12)
         ),
         url("images/home-background.png");
 
       /*
         cover 會填滿畫面，
-        但唔會將圖片壓扁或拉長。
+        但唔會壓扁圖片。
       */
       background-size: cover;
       background-position: center;
@@ -90,113 +90,182 @@
     }
 
     /* =========================
-       右上角 Logo
+       木牌 Logo
     ========================== */
 
-/* =========================
-   升級版 Logo
-========================== */
+    .brand {
+      position: absolute;
+      top: 28px;
+      right: 34px;
+      z-index: 10;
 
-  /* =========================
-   乾淨故事書 Logo
-========================== */
+      min-width: 260px;
 
-.brand {
-  position: absolute;
-  top: 28px;
-  right: 32px;
-  z-index: 5;
+      padding: 14px 20px 16px;
 
-  padding: 13px 20px 15px;
+      border: 4px solid #4c2d16;
+      border-radius: 18px 13px 20px 14px;
 
-  border: 2px solid rgba(91, 59, 32, 0.55);
-  border-radius: 14px;
+      background:
+        linear-gradient(
+          180deg,
+          #a66a35 0%,
+          #805027 52%,
+          #663a1d 100%
+        );
 
-  background: rgba(255, 248, 218, 0.88);
+      box-shadow:
+        0 7px 0 #3b2413,
+        0 14px 26px rgba(42, 25, 13, 0.34),
+        inset 0 3px 0 rgba(255, 231, 176, 0.28);
 
-  box-shadow:
-    0 7px 18px rgba(45, 30, 18, 0.2);
+      text-align: center;
 
-  text-align: center;
+      transform: rotate(-1deg);
+    }
 
-  backdrop-filter: blur(4px);
-}
+    /*
+      木牌上面兩條繩
+    */
+    .brand::before,
+    .brand::after {
+      content: "";
 
-.brand-small {
-  display: block;
+      position: absolute;
+      top: -31px;
 
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 3px;
+      width: 4px;
+      height: 32px;
 
-  color: #6e5032;
-}
+      border-radius: 4px;
 
-.brand-large {
-  display: block;
+      background-color: #5b3b22;
 
-  margin-top: 5px;
+      box-shadow:
+        1px 0 0 rgba(255, 255, 255, 0.18);
+    }
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+    .brand::before {
+      left: 45px;
 
-  font-size: 29px;
-  font-weight: 900;
-  line-height: 1;
+      transform: rotate(-6deg);
+    }
 
-  color: #70401f;
+    .brand::after {
+      right: 45px;
 
-  text-shadow:
-    1px 2px 0 rgba(244, 196, 102, 0.75);
-}
+      transform: rotate(6deg);
+    }
 
-@media (max-width: 700px) {
-  .brand {
-    top: 16px;
-    right: 50%;
+    .brand-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    padding: 10px 15px 12px;
+      gap: 10px;
+    }
 
-    transform: translateX(50%);
-  }
+    .brand-lamb,
+    .brand-rainbow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-  .brand-small {
-    font-size: 10px;
-    letter-spacing: 2.5px;
-  }
+      width: 35px;
+      height: 35px;
 
-  .brand-large {
-    font-size: 22px;
-  }
-}
+      border: 2px solid rgba(76, 45, 22, 0.7);
+      border-radius: 50%;
+
+      background-color: rgba(255, 244, 205, 0.92);
+
+      box-shadow:
+        0 3px 0 rgba(62, 36, 17, 0.75);
+
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .brand-small {
+      display: inline-block;
+
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      line-height: 1;
+
+      color: #fff0c1;
+
+      text-shadow:
+        1px 2px 0 #4b2812;
+    }
+
+    .brand-large {
+      display: block;
+
+      margin-top: 7px;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 31px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      line-height: 0.95;
+
+      color: #ffd96c;
+
+      text-shadow:
+        2px 3px 0 #4d2913;
+    }
+
+    .brand-meaning {
+      display: block;
+
+      margin-top: 7px;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 12px;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+
+      color: #fff3ce;
+    }
+
     /* =========================
-       中央內容卡
+       中央內容
     ========================== */
 
     .welcome-panel {
       position: relative;
-      z-index: 3;
+      z-index: 5;
 
       width: min(92vw, 620px);
 
-      padding: clamp(25px, 5vw, 46px);
+      padding:
+        clamp(27px, 5vw, 46px);
 
-      border: 2px solid rgba(108, 73, 34, 0.55);
-      border-radius: 24px;
+      border: 3px solid rgba(91, 59, 29, 0.68);
+      border-radius: 25px;
 
       background:
         linear-gradient(
           145deg,
-          rgba(255, 250, 220, 0.93),
-          rgba(245, 226, 173, 0.9)
+          rgba(255, 251, 226, 0.94),
+          rgba(244, 224, 170, 0.91)
         );
 
       box-shadow:
-        0 14px 35px rgba(50, 40, 22, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+        0 15px 0 rgba(92, 57, 26, 0.18),
+        0 24px 45px rgba(47, 35, 19, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.9);
 
       text-align: center;
 
@@ -207,46 +276,50 @@
       margin: 0 0 12px;
 
       font-size: clamp(13px, 2vw, 16px);
-      font-weight: 800;
-      letter-spacing: 2px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
 
-      color: #6e512d;
+      color: #6c4b29;
     }
 
     .main-title {
       margin: 0;
 
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(43px, 7vw, 72px);
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: clamp(44px, 7vw, 72px);
       font-weight: 900;
       line-height: 0.96;
 
-      color: #57361f;
+      color: #59371e;
 
       text-shadow:
-        2px 3px 0 #efc66e;
+        2px 3px 0 #efc66b;
     }
 
     .description {
-      max-width: 480px;
+      max-width: 490px;
 
-      margin: 20px auto 26px;
+      margin: 20px auto 25px;
 
-      font-size: clamp(16px, 2.5vw, 20px);
+      font-size: clamp(16px, 2.4vw, 20px);
       font-weight: 650;
       line-height: 1.55;
 
-      color: #354b36;
+      color: #354a35;
     }
 
     .language-label {
-      margin: 0 0 13px;
+      margin: 0 0 14px;
 
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 850;
 
-      color: #4c3c28;
+      color: #4d3a25;
     }
 
     /* =========================
@@ -255,9 +328,10 @@
 
     .language-options {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
-      gap: 14px;
+      gap: 15px;
 
       width: 100%;
       max-width: 440px;
@@ -270,74 +344,78 @@
 
       padding: 12px 18px;
 
-      border: 3px solid #65431f;
-      border-radius: 13px;
+      border: 3px solid #60401f;
+      border-radius: 14px 10px 15px 11px;
 
       background:
         linear-gradient(
           to bottom,
-          #fff4ca,
-          #e8c576
+          #fff4c9,
+          #dfb760
         );
 
       box-shadow:
-        0 5px 0 #5b3b1d;
+        0 6px 0 #55371b;
 
-      color: #352718;
+      color: #382919;
       font-size: 18px;
-      font-weight: 800;
+      font-weight: 900;
 
       cursor: pointer;
 
       transition:
         transform 0.18s ease,
         box-shadow 0.18s ease,
-        background 0.18s ease;
+        filter 0.18s ease;
     }
 
     .language-button:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
 
       box-shadow:
-        0 8px 0 #5b3b1d;
+        0 10px 0 #55371b;
+
+      filter: brightness(1.04);
     }
 
     .language-button:active {
       transform: translateY(3px);
 
       box-shadow:
-        0 2px 0 #5b3b1d;
+        0 2px 0 #55371b;
     }
 
     .language-button.selected {
       background:
         linear-gradient(
           to bottom,
-          #fffef1,
-          #ffe59a
+          #fffef0,
+          #ffe393
         );
 
-      outline: 4px solid rgba(255, 255, 255, 0.9);
+      outline:
+        4px solid rgba(255, 255, 255, 0.95);
+
       outline-offset: 3px;
 
       box-shadow:
-        0 5px 0 #5b3b1d,
-        0 0 20px rgba(255, 226, 117, 0.9);
+        0 6px 0 #55371b,
+        0 0 22px rgba(255, 224, 107, 0.95);
     }
 
     /* =========================
-       歡迎文字
+       歡迎訊息
     ========================== */
 
     .welcome-message {
       min-height: 28px;
 
-      margin: 23px 0 12px;
+      margin: 24px 0 12px;
 
       font-size: 17px;
-      font-weight: 750;
+      font-weight: 800;
 
-      color: #405237;
+      color: #405236;
     }
 
     /* =========================
@@ -348,28 +426,28 @@
       width: min(100%, 330px);
       min-height: 67px;
 
-      padding: 15px 24px;
+      padding: 15px 25px;
 
-      border: 4px solid #4e351d;
-      border-radius: 16px;
+      border: 4px solid #493318;
+      border-radius: 17px 12px 18px 13px;
 
       background:
         linear-gradient(
           to bottom,
-          #91b83f,
-          #527b27
+          #9ac547,
+          #507b27
         );
 
       box-shadow:
-        0 7px 0 #3f2c18,
-        0 12px 24px rgba(44, 54, 23, 0.28);
+        0 8px 0 #3e2b17,
+        0 14px 26px rgba(43, 54, 24, 0.3);
 
       color: white;
       font-size: clamp(20px, 3vw, 25px);
       font-weight: 900;
 
       text-shadow:
-        1px 2px 0 rgba(49, 61, 23, 0.7);
+        1px 2px 0 rgba(44, 57, 20, 0.75);
 
       cursor: pointer;
 
@@ -381,12 +459,12 @@
 
     .start-button:hover:not(:disabled) {
       transform:
-        translateY(-4px)
+        translateY(-5px)
         scale(1.02);
 
       box-shadow:
-        0 11px 0 #3f2c18,
-        0 16px 28px rgba(44, 54, 23, 0.32);
+        0 13px 0 #3e2b17,
+        0 18px 30px rgba(43, 54, 24, 0.35);
 
       filter: brightness(1.08);
     }
@@ -395,30 +473,30 @@
       transform: translateY(3px);
 
       box-shadow:
-        0 3px 0 #3f2c18;
+        0 3px 0 #3e2b17;
     }
 
     .start-button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      filter: grayscale(0.35);
-    }
+      opacity: 0.54;
 
-    /* =========================
-       小提示
-    ========================== */
+      cursor: not-allowed;
+
+      filter:
+        grayscale(0.3)
+        brightness(0.92);
+    }
 
     .small-note {
-      margin: 16px 0 0;
+      margin: 17px 0 0;
 
       font-size: 13px;
-      line-height: 1.4;
+      line-height: 1.45;
 
-      color: #695b43;
+      color: #675942;
     }
 
     /* =========================
-       轉場動畫
+       Start 轉場動畫
     ========================== */
 
     body::after {
@@ -433,13 +511,14 @@
       background:
         radial-gradient(
           circle at center,
-          rgba(255, 255, 230, 0.98),
-          rgba(255, 244, 195, 1)
+          rgba(255, 255, 232, 0.98),
+          rgba(255, 242, 190, 1)
         );
 
       opacity: 0;
 
-      transition: opacity 1.1s ease;
+      transition:
+        opacity 1.1s ease;
     }
 
     body.leaving::after {
@@ -455,18 +534,27 @@
     }
 
     body.leaving .welcome-panel {
-      animation: panelLeave 1.1s ease forwards;
+      animation:
+        panelLeave
+        1.1s ease
+        forwards;
     }
 
     @keyframes panelLeave {
       from {
         opacity: 1;
-        transform: translateY(0) scale(1);
+
+        transform:
+          translateY(0)
+          scale(1);
       }
 
       to {
         opacity: 0;
-        transform: translateY(-15px) scale(0.96);
+
+        transform:
+          translateY(-18px)
+          scale(0.96);
       }
     }
 
@@ -479,44 +567,69 @@
         align-items: flex-start;
 
         padding-top:
-          max(95px, env(safe-area-inset-top));
+          max(145px, env(safe-area-inset-top));
 
         /*
-          手機畫面裁走左右景物，
-          但圖片比例保持正常。
+          背景仍然保持比例，
+          只會裁走左右少少。
         */
         background-position: 52% center;
       }
 
       .brand {
-        top: 18px;
+        top: 19px;
         right: 50%;
 
-        padding: 8px 14px 10px;
+        min-width: 235px;
+
+        padding: 11px 15px 13px;
 
         transform:
           translateX(50%)
           rotate(0deg);
       }
 
+      .brand::before {
+        left: 40px;
+      }
+
+      .brand::after {
+        right: 40px;
+      }
+
+      .brand-lamb,
+      .brand-rainbow {
+        width: 30px;
+        height: 30px;
+
+        font-size: 18px;
+      }
+
       .brand-small {
         font-size: 11px;
+        letter-spacing: 2px;
       }
 
       .brand-large {
-        font-size: 20px;
+        font-size: 24px;
+      }
+
+      .brand-meaning {
+        font-size: 10px;
       }
 
       .welcome-panel {
         width: min(94vw, 520px);
 
-        padding: 25px 19px 28px;
+        padding:
+          25px 19px 29px;
 
-        border-radius: 19px;
+        border-radius: 20px;
       }
 
       .main-title {
-        font-size: clamp(40px, 12vw, 58px);
+        font-size:
+          clamp(40px, 12vw, 58px);
       }
 
       .description {
@@ -528,6 +641,7 @@
 
       .language-options {
         grid-template-columns: 1fr;
+
         gap: 12px;
       }
 
@@ -541,19 +655,30 @@
     }
 
     /* =========================
-       極矮螢幕
+       矮螢幕電腦
     ========================== */
 
-    @media (max-height: 650px) and (min-width: 701px) {
+    @media
+    (max-height: 680px)
+    and
+    (min-width: 701px) {
+
       .page {
         align-items: flex-start;
+
         overflow-y: auto;
       }
 
+      .brand {
+        top: 20px;
+      }
+
       .welcome-panel {
-        margin-top: 70px;
-        margin-bottom: 30px;
-        padding: 25px 34px;
+        margin-top: 80px;
+        margin-bottom: 35px;
+
+        padding:
+          25px 34px;
       }
 
       .main-title {
@@ -595,18 +720,45 @@
 
   <main class="page">
 
-    <!-- 右上角 Logo -->
+    <!-- 木牌 Logo -->
     <div
       class="brand"
       aria-label="Bible Kids Adventure"
     >
-      <span class="brand-small">
-        BIBLE KIDS
-      </span>
+
+      <div class="brand-top">
+
+        <span
+          class="brand-lamb"
+          aria-hidden="true"
+        >
+          🐑
+        </span>
+
+        <span class="brand-small">
+          BIBLE KIDS
+        </span>
+
+        <span
+          class="brand-rainbow"
+          aria-hidden="true"
+        >
+          🌈
+        </span>
+
+      </div>
 
       <span class="brand-large">
         ADVENTURE
       </span>
+
+      <span
+        class="brand-meaning"
+        id="brandMeaning"
+      >
+        Faith · Promise · Journey
+      </span>
+
     </div>
 
     <!-- 中央內容 -->
@@ -630,8 +782,8 @@
         class="description"
         id="description"
       >
-        Explore the Bible and discover a world of faith,
-        courage and adventure.
+        Explore the Bible and discover a world
+        of faith, courage and adventure.
       </p>
 
       <p
@@ -694,52 +846,89 @@
 
   <script>
     /*
-      記錄玩家選擇的語言
+      記錄玩家選擇嘅語言
     */
     let selectedLanguage = "";
 
+    /*
+      取得網頁元素
+    */
     const englishButton =
-      document.getElementById("englishButton");
+      document.getElementById(
+        "englishButton"
+      );
 
     const cantoneseButton =
-      document.getElementById("cantoneseButton");
+      document.getElementById(
+        "cantoneseButton"
+      );
 
     const startButton =
-      document.getElementById("startButton");
+      document.getElementById(
+        "startButton"
+      );
 
     const eyebrow =
-      document.getElementById("eyebrow");
+      document.getElementById(
+        "eyebrow"
+      );
 
     const mainTitle =
-      document.getElementById("mainTitle");
+      document.getElementById(
+        "mainTitle"
+      );
 
     const description =
-      document.getElementById("description");
+      document.getElementById(
+        "description"
+      );
 
     const languageLabel =
-      document.getElementById("languageLabel");
+      document.getElementById(
+        "languageLabel"
+      );
 
     const welcomeMessage =
-      document.getElementById("welcomeMessage");
+      document.getElementById(
+        "welcomeMessage"
+      );
 
     const smallNote =
-      document.getElementById("smallNote");
+      document.getElementById(
+        "smallNote"
+      );
+
+    const brandMeaning =
+      document.getElementById(
+        "brandMeaning"
+      );
 
     /*
-      選擇語言
+      玩家選擇語言
     */
     function chooseLanguage(language) {
       selectedLanguage = language;
 
-      englishButton.classList.remove("selected");
-      cantoneseButton.classList.remove("selected");
+      englishButton.classList.remove(
+        "selected"
+      );
+
+      cantoneseButton.classList.remove(
+        "selected"
+      );
 
       startButton.disabled = false;
 
+      /*
+        English
+      */
       if (language === "en") {
-        document.documentElement.lang = "en";
+        document.documentElement.lang =
+          "en";
 
-        englishButton.classList.add("selected");
+        englishButton.classList.add(
+          "selected"
+        );
 
         eyebrow.textContent =
           "A journey of faith";
@@ -761,10 +950,21 @@
 
         smallNote.textContent =
           "Follow the path and begin your Bible adventure.";
-      } else {
-        document.documentElement.lang = "zh-HK";
 
-        cantoneseButton.classList.add("selected");
+        brandMeaning.textContent =
+          "Faith · Promise · Journey";
+      }
+
+      /*
+        廣東話
+      */
+      else {
+        document.documentElement.lang =
+          "zh-HK";
+
+        cantoneseButton.classList.add(
+          "selected"
+        );
 
         eyebrow.textContent =
           "信心嘅旅程";
@@ -786,8 +986,14 @@
 
         smallNote.textContent =
           "沿住小路，展開你嘅聖經冒險。";
+
+        brandMeaning.textContent =
+          "信心 · 應許 · 旅程";
       }
 
+      /*
+        保存語言選擇
+      */
       localStorage.setItem(
         "bibleKidsLanguage",
         language
@@ -802,19 +1008,36 @@
         return;
       }
 
+      /*
+        防止重複按掣
+      */
       if (
-        document.body.classList.contains("leaving")
+        document.body.classList.contains(
+          "leaving"
+        )
       ) {
         return;
       }
 
       startButton.disabled = true;
 
-      document.body.classList.add("leaving");
+      /*
+        開始轉場動畫
+      */
+      document.body.classList.add(
+        "leaving"
+      );
 
-      setTimeout(function () {
-        window.location.href = "character.html";
-      }, 1100);
+      /*
+        1.1 秒後進入角色選擇頁
+      */
+      setTimeout(
+        function () {
+          window.location.href =
+            "character.html";
+        },
+        1100
+      );
     }
 
     /*
@@ -832,7 +1055,9 @@
           savedLanguage === "en" ||
           savedLanguage === "zh-HK"
         ) {
-          chooseLanguage(savedLanguage);
+          chooseLanguage(
+            savedLanguage
+          );
         }
       }
     );
