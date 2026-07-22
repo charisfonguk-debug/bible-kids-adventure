@@ -12,63 +12,30 @@
   <title>Bible Kids Adventure</title>
 
   <style>
-    /*
-      所有元素使用較容易控制的尺寸計算方式
-    */
     * {
       box-sizing: border-box;
     }
 
-    /*
-      令網頁填滿整個瀏覽器
-    */
     html,
     body {
       width: 100%;
       height: 100%;
       margin: 0;
+      overflow: hidden;
     }
 
     body {
-      width: 100vw;
-      height: 100vh;
-
-      overflow: hidden;
-
       font-family:
         Arial,
-        "Noto Sans TC",
         "Microsoft JhengHei",
         sans-serif;
-
-      background-color: black;
     }
 
-    /*
-      首頁主畫面
-    */
     .game-screen {
       position: relative;
-
       width: 100vw;
       height: 100vh;
-
       overflow: hidden;
-
-      /*
-        使用圖片做完整背景
-      */
-      background-image:
-        url("images/home-background.png");
-
-      /*
-        圖片會完全拉伸到瀏覽器尺寸
-        所以不會出現左右深綠色空位
-      */
-      background-size: 100% 100%;
-
-      background-position: center;
-      background-repeat: no-repeat;
 
       transition:
         transform 1s ease,
@@ -76,72 +43,65 @@
     }
 
     /*
-      圖片入面的按鈕只是一幅圖，
-      所以我們在相同位置放透明的真正按鈕
+      真正的背景圖片。
+      object-fit: fill 會將圖片拉到整個畫面。
+    */
+    .background-picture {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: fill;
+
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /*
+      背景圖片上的透明按鈕
     */
     .image-button {
       position: absolute;
       z-index: 10;
 
-      display: block;
-
-      margin: 0;
       padding: 0;
+      margin: 0;
 
-      border: none;
+      border: 0;
       border-radius: 18px;
 
-      background-color: transparent;
-
+      background: transparent;
       color: transparent;
-      font-size: 0;
 
       cursor: pointer;
 
       transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        outline 0.18s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        outline 0.2s ease;
     }
 
-    /*
-      滑鼠放上按鈕時的效果
-    */
     .image-button:hover {
-      transform:
-        translateY(-2px)
-        scale(1.025);
+      transform: scale(1.03);
 
       box-shadow:
-        inset 0 0 0 4px
-        rgba(255, 255, 255, 0.35),
-
-        0 0 22px
-        rgba(255, 235, 155, 0.7);
+        inset 0 0 0 5px rgba(255, 255, 255, 0.35),
+        0 0 24px rgba(255, 240, 170, 0.8);
     }
 
-    /*
-      使用鍵盤控制時的效果
-    */
-    .image-button:focus-visible {
-      outline: 5px solid white;
-      outline-offset: 3px;
-    }
-
-    /*
-      選擇語言後的白色邊框
-    */
     .image-button.selected {
       outline: 5px solid white;
-      outline-offset: 3px;
+      outline-offset: 2px;
 
       box-shadow:
-        0 0 25px
-        rgba(255, 240, 170, 0.95);
+        0 0 25px rgba(255, 240, 170, 0.95);
     }
 
     /*
-      English 按鈕位置
+      English 按鈕
     */
     #englishButton {
       left: 32.7%;
@@ -152,7 +112,7 @@
     }
 
     /*
-      廣東話按鈕位置
+      廣東話按鈕
     */
     #cantoneseButton {
       left: 50.5%;
@@ -163,7 +123,7 @@
     }
 
     /*
-      開始冒險按鈕位置
+      開始冒險按鈕
     */
     #startButton {
       left: 38.2%;
@@ -172,27 +132,11 @@
       width: 23.7%;
       height: 10.7%;
 
-      border-radius: 24px;
+      border-radius: 25px;
     }
 
     /*
-      開始按鈕的滑鼠效果
-    */
-    #startButton:hover {
-      transform:
-        translateY(-3px)
-        scale(1.035);
-
-      box-shadow:
-        inset 0 0 0 5px
-        rgba(255, 255, 255, 0.3),
-
-        0 0 30px
-        rgba(219, 255, 127, 0.75);
-    }
-
-    /*
-      按下開始後的白色轉場畫面
+      轉場白色畫面
     */
     body::after {
       content: "";
@@ -201,25 +145,18 @@
       inset: 0;
       z-index: 999;
 
-      pointer-events: none;
-
-      background-color: #fff6d8;
+      background: #fff5d6;
 
       opacity: 0;
+      pointer-events: none;
 
       transition: opacity 1s ease;
     }
 
-    /*
-      開始冒險後，白色畫面慢慢出現
-    */
     body.leaving::after {
       opacity: 1;
     }
 
-    /*
-      開始冒險後，背景慢慢放大和變光
-    */
     body.leaving .game-screen {
       transform: scale(1.08);
 
@@ -229,16 +166,13 @@
     }
 
     /*
-      玩家未選語言時，
-      語言按鈕會左右搖動
+      未選語言時搖動
     */
     .shake {
-      animation:
-        shakeButtons
-        0.45s ease;
+      animation: shake 0.45s ease;
     }
 
-    @keyframes shakeButtons {
+    @keyframes shake {
       0% {
         transform: translateX(0);
       }
@@ -259,98 +193,21 @@
         transform: translateX(0);
       }
     }
-
-    /*
-      給讀屏軟件使用，
-      正常畫面不會看見
-    */
-    .screen-reader-only {
-      position: absolute;
-
-      width: 1px;
-      height: 1px;
-
-      margin: -1px;
-      padding: 0;
-
-      overflow: hidden;
-
-      clip: rect(0, 0, 0, 0);
-
-      white-space: nowrap;
-
-      border: 0;
-    }
-
-    /*
-      手機直向時顯示提示
-    */
-    .rotate-message {
-      display: none;
-
-      position: fixed;
-      left: 50%;
-      bottom: 16px;
-      z-index: 100;
-
-      width: max-content;
-      max-width: 90%;
-
-      padding: 10px 16px;
-
-      border-radius: 10px;
-
-      background-color:
-        rgba(20, 30, 22, 0.85);
-
-      color: white;
-      font-size: 14px;
-      text-align: center;
-
-      transform: translateX(-50%);
-    }
-
-    @media
-    (orientation: portrait)
-    and
-    (max-width: 700px) {
-
-      .rotate-message {
-        display: block;
-      }
-    }
-
-    /*
-      如果使用者關閉動畫，
-      網頁會減少動畫效果
-    */
-    @media
-    (prefers-reduced-motion: reduce) {
-
-      .game-screen,
-      body::after,
-      .image-button {
-        transition: none;
-      }
-
-      .shake {
-        animation: none;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-  <main
-    class="game-screen"
-    aria-label="Bible Kids Adventure home page"
-  >
+  <main class="game-screen">
 
-    <!--
-      English 透明按鈕
-      放在背景圖 English 按鈕上面
-    -->
+    <!-- 背景圖片 -->
+    <img
+      class="background-picture"
+      src="images/home-background.png"
+      alt=""
+    >
+
+    <!-- English -->
     <button
       type="button"
       class="image-button"
@@ -361,9 +218,7 @@
       English
     </button>
 
-    <!--
-      廣東話透明按鈕
-    -->
+    <!-- 廣東話 -->
     <button
       type="button"
       class="image-button"
@@ -374,9 +229,7 @@
       廣東話
     </button>
 
-    <!--
-      開始冒險透明按鈕
-    -->
+    <!-- 開始冒險 -->
     <button
       type="button"
       class="image-button"
@@ -387,222 +240,72 @@
       開始冒險
     </button>
 
-    <!--
-      讀屏軟件狀態訊息
-    -->
-    <p
-      class="screen-reader-only"
-      id="statusMessage"
-      aria-live="polite"
-    ></p>
-
   </main>
 
-  <!--
-    手機直向提示
-  -->
-  <div class="rotate-message">
-    將手機打橫，畫面會更加完整
-  </div>
-
   <script>
-    /*
-      記錄玩家選擇的語言
-    */
     let selectedLanguage = "";
 
-    /*
-      玩家選擇語言
-    */
     function chooseLanguage(language) {
-
       selectedLanguage = language;
 
       const englishButton =
-        document.getElementById(
-          "englishButton"
-        );
+        document.getElementById("englishButton");
 
       const cantoneseButton =
-        document.getElementById(
-          "cantoneseButton"
-        );
+        document.getElementById("cantoneseButton");
 
-      const startButton =
-        document.getElementById(
-          "startButton"
-        );
+      englishButton.classList.remove("selected");
+      cantoneseButton.classList.remove("selected");
 
-      const statusMessage =
-        document.getElementById(
-          "statusMessage"
-        );
-
-      /*
-        先移除兩個語言按鈕的選擇效果
-      */
-      englishButton.classList.remove(
-        "selected"
-      );
-
-      cantoneseButton.classList.remove(
-        "selected"
-      );
-
-      /*
-        選擇 English
-      */
       if (language === "en") {
-
-        document.documentElement.lang =
-          "en";
-
-        englishButton.classList.add(
-          "selected"
-        );
-
-        startButton.setAttribute(
-          "aria-label",
-          "Start Adventure"
-        );
-
-        statusMessage.textContent =
-          "English selected. Press Start Adventure.";
+        englishButton.classList.add("selected");
+      } else {
+        cantoneseButton.classList.add("selected");
       }
 
-      /*
-        選擇廣東話
-      */
-      else {
-
-        document.documentElement.lang =
-          "zh-HK";
-
-        cantoneseButton.classList.add(
-          "selected"
-        );
-
-        startButton.setAttribute(
-          "aria-label",
-          "開始冒險"
-        );
-
-        statusMessage.textContent =
-          "已選擇廣東話，請按開始冒險。";
-      }
-
-      /*
-        將語言選擇保存到瀏覽器
-      */
       localStorage.setItem(
         "bibleKidsLanguage",
         language
       );
     }
 
-    /*
-      玩家按開始冒險
-    */
     function startAdventure() {
-
       const englishButton =
-        document.getElementById(
-          "englishButton"
-        );
+        document.getElementById("englishButton");
 
       const cantoneseButton =
-        document.getElementById(
-          "cantoneseButton"
-        );
+        document.getElementById("cantoneseButton");
 
-      /*
-        如果未選擇語言，
-        兩個語言按鈕會搖動
-      */
       if (!selectedLanguage) {
+        englishButton.classList.add("shake");
+        cantoneseButton.classList.add("shake");
 
-        englishButton.classList.add(
-          "shake"
-        );
-
-        cantoneseButton.classList.add(
-          "shake"
-        );
-
-        setTimeout(
-          function () {
-
-            englishButton.classList.remove(
-              "shake"
-            );
-
-            cantoneseButton.classList.remove(
-              "shake"
-            );
-
-          },
-          500
-        );
+        setTimeout(function () {
+          englishButton.classList.remove("shake");
+          cantoneseButton.classList.remove("shake");
+        }, 500);
 
         return;
       }
 
-      /*
-        防止玩家連續按開始按鈕
-      */
-      if (
-        document.body.classList.contains(
-          "leaving"
-        )
-      ) {
-        return;
-      }
+      document.body.classList.add("leaving");
 
-      /*
-        開始放大和變光動畫
-      */
-      document.body.classList.add(
-        "leaving"
-      );
-
-      /*
-        一秒後進入角色選擇頁
-      */
-      setTimeout(
-        function () {
-
-          window.location.href =
-            "character.html";
-
-        },
-        1000
-      );
+      setTimeout(function () {
+        window.location.href = "character.html";
+      }, 1000);
     }
 
-    /*
-      網頁載入時，
-      檢查之前保存的語言
-    */
-    window.addEventListener(
-      "load",
-      function () {
+    window.addEventListener("load", function () {
+      const savedLanguage =
+        localStorage.getItem("bibleKidsLanguage");
 
-        const savedLanguage =
-          localStorage.getItem(
-            "bibleKidsLanguage"
-          );
-
-        if (
-          savedLanguage === "en" ||
-          savedLanguage === "zh-HK"
-        ) {
-
-          chooseLanguage(
-            savedLanguage
-          );
-        }
+      if (
+        savedLanguage === "en" ||
+        savedLanguage === "zh-HK"
+      ) {
+        chooseLanguage(savedLanguage);
       }
-    );
+    });
   </script>
 
 </body>
