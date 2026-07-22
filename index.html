@@ -93,61 +93,126 @@
        右上角 Logo
     ========================== */
 
-    .brand {
-      position: absolute;
-      top: 28px;
-      right: 32px;
-      z-index: 5;
+/* =========================
+   升級版 Logo
+========================== */
 
-      padding: 11px 18px 13px;
+.brand {
+  position: absolute;
+  top: 26px;
+  right: 32px;
+  z-index: 5;
 
-      border: 3px solid #5b3b20;
-      border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
+  padding: 12px 20px 13px 14px;
+
+  border: 3px solid #59391f;
+  border-radius: 18px 13px 20px 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 249, 218, 0.98),
+      rgba(231, 199, 126, 0.97)
+    );
+
+  box-shadow:
+    0 6px 0 #4a2e18,
+    0 12px 25px rgba(50, 31, 16, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.85);
+
+  color: #55351d;
+
+  transform: rotate(-1.2deg);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.brand:hover {
+  transform:
+    rotate(0deg)
+    translateY(-3px);
+
+  box-shadow:
+    0 9px 0 #4a2e18,
+    0 16px 30px rgba(50, 31, 16, 0.34),
+    inset 0 2px 0 rgba(255, 255, 255, 0.85);
+}
+
+/*
+  左邊小徽章
+*/
+    .brand::before {
+      content: "+";
+    
+      display: grid;
+      place-items: center;
+    
+      width: 48px;
+      height: 48px;
+    
+      flex-shrink: 0;
+    
+      border: 3px solid #5a391e;
+      border-radius: 50%;
+    
       background:
-        linear-gradient(
-          to bottom,
-          #9c6433,
-          #633a1e
+        radial-gradient(
+          circle at 35% 30%,
+          #fff1a8,
+          #cf8d32
         );
-
+    
       box-shadow:
-        0 6px 0 #422814,
-        0 10px 20px rgba(45, 28, 15, 0.28);
-
-      color: white;
-      text-align: center;
-
-      transform: rotate(1deg);
-    }
-
-    .brand-small {
-      display: block;
-
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      line-height: 1;
-
-      color: #fff4cf;
-    }
-
-    .brand-large {
-      display: block;
-
-      margin-top: 5px;
-
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 27px;
+        0 4px 0 #4a2e18,
+        inset 0 2px 0 rgba(255, 255, 255, 0.65);
+    
+      color: #fff8dc;
+      font-family: Georgia, serif;
+      font-size: 38px;
       font-weight: 900;
       line-height: 1;
-
-      color: #ffd66d;
-
+    
       text-shadow:
-        2px 2px 0 #543018;
+        1px 2px 0 #74411f;
     }
-
+    
+    .brand-small {
+      display: block;
+    
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2.4px;
+      line-height: 1;
+    
+      color: #76502b;
+    }
+    
+    .brand-large {
+      display: block;
+    
+      margin-top: 5px;
+    
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+    
+      font-size: 29px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      line-height: 0.95;
+    
+      color: #7c411d;
+    
+      text-shadow:
+        1px 2px 0 #ffd775;
+    }
     /* =========================
        中央內容卡
     ========================== */
