@@ -1,95 +1,3348 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Choose Your Character</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <title>Create Your Character | Bible Kids Adventure</title>
 
   <style>
+    /* =========================
+       基本設定
+    ========================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
+      width: 100%;
+      min-height: 100%;
       margin: 0;
+    }
+
+    body {
       min-height: 100vh;
+      min-height: 100svh;
+
+      overflow-x: hidden;
+
+      font-family:
+        "Trebuchet MS",
+        Arial,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+
+      background-color: #809d68;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       頁面背景
+    ========================== */
+
+    .page {
+      position: relative;
+
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      background-color: #f3dfae;
-      color: #3f2f22;
+      justify-content: center;
+
+      padding:
+        max(22px, env(safe-area-inset-top))
+        max(22px, env(safe-area-inset-right))
+        max(22px, env(safe-area-inset-bottom))
+        max(22px, env(safe-area-inset-left));
+
+      background-image:
+        linear-gradient(
+          rgba(34, 62, 39, 0.28),
+          rgba(53, 69, 37, 0.26)
+        ),
+        url("images/home-background.png");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* =========================
+       整個角色建立器
+    ========================== */
+
+    .creator-shell {
+      position: relative;
+      z-index: 2;
+
+      width: min(96vw, 1400px);
+      min-height: min(92vh, 900px);
+
+      display: grid;
+      grid-template-rows:
+        auto
+        minmax(0, 1fr)
+        auto;
+
+      border: 8px solid #533018;
+      border-radius: 24px 17px 27px 19px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(146, 91, 45, 0.98),
+          rgba(91, 50, 24, 0.98)
+        );
+
+      box-shadow:
+        0 12px 0 #351e0f,
+        0 28px 55px rgba(24, 17, 10, 0.42),
+        inset 0 3px 0 rgba(255, 227, 174, 0.25);
+
+      overflow: hidden;
+    }
+
+    /* =========================
+       頂部木框
+    ========================== */
+
+    .top-wood {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      min-height: 85px;
+
+      padding:
+        15px
+        clamp(18px, 3vw, 36px);
+
+      border-bottom: 7px solid #4d2b14;
+
+      background:
+        repeating-linear-gradient(
+          2deg,
+          rgba(255, 232, 182, 0.045) 0,
+          rgba(255, 232, 182, 0.045) 2px,
+          transparent 3px,
+          transparent 16px
+        ),
+        linear-gradient(
+          180deg,
+          #b8763e,
+          #805026
+        );
+
+      box-shadow:
+        inset 0 3px 0 rgba(255, 225, 170, 0.25),
+        inset 0 -4px 0 rgba(67, 34, 14, 0.3);
+    }
+
+    .brand {
+      flex-shrink: 0;
+
+      padding:
+        9px
+        15px
+        10px;
+
+      border: 3px solid #4c2b14;
+      border-radius: 14px 10px 16px 11px;
+
+      background:
+        linear-gradient(
+          180deg,
+          #9f622f,
+          #6c3b1b
+        );
+
+      box-shadow:
+        0 4px 0 #40230f;
+
+      text-align: center;
+
+      transform: rotate(-1deg);
+    }
+
+    .brand-small {
+      display: block;
+
+      color: #fff0c7;
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    .brand-large {
+      display: block;
+
+      margin-top: 4px;
+
+      color: #ffd66a;
+
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+
+      text-shadow:
+        1px 2px 0 #49250f;
+    }
+
+    .top-title {
+      margin: 0;
+
+      color: #fff0c9;
+
+      font-size:
+        clamp(26px, 4vw, 43px);
+
+      font-weight: 900;
+      line-height: 1;
+
+      text-align: center;
+
+      text-shadow:
+        2px 3px 0 #4b2813;
+    }
+
+    .top-spacer {
+      width: 135px;
+      flex-shrink: 0;
+    }
+
+    /* =========================
+       中間主區域
+    ========================== */
+
+    .main-area {
+      display: grid;
+      grid-template-columns:
+        minmax(320px, 0.85fr)
+        minmax(500px, 1.35fr);
+
+      min-height: 0;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 245, 216, 0.08)
+        );
+    }
+
+    /* =========================
+       左邊角色預覽
+    ========================== */
+
+    .preview-side {
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 0;
+
+      padding:
+        clamp(22px, 4vw, 42px);
+
+      border-right: 7px solid #57321a;
+
+      overflow: hidden;
+
+      background-image:
+        linear-gradient(
+          rgba(236, 244, 218, 0.1),
+          rgba(64, 91, 52, 0.2)
+        ),
+        url("images/home-background.png");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .preview-side::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 50% 42%,
+          rgba(255, 252, 220, 0.56),
+          rgba(123, 154, 96, 0.18) 50%,
+          rgba(45, 72, 42, 0.3) 100%
+        );
+
+      pointer-events: none;
+    }
+
+    .preview-title {
+      position: relative;
+      z-index: 3;
+
+      margin:
+        0
+        0
+        17px;
+
+      padding:
+        8px
+        19px;
+
+      border: 3px solid #57361b;
+      border-radius: 999px;
+
+      background:
+        rgba(255, 243, 202, 0.94);
+
+      box-shadow:
+        0 5px 0 rgba(75, 43, 20, 0.9);
+
+      color: #53351e;
+
+      font-size:
+        clamp(15px, 2vw, 19px);
+
+      font-weight: 900;
+    }
+
+    .avatar-stage {
+      position: relative;
+      z-index: 2;
+
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      width: min(100%, 430px);
+      min-height: 470px;
+
+      border: 5px solid rgba(79, 48, 23, 0.82);
+
+      border-radius:
+        32px 22px 35px 24px;
+
+      background:
+        radial-gradient(
+          circle at 50% 34%,
+          rgba(255, 255, 236, 0.95),
+          rgba(196, 223, 161, 0.83) 55%,
+          rgba(89, 139, 74, 0.86) 100%
+        );
+
+      box-shadow:
+        0 9px 0 rgba(69, 40, 18, 0.86),
+        0 18px 34px rgba(37, 26, 15, 0.28),
+        inset 0 3px 0 rgba(255, 255, 255, 0.65);
+
+      overflow: hidden;
+    }
+
+    .avatar-stage::before {
+      content: "";
+
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      bottom: -65px;
+
+      height: 150px;
+
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          rgba(76, 121, 62, 0.72),
+          rgba(56, 96, 48, 0.9)
+        );
+
+      box-shadow:
+        inset 0 5px 0 rgba(170, 205, 132, 0.32);
+    }
+
+    .avatar-glow {
+      position: absolute;
+      top: 36px;
+      left: 50%;
+
+      width: 290px;
+      height: 290px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255, 250, 197, 0.54),
+          transparent 68%
+        );
+
+      transform: translateX(-50%);
+
+      pointer-events: none;
+    }
+
+    .avatar-image {
+      position: relative;
+      z-index: 3;
+
+      display: block;
+
+      width: min(98%, 420px);
+      height: auto;
+
+      margin-bottom: -4px;
+
+      object-fit: contain;
+
+      filter:
+        drop-shadow(
+          0 12px 8px rgba(51, 38, 23, 0.22)
+        );
+
+      transition:
+        opacity 0.2s ease,
+        transform 0.25s ease;
+    }
+
+    .avatar-image.loading {
+      opacity: 0.36;
+
+      transform:
+        scale(0.97);
+    }
+
+    .avatar-error {
+      position: absolute;
+      z-index: 5;
+
+      display: none;
+
+      width: 75%;
+
+      padding: 17px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(255, 246, 214, 0.94);
+
+      color: #57371f;
+
+      font-weight: 900;
+      line-height: 1.45;
+
       text-align: center;
     }
 
-    main {
-      width: min(90%, 850px);
+    .avatar-error.visible {
+      display: block;
     }
 
-    h1 {
-      font-size: clamp(36px, 7vw, 64px);
-      margin-bottom: 10px;
+    .character-name {
+      position: relative;
+      z-index: 3;
+
+      min-height: 39px;
+
+      margin:
+        20px
+        0
+        0;
+
+      padding:
+        7px
+        20px;
+
+      border: 3px solid #513119;
+      border-radius: 999px;
+
+      background:
+        rgba(255, 242, 201, 0.95);
+
+      box-shadow:
+        0 5px 0 #4b2d16;
+
+      color: #54331c;
+
+      font-size:
+        clamp(21px, 3vw, 29px);
+
+      font-weight: 900;
+      line-height: 1;
     }
 
-    .characters {
+    /* =========================
+       右邊羊皮紙問題區
+    ========================== */
+
+    .question-side {
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 24px;
-      margin-top: 40px;
-    }
-
-    .character-card {
-      width: 190px;
-      padding: 20px;
-      border: 4px solid #5c4028;
-      border-radius: 18px;
-      background-color: #fff4d4;
-      box-shadow: 7px 8px 0 #5c4028;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .character-card:hover {
-      transform: translateY(-8px);
-    }
-
-    .character-picture {
-      height: 210px;
-      display: flex;
-      justify-content: center;
       align-items: center;
-      margin-bottom: 15px;
-      border-radius: 14px;
-      background-color: #cde5d2;
-      font-size: 80px;
+      justify-content: center;
+
+      min-width: 0;
+
+      padding:
+        clamp(25px, 4vw, 46px);
+
+      background:
+        linear-gradient(
+          140deg,
+          rgba(122, 75, 36, 0.82),
+          rgba(93, 51, 25, 0.92)
+        );
+    }
+
+    .parchment {
+      position: relative;
+
+      width: min(100%, 760px);
+      min-height: 500px;
+
+      display: flex;
+      flex-direction: column;
+
+      padding:
+        clamp(34px, 5vw, 55px)
+        clamp(24px, 5vw, 55px)
+        34px;
+
+      border:
+        3px solid rgba(92, 57, 26, 0.68);
+
+      border-radius:
+        12px 7px 15px 9px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #fff4cf 0%,
+          #f5dfaa 50%,
+          #ecd095 100%
+        );
+
+      box-shadow:
+        0 9px 0 rgba(62, 37, 17, 0.65),
+        0 20px 38px rgba(34, 23, 14, 0.32),
+        inset 0 2px 0 rgba(255, 255, 255, 0.75);
+
+      overflow: hidden;
+    }
+
+    .parchment::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      opacity: 0.22;
+
+      background:
+        repeating-linear-gradient(
+          3deg,
+          rgba(116, 72, 33, 0.08) 0,
+          rgba(116, 72, 33, 0.08) 1px,
+          transparent 2px,
+          transparent 11px
+        );
+
+      pointer-events: none;
+    }
+
+    .nail {
+      position: absolute;
+      z-index: 4;
+
+      width: 21px;
+      height: 21px;
+
+      border: 3px solid #4a4336;
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #e3e5df,
+          #8e968f 55%,
+          #4c504b 100%
+        );
+
+      box-shadow:
+        0 3px 4px rgba(42, 30, 18, 0.45);
+    }
+
+    .nail-top-left {
+      top: 17px;
+      left: 18px;
+    }
+
+    .nail-top-right {
+      top: 17px;
+      right: 18px;
+    }
+
+    .nail-bottom-left {
+      bottom: 17px;
+      left: 18px;
+    }
+
+    .nail-bottom-right {
+      right: 18px;
+      bottom: 17px;
+    }
+
+    .question-heading {
+      position: relative;
+      z-index: 2;
+
+      margin: 0;
+
+      color: #a34116;
+
+      font-size:
+        clamp(29px, 4.5vw, 47px);
+
+      font-weight: 900;
+      line-height: 1.1;
+
+      text-align: center;
+
+      text-shadow:
+        1px 2px 0 rgba(255, 238, 181, 0.85);
+    }
+
+    .heading-line {
+      position: relative;
+      z-index: 2;
+
+      width: min(90%, 510px);
+      height: 4px;
+
+      margin:
+        17px
+        auto
+        21px;
+
+      border-radius: 999px;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          #936331 20%,
+          #936331 80%,
+          transparent
+        );
+    }
+
+    .question-help {
+      position: relative;
+      z-index: 2;
+
+      max-width: 590px;
+
+      margin:
+        0
+        auto
+        24px;
+
+      color: #685036;
+
+      font-size:
+        clamp(14px, 2vw, 17px);
+
+      font-weight: 800;
+      line-height: 1.45;
+
+      text-align: center;
+    }
+
+    .choices {
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 17px;
+
+      width: 100%;
+      max-width: 650px;
+
+      margin: auto;
+    }
+
+    /* =========================
+       圖像選項卡
+    ========================== */
+
+    .choice-card {
+      position: relative;
+
+      min-width: 0;
+      min-height: 155px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      padding:
+        13px
+        11px
+        14px;
+
+      border: 4px solid #69411f;
+
+      border-radius:
+        17px 12px 19px 13px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 252, 231, 0.98),
+          rgba(230, 197, 126, 0.96)
+        );
+
+      box-shadow:
+        0 6px 0 #533219,
+        0 12px 20px rgba(52, 36, 20, 0.2);
+
+      color: #49311d;
+
+      font-weight: 900;
+
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        filter 0.18s ease;
+    }
+
+    .choice-card:hover {
+      transform:
+        translateY(-5px);
+
+      box-shadow:
+        0 11px 0 #533219,
+        0 17px 25px rgba(52, 36, 20, 0.24);
+
+      filter: brightness(1.04);
+    }
+
+    .choice-card:active {
+      transform:
+        translateY(2px);
+
+      box-shadow:
+        0 3px 0 #533219;
+    }
+
+    .choice-card.selected {
+      border-color: #426526;
+
+      outline:
+        5px solid rgba(119, 165, 70, 0.62);
+
+      outline-offset: 3px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #fffdeb,
+          #ddea9a
+        );
+
+      box-shadow:
+        0 7px 0 #3f5d29,
+        0 0 20px rgba(105, 147, 62, 0.4);
+    }
+
+    .choice-card.selected::after {
+      content: "✓";
+
+      position: absolute;
+      top: -13px;
+      right: -11px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 37px;
+      height: 37px;
+
+      border: 3px solid #fff8d8;
+      border-radius: 50%;
+
+      background: #548034;
+
+      color: white;
+
+      font-size: 22px;
+      font-weight: 900;
+
+      box-shadow:
+        0 3px 0 #345020;
+    }
+
+    .choice-image-box {
+      width: 118px;
+      height: 118px;
+
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+
+      margin-bottom: 8px;
+
+      border: 3px solid rgba(92, 57, 28, 0.45);
+      border-radius: 16px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          #ffffea,
+          #b9dc97
+        );
+
+      overflow: hidden;
+    }
+
+    .choice-image {
+      display: block;
+
+      width: 112px;
+      height: 112px;
+
+      object-fit: contain;
+    }
+
+    .choice-label {
+      display: block;
+
+      font-size:
+        clamp(15px, 2vw, 18px);
+
+      font-weight: 900;
+      line-height: 1.2;
+
+      text-align: center;
+    }
+
+    /* =========================
+       小型髮型／服裝卡
+    ========================== */
+
+    .choices.compact {
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 14px;
+    }
+
+    .choices.compact .choice-card {
+      min-height: 145px;
+
+      padding:
+        10px
+        7px
+        12px;
+    }
+
+    .choices.compact .choice-image-box {
+      width: 93px;
+      height: 93px;
+    }
+
+    .choices.compact .choice-image {
+      width: 90px;
+      height: 90px;
+    }
+
+    .choices.compact .choice-label {
+      font-size: 14px;
+    }
+
+    /* =========================
+       顏色選項
+    ========================== */
+
+    .choices.colour-choices {
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      max-width: 520px;
+    }
+
+    .colour-choice {
+      position: relative;
+
+      min-height: 100px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 10px;
+
+      padding:
+        12px
+        8px;
+
+      border: 4px solid #68431f;
+
+      border-radius:
+        16px 11px 18px 12px;
+
+      background:
+        rgba(255, 248, 220, 0.93);
+
+      box-shadow:
+        0 6px 0 #533219;
+
+      color: #4b321e;
+
+      font-weight: 900;
+
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .colour-choice:hover {
+      transform:
+        translateY(-4px);
+
+      box-shadow:
+        0 10px 0 #533219;
+    }
+
+    .colour-choice.selected {
+      border-color: #426526;
+
+      outline:
+        5px solid rgba(119, 165, 70, 0.62);
+
+      outline-offset: 3px;
+
+      background:
+        #ffffe6;
+    }
+
+    .colour-choice.selected::after {
+      content: "✓";
+
+      position: absolute;
+      top: 7px;
+      right: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 27px;
+      height: 27px;
+
+      border-radius: 50%;
+
+      background: #527b34;
+
+      color: white;
+
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .colour-circle {
+      width: 55px;
+      height: 55px;
+
+      border: 5px solid #fff9e1;
+      border-radius: 50%;
+
+      box-shadow:
+        0 0 0 3px #5d3b20,
+        0 5px 0 rgba(72, 43, 20, 0.5);
+    }
+
+    .colour-label {
+      font-size: 14px;
+      line-height: 1.15;
+    }
+
+    /* =========================
+       名字輸入
+    ========================== */
+
+    .name-step {
+      position: relative;
+      z-index: 2;
+
+      width: min(100%, 520px);
+
+      margin: auto;
+    }
+
+    .name-label {
+      display: block;
+
+      margin-bottom: 13px;
+
+      color: #593b24;
+
+      font-size: 18px;
+      font-weight: 900;
+
+      text-align: center;
+    }
+
+    .name-input {
+      width: 100%;
+      min-height: 67px;
+
+      padding:
+        14px
+        19px;
+
+      border: 4px solid #67431f;
+
+      border-radius:
+        17px 12px 19px 13px;
+
+      outline: none;
+
+      background:
+        rgba(255, 254, 235, 0.98);
+
+      box-shadow:
+        inset 0 4px 6px rgba(93, 57, 26, 0.13),
+        0 6px 0 #533219;
+
+      color: #442d1c;
+
+      font-size: 23px;
+      font-weight: 900;
+
+      text-align: center;
+
+      transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .name-input:focus {
+      border-color: #507532;
+
+      box-shadow:
+        inset 0 4px 6px rgba(93, 57, 26, 0.13),
+        0 6px 0 #3c5927,
+        0 0 0 5px rgba(113, 155, 67, 0.29);
+    }
+
+    .name-note {
+      margin:
+        17px
+        0
+        0;
+
+      color: #6c5337;
+
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45;
+
+      text-align: center;
+    }
+
+    /* =========================
+       底部導航
+    ========================== */
+
+    .navigation-bar {
+      display: grid;
+      grid-template-columns:
+        minmax(130px, 1fr)
+        auto
+        minmax(130px, 1fr);
+
+      align-items: center;
+
+      min-height: 85px;
+
+      padding:
+        14px
+        clamp(16px, 3vw, 35px);
+
+      border-top: 7px solid #4b2913;
+
+      background:
+        repeating-linear-gradient(
+          2deg,
+          rgba(255, 230, 176, 0.045) 0,
+          rgba(255, 230, 176, 0.045) 2px,
+          transparent 3px,
+          transparent 15px
+        ),
+        linear-gradient(
+          180deg,
+          #9e602f,
+          #73411e
+        );
+
+      box-shadow:
+        inset 0 3px 0 rgba(255, 223, 166, 0.22);
+    }
+
+    .nav-button {
+      min-width: 145px;
+      min-height: 52px;
+
+      padding:
+        11px
+        19px;
+
+      border: 4px solid #4a2b16;
+
+      border-radius:
+        15px 10px 17px 11px;
+
+      background:
+        linear-gradient(
+          to bottom,
+          #f2c76c,
+          #ae6c2d
+        );
+
+      box-shadow:
+        0 6px 0 #3f2412;
+
+      color: #fff4d5;
+
+      font-size:
+        clamp(15px, 2vw, 19px);
+
+      font-weight: 900;
+
+      text-shadow:
+        1px 2px 0 rgba(66, 34, 14, 0.75);
+
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        filter 0.18s ease;
+    }
+
+    .previous-button {
+      justify-self: start;
+    }
+
+    .next-button {
+      justify-self: end;
+    }
+
+    .nav-button:hover:not(:disabled) {
+      transform:
+        translateY(-4px);
+
+      box-shadow:
+        0 10px 0 #3f2412;
+
+      filter: brightness(1.06);
+    }
+
+    .nav-button:active:not(:disabled) {
+      transform:
+        translateY(2px);
+
+      box-shadow:
+        0 3px 0 #3f2412;
+    }
+
+    .nav-button:disabled {
+      opacity: 0.45;
+
+      cursor: not-allowed;
+
+      filter:
+        grayscale(0.35);
+    }
+
+    .progress-area {
+      min-width: 180px;
+
+      text-align: center;
+    }
+
+    .progress-text {
+      display: block;
+
+      color: #fff1cd;
+
+      font-size:
+        clamp(16px, 2.2vw, 21px);
+
+      font-weight: 900;
+
+      text-shadow:
+        1px 2px 0 #4a2813;
+    }
+
+    .progress-dots {
+      display: flex;
+      justify-content: center;
+
+      gap: 6px;
+
+      margin-top: 8px;
+    }
+
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+
+      border: 2px solid rgba(255, 244, 207, 0.88);
+      border-radius: 50%;
+
+      background:
+        rgba(79, 42, 19, 0.6);
+    }
+
+    .progress-dot.complete {
+      background: #d5ee86;
+    }
+
+    .progress-dot.current {
+      transform:
+        scale(1.35);
+
+      background: #fff6b3;
+
+      box-shadow:
+        0 0 8px rgba(255, 246, 179, 0.8);
+    }
+
+    /* =========================
+       頁面轉場
+    ========================== */
+
+    body::after {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255, 255, 234, 0.98),
+          rgba(247, 224, 158, 1)
+        );
+
+      opacity: 0;
+
+      transition:
+        opacity 0.85s ease;
+    }
+
+    body.leaving::after {
+      opacity: 1;
+    }
+
+    body.leaving .creator-shell {
+      animation:
+        leavePage
+        0.85s ease
+        forwards;
+    }
+
+    @keyframes leavePage {
+      to {
+        transform:
+          scale(1.06);
+
+        filter:
+          brightness(1.18)
+          blur(2px);
+      }
+    }
+
+    /* =========================
+       較窄電腦／平板
+    ========================== */
+
+    @media (max-width: 1050px) {
+      .creator-shell {
+        min-height: auto;
+      }
+
+      .main-area {
+        grid-template-columns:
+          minmax(280px, 0.8fr)
+          minmax(430px, 1.2fr);
+      }
+
+      .preview-side {
+        padding:
+          24px
+          20px;
+      }
+
+      .avatar-stage {
+        min-height: 400px;
+      }
+
+      .question-side {
+        padding:
+          27px
+          23px;
+      }
+
+      .parchment {
+        min-height: 470px;
+
+        padding:
+          42px
+          25px
+          30px;
+      }
+    }
+
+    /* =========================
+       手機版
+    ========================== */
+
+    @media (max-width: 760px) {
+      .page {
+        display: block;
+
+        padding:
+          max(10px, env(safe-area-inset-top))
+          9px
+          max(14px, env(safe-area-inset-bottom));
+      }
+
+      .creator-shell {
+        width: 100%;
+        min-height: auto;
+
+        border-width: 5px;
+        border-radius: 18px 13px 20px 14px;
+      }
+
+      .top-wood {
+        min-height: 73px;
+
+        justify-content: center;
+
+        padding:
+          12px
+          10px;
+
+        border-bottom-width: 5px;
+      }
+
+      .brand {
+        display: none;
+      }
+
+      .top-title {
+        font-size:
+          clamp(24px, 8vw, 34px);
+      }
+
+      .top-spacer {
+        display: none;
+      }
+
+      .main-area {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .preview-side {
+        min-height: auto;
+
+        padding:
+          18px
+          14px
+          23px;
+
+        border-right: 0;
+        border-bottom: 5px solid #57321a;
+      }
+
+      .preview-title {
+        margin-bottom: 12px;
+
+        font-size: 14px;
+      }
+
+      .avatar-stage {
+        width: min(88vw, 330px);
+        min-height: 305px;
+
+        border-width: 4px;
+      }
+
+      .avatar-image {
+        width: min(96%, 310px);
+      }
+
+      .character-name {
+        margin-top: 15px;
+
+        font-size: 21px;
+      }
+
+      .question-side {
+        padding:
+          18px
+          11px
+          21px;
+      }
+
+      .parchment {
+        width: 100%;
+        min-height: 430px;
+
+        padding:
+          39px
+          16px
+          30px;
+      }
+
+      .question-heading {
+        font-size:
+          clamp(27px, 8vw, 36px);
+      }
+
+      .question-help {
+        margin-bottom: 20px;
+
+        font-size: 14px;
+      }
+
+      .choices,
+      .choices.compact,
+      .choices.colour-choices {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+        gap: 13px;
+      }
+
+      .choice-card,
+      .choices.compact .choice-card {
+        min-height: 137px;
+
+        padding:
+          9px
+          6px
+          11px;
+      }
+
+      .choice-image-box,
+      .choices.compact .choice-image-box {
+        width: 86px;
+        height: 86px;
+      }
+
+      .choice-image,
+      .choices.compact .choice-image {
+        width: 83px;
+        height: 83px;
+      }
+
+      .choice-label,
+      .choices.compact .choice-label {
+        font-size: 13px;
+      }
+
+      .colour-choice {
+        min-height: 91px;
+      }
+
+      .colour-circle {
+        width: 46px;
+        height: 46px;
+      }
+
+      .navigation-bar {
+        grid-template-columns:
+          1fr
+          auto
+          1fr;
+
+        min-height: 76px;
+
+        padding:
+          11px
+          9px;
+
+        border-top-width: 5px;
+      }
+
+      .nav-button {
+        min-width: 0;
+        min-height: 48px;
+
+        padding:
+          9px
+          10px;
+
+        border-width: 3px;
+
+        font-size: 13px;
+      }
+
+      .progress-area {
+        min-width: 115px;
+      }
+
+      .progress-text {
+        font-size: 14px;
+      }
+
+      .progress-dot {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    /* =========================
+       非常細手機
+    ========================== */
+
+    @media (max-width: 390px) {
+      .choices,
+      .choices.compact {
+        grid-template-columns: 1fr;
+      }
+
+      .choices.colour-choices {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .choice-card {
+        flex-direction: row;
+
+        min-height: 105px;
+
+        gap: 13px;
+      }
+
+      .choice-image-box {
+        flex-shrink: 0;
+
+        margin-bottom: 0;
+      }
+
+      .navigation-bar {
+        grid-template-columns:
+          1fr
+          100px
+          1fr;
+      }
+
+      .nav-button {
+        font-size: 12px;
+      }
+
+      .progress-dots {
+        gap: 4px;
+      }
+    }
+
+    /* =========================
+       減少動畫設定
+    ========================== */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <main>
-    <h1>Choose Your Character</h1>
-    <p>選擇你嘅探險角色</p>
+  <main class="page">
 
-    <section class="characters">
+    <section class="creator-shell">
 
-      <div class="character-card">
-        <div class="character-picture">🧒</div>
-        <strong>Explorer One</strong>
+      <!-- 頂部 -->
+      <header class="top-wood">
+
+        <div
+          class="brand"
+          aria-label="Bible Kids Adventure"
+        >
+          <span class="brand-small">
+            BIBLE KIDS
+          </span>
+
+          <span class="brand-large">
+            ADVENTURE
+          </span>
+        </div>
+
+        <h1
+          class="top-title"
+          id="topTitle"
+        >
+          Create Your Character!
+        </h1>
+
+        <div
+          class="top-spacer"
+          aria-hidden="true"
+        ></div>
+
+      </header>
+
+      <!-- 中間內容 -->
+      <div class="main-area">
+
+        <!-- 左邊角色預覽 -->
+        <section class="preview-side">
+
+          <p
+            class="preview-title"
+            id="previewTitle"
+          >
+            Your Character
+          </p>
+
+          <div class="avatar-stage">
+
+            <div class="avatar-glow"></div>
+
+            <img
+              class="avatar-image loading"
+              id="avatarImage"
+              alt="Character preview"
+              loading="eager"
+            >
+
+            <p
+              class="avatar-error"
+              id="avatarError"
+            >
+              The character could not load.
+              Please check your internet connection.
+            </p>
+
+          </div>
+
+          <p
+            class="character-name"
+            id="characterName"
+          >
+            Young Explorer
+          </p>
+
+        </section>
+
+        <!-- 右邊問題 -->
+        <section class="question-side">
+
+          <div class="parchment">
+
+            <span
+              class="nail nail-top-left"
+              aria-hidden="true"
+            ></span>
+
+            <span
+              class="nail nail-top-right"
+              aria-hidden="true"
+            ></span>
+
+            <span
+              class="nail nail-bottom-left"
+              aria-hidden="true"
+            ></span>
+
+            <span
+              class="nail nail-bottom-right"
+              aria-hidden="true"
+            ></span>
+
+            <h2
+              class="question-heading"
+              id="questionHeading"
+            >
+              Boy or Girl?
+            </h2>
+
+            <div class="heading-line"></div>
+
+            <p
+              class="question-help"
+              id="questionHelp"
+            >
+              Choose the character you would like to create.
+            </p>
+
+            <div
+              class="choices"
+              id="choices"
+            ></div>
+
+          </div>
+
+        </section>
+
       </div>
 
-      <div class="character-card">
-        <div class="character-picture">🧑</div>
-        <strong>Explorer Two</strong>
-      </div>
+      <!-- 底部導航 -->
+      <nav
+        class="navigation-bar"
+        aria-label="Character creation steps"
+      >
 
-      <div class="character-card">
-        <div class="character-picture">👧</div>
-        <strong>Explorer Three</strong>
-      </div>
+        <button
+          type="button"
+          class="nav-button previous-button"
+          id="previousButton"
+        >
+          ← Back
+        </button>
+
+        <div class="progress-area">
+
+          <span
+            class="progress-text"
+            id="progressText"
+          >
+            Step 1 / 7
+          </span>
+
+          <div
+            class="progress-dots"
+            id="progressDots"
+            aria-hidden="true"
+          ></div>
+
+        </div>
+
+        <button
+          type="button"
+          class="nav-button next-button"
+          id="nextButton"
+          disabled
+        >
+          Next →
+        </button>
+
+      </nav>
 
     </section>
+
   </main>
+
+  <script>
+    /* =========================
+       基本資料
+    ========================== */
+
+    const totalSteps = 7;
+
+    let currentStep = 0;
+
+    const state = {
+      gender: "",
+      skinColor: "ffdbb4",
+      topVariant: "shortFlat",
+      hairColor: "724133",
+      clothesVariant: "hoodie",
+      clothesColor: "5199e4",
+      name: ""
+    };
+
+    const avatarImage =
+      document.getElementById(
+        "avatarImage"
+      );
+
+    const avatarError =
+      document.getElementById(
+        "avatarError"
+      );
+
+    const characterName =
+      document.getElementById(
+        "characterName"
+      );
+
+    const questionHeading =
+      document.getElementById(
+        "questionHeading"
+      );
+
+    const questionHelp =
+      document.getElementById(
+        "questionHelp"
+      );
+
+    const choices =
+      document.getElementById(
+        "choices"
+      );
+
+    const previousButton =
+      document.getElementById(
+        "previousButton"
+      );
+
+    const nextButton =
+      document.getElementById(
+        "nextButton"
+      );
+
+    const progressText =
+      document.getElementById(
+        "progressText"
+      );
+
+    const progressDots =
+      document.getElementById(
+        "progressDots"
+      );
+
+    /* =========================
+       語言內容
+    ========================== */
+
+    const text = {
+      en: {
+        topTitle:
+          "Create Your Character!",
+
+        previewTitle:
+          "Your Character",
+
+        defaultName:
+          "Young Explorer",
+
+        previous:
+          "← Back",
+
+        next:
+          "Next →",
+
+        finish:
+          "Begin Adventure →",
+
+        step:
+          "Step",
+
+        of:
+          "/",
+
+        avatarError:
+          "The character could not load. Please check your internet connection.",
+
+        questions: [
+          {
+            title:
+              "Boy or Girl?",
+
+            help:
+              "Choose the character you would like to create."
+          },
+          {
+            title:
+              "Choose a Skin Tone",
+
+            help:
+              "Choose the skin tone for your young adventurer."
+          },
+          {
+            title:
+              "Choose a Hairstyle",
+
+            help:
+              "Pick the hairstyle that suits your character."
+          },
+          {
+            title:
+              "Choose Hair Colour",
+
+            help:
+              "Choose your character's hair colour."
+          },
+          {
+            title:
+              "Choose Some Clothes",
+
+            help:
+              "Pick an outfit for the adventure."
+          },
+          {
+            title:
+              "Choose Clothes Colour",
+
+            help:
+              "Choose a colour for the outfit."
+          },
+          {
+            title:
+              "What Is Your Name?",
+
+            help:
+              "Your name will appear during your Bible adventure."
+          }
+        ],
+
+        labels: {
+          boy: "Boy",
+          girl: "Girl",
+
+          skinLight: "Light",
+          skinWarm: "Warm",
+          skinTan: "Tan",
+          skinBrown: "Brown",
+          skinDeep: "Deep",
+
+          short: "Short",
+          shortCurly: "Short Curly",
+          wavy: "Wavy",
+          bob: "Bob",
+          long: "Long",
+          bun: "Bun",
+
+          darkBrown: "Dark Brown",
+          brown: "Brown",
+          lightBrown: "Light Brown",
+          golden: "Golden",
+          auburn: "Auburn",
+          red: "Red",
+
+          hoodie: "Hoodie",
+          overalls: "Overalls",
+          tshirt: "T-Shirt",
+          sweater: "Sweater",
+          graphic: "Picture Shirt",
+          smart: "Smart Shirt",
+
+          blue: "Blue",
+          green: "Green",
+          redClothes: "Red",
+          yellow: "Yellow",
+          pink: "Pink",
+          grey: "Grey",
+
+          nameLabel:
+            "Enter your name",
+
+          namePlaceholder:
+            "Type your name",
+
+          nameNote:
+            "Use 1–18 letters or numbers."
+        }
+      },
+
+      "zh-HK": {
+        topTitle:
+          "建立你嘅角色！",
+
+        previewTitle:
+          "你嘅角色",
+
+        defaultName:
+          "小小探險家",
+
+        previous:
+          "← 上一步",
+
+        next:
+          "下一步 →",
+
+        finish:
+          "開始冒險 →",
+
+        step:
+          "第",
+
+        of:
+          "／7 步",
+
+        avatarError:
+          "角色暫時未能載入，請檢查網絡連線。",
+
+        questions: [
+          {
+            title:
+              "你係男仔定女仔？",
+
+            help:
+              "揀選你想建立嘅角色。"
+          },
+          {
+            title:
+              "揀選膚色",
+
+            help:
+              "為你嘅小小探險家揀選膚色。"
+          },
+          {
+            title:
+              "揀選髮型",
+
+            help:
+              "揀一個最適合你角色嘅髮型。"
+          },
+          {
+            title:
+              "揀選頭髮顏色",
+
+            help:
+              "揀選你角色嘅頭髮顏色。"
+          },
+          {
+            title:
+              "揀選衣服",
+
+            help:
+              "為冒險旅程揀選一套衣服。"
+          },
+          {
+            title:
+              "揀選衣服顏色",
+
+            help:
+              "揀選你最鍾意嘅衣服顏色。"
+          },
+          {
+            title:
+              "你叫咩名？",
+
+            help:
+              "你嘅名字會喺聖經冒險旅程中出現。"
+          }
+        ],
+
+        labels: {
+          boy: "男仔",
+          girl: "女仔",
+
+          skinLight: "淺膚色",
+          skinWarm: "暖膚色",
+          skinTan: "小麥色",
+          skinBrown: "啡膚色",
+          skinDeep: "深膚色",
+
+          short: "短髮",
+          shortCurly: "短曲髮",
+          wavy: "波浪髮",
+          bob: "齊肩髮",
+          long: "長髮",
+          bun: "髮髻",
+
+          darkBrown: "深啡色",
+          brown: "啡色",
+          lightBrown: "淺啡色",
+          golden: "金色",
+          auburn: "紅啡色",
+          red: "紅色",
+
+          hoodie: "連帽衫",
+          overalls: "工人褲",
+          tshirt: "短袖上衣",
+          sweater: "冷衫",
+          graphic: "圖案上衣",
+          smart: "醒目恤衫",
+
+          blue: "藍色",
+          green: "綠色",
+          redClothes: "紅色",
+          yellow: "黃色",
+          pink: "粉紅色",
+          grey: "灰色",
+
+          nameLabel:
+            "輸入你嘅名字",
+
+          namePlaceholder:
+            "喺度輸入名字",
+
+          nameNote:
+            "請輸入 1 至 18 個中文字、英文字或數字。"
+        }
+      }
+    };
+
+    /* =========================
+       選項資料
+    ========================== */
+
+    const genderOptions = [
+      {
+        value: "boy",
+        labelKey: "boy",
+        topVariant: "shortFlat",
+        seed: "bible-boy"
+      },
+      {
+        value: "girl",
+        labelKey: "girl",
+        topVariant: "bob",
+        seed: "bible-girl"
+      }
+    ];
+
+    const skinOptions = [
+      {
+        value: "ffdbb4",
+        labelKey: "skinLight"
+      },
+      {
+        value: "edb98a",
+        labelKey: "skinWarm"
+      },
+      {
+        value: "d08b5b",
+        labelKey: "skinTan"
+      },
+      {
+        value: "ae5d29",
+        labelKey: "skinBrown"
+      },
+      {
+        value: "614335",
+        labelKey: "skinDeep"
+      }
+    ];
+
+    const hairStyleOptions = [
+      {
+        value: "shortFlat",
+        labelKey: "short"
+      },
+      {
+        value: "shortCurly",
+        labelKey: "shortCurly"
+      },
+      {
+        value: "shortWaved",
+        labelKey: "wavy"
+      },
+      {
+        value: "bob",
+        labelKey: "bob"
+      },
+      {
+        value: "longButNotTooLong",
+        labelKey: "long"
+      },
+      {
+        value: "bun",
+        labelKey: "bun"
+      }
+    ];
+
+    const hairColourOptions = [
+      {
+        value: "2c1b18",
+        labelKey: "darkBrown"
+      },
+      {
+        value: "724133",
+        labelKey: "brown"
+      },
+      {
+        value: "a55728",
+        labelKey: "lightBrown"
+      },
+      {
+        value: "d6b370",
+        labelKey: "golden"
+      },
+      {
+        value: "b58143",
+        labelKey: "auburn"
+      },
+      {
+        value: "c93305",
+        labelKey: "red"
+      }
+    ];
+
+    const clothesStyleOptions = [
+      {
+        value: "hoodie",
+        labelKey: "hoodie"
+      },
+      {
+        value: "overall",
+        labelKey: "overalls"
+      },
+      {
+        value: "shirtCrewNeck",
+        labelKey: "tshirt"
+      },
+      {
+        value: "collarAndSweater",
+        labelKey: "sweater"
+      },
+      {
+        value: "graphicShirt",
+        labelKey: "graphic"
+      },
+      {
+        value: "blazerAndShirt",
+        labelKey: "smart"
+      }
+    ];
+
+    const clothesColourOptions = [
+      {
+        value: "5199e4",
+        labelKey: "blue"
+      },
+      {
+        value: "a7ffc4",
+        labelKey: "green"
+      },
+      {
+        value: "ff5c5c",
+        labelKey: "redClothes"
+      },
+      {
+        value: "ffffb1",
+        labelKey: "yellow"
+      },
+      {
+        value: "ff488e",
+        labelKey: "pink"
+      },
+      {
+        value: "929598",
+        labelKey: "grey"
+      }
+    ];
+
+    /* =========================
+       取得語言
+    ========================== */
+
+    function getLanguage() {
+      const savedLanguage =
+        localStorage.getItem(
+          "bibleKidsLanguage"
+        );
+
+      return savedLanguage === "zh-HK"
+        ? "zh-HK"
+        : "en";
+    }
+
+    function getText() {
+      return text[getLanguage()];
+    }
+
+    /* =========================
+       建立角色圖片網址
+    ========================== */
+
+    function buildAvatarUrl(
+      overrides = {}
+    ) {
+      const avatarState = {
+        ...state,
+        ...overrides
+      };
+
+      const seed =
+        avatarState.gender === "girl"
+          ? "bible-girl"
+          : "bible-boy";
+
+      const url =
+        new URL(
+          "https://api.dicebear.com/10.x/avataaars/svg"
+        );
+
+      url.searchParams.set(
+        "seed",
+        seed
+      );
+
+      url.searchParams.set(
+        "topVariant",
+        avatarState.topVariant
+      );
+
+      url.searchParams.set(
+        "hairColor",
+        avatarState.hairColor
+      );
+
+      url.searchParams.set(
+        "skinColor",
+        avatarState.skinColor
+      );
+
+      url.searchParams.set(
+        "clothesVariant",
+        avatarState.clothesVariant
+      );
+
+      url.searchParams.set(
+        "clothesColor",
+        avatarState.clothesColor
+      );
+
+      url.searchParams.set(
+        "eyesVariant",
+        "happy"
+      );
+
+      url.searchParams.set(
+        "eyebrowsVariant",
+        "raisedExcitedNatural"
+      );
+
+      url.searchParams.set(
+        "mouthVariant",
+        "smile"
+      );
+
+      url.searchParams.set(
+        "facialHairProbability",
+        "0"
+      );
+
+      url.searchParams.set(
+        "accessoriesProbability",
+        "0"
+      );
+
+      url.searchParams.set(
+        "scale",
+        "0.91"
+      );
+
+      url.searchParams.set(
+        "translateY",
+        "5"
+      );
+
+      if (
+        avatarState.clothesVariant ===
+        "graphicShirt"
+      ) {
+        url.searchParams.set(
+          "clothesGraphicVariant",
+          "bear"
+        );
+      }
+
+      return url.toString();
+    }
+
+    /* =========================
+       更新左邊角色預覽
+    ========================== */
+
+    function updateAvatar() {
+      avatarImage.classList.add(
+        "loading"
+      );
+
+      avatarError.classList.remove(
+        "visible"
+      );
+
+      avatarImage.src =
+        buildAvatarUrl();
+
+      const language =
+        getLanguage();
+
+      characterName.textContent =
+        state.name.trim() ||
+        text[language].defaultName;
+    }
+
+    avatarImage.addEventListener(
+      "load",
+      function () {
+        avatarImage.classList.remove(
+          "loading"
+        );
+
+        avatarError.classList.remove(
+          "visible"
+        );
+      }
+    );
+
+    avatarImage.addEventListener(
+      "error",
+      function () {
+        avatarImage.classList.remove(
+          "loading"
+        );
+
+        avatarError.textContent =
+          getText().avatarError;
+
+        avatarError.classList.add(
+          "visible"
+        );
+      }
+    );
+
+    /* =========================
+       製作角色圖片選項卡
+    ========================== */
+
+    function createImageChoice(
+      value,
+      label,
+      imageUrl,
+      isSelected
+    ) {
+      const button =
+        document.createElement(
+          "button"
+        );
+
+      button.type =
+        "button";
+
+      button.className =
+        "choice-card" +
+        (
+          isSelected
+            ? " selected"
+            : ""
+        );
+
+      button.dataset.value =
+        value;
+
+      button.setAttribute(
+        "aria-pressed",
+        isSelected
+          ? "true"
+          : "false"
+      );
+
+      const imageBox =
+        document.createElement(
+          "span"
+        );
+
+      imageBox.className =
+        "choice-image-box";
+
+      const image =
+        document.createElement(
+          "img"
+        );
+
+      image.className =
+        "choice-image";
+
+      image.src =
+        imageUrl;
+
+      image.alt =
+        "";
+
+      image.loading =
+        "lazy";
+
+      const labelElement =
+        document.createElement(
+          "span"
+        );
+
+      labelElement.className =
+        "choice-label";
+
+      labelElement.textContent =
+        label;
+
+      imageBox.appendChild(
+        image
+      );
+
+      button.appendChild(
+        imageBox
+      );
+
+      button.appendChild(
+        labelElement
+      );
+
+      return button;
+    }
+
+    /* =========================
+       製作顏色選項
+    ========================== */
+
+    function createColourChoice(
+      value,
+      label,
+      isSelected
+    ) {
+      const button =
+        document.createElement(
+          "button"
+        );
+
+      button.type =
+        "button";
+
+      button.className =
+        "colour-choice" +
+        (
+          isSelected
+            ? " selected"
+            : ""
+        );
+
+      button.dataset.value =
+        value;
+
+      button.setAttribute(
+        "aria-pressed",
+        isSelected
+          ? "true"
+          : "false"
+      );
+
+      const circle =
+        document.createElement(
+          "span"
+        );
+
+      circle.className =
+        "colour-circle";
+
+      circle.style.backgroundColor =
+        "#" + value;
+
+      const labelElement =
+        document.createElement(
+          "span"
+        );
+
+      labelElement.className =
+        "colour-label";
+
+      labelElement.textContent =
+        label;
+
+      button.appendChild(
+        circle
+      );
+
+      button.appendChild(
+        labelElement
+      );
+
+      return button;
+    }
+
+    /* =========================
+       顯示第一題：男仔／女仔
+    ========================== */
+
+    function renderGenderStep() {
+      choices.className =
+        "choices";
+
+      genderOptions.forEach(
+        function (option) {
+          const previewState = {
+            gender:
+              option.value,
+
+            topVariant:
+              option.topVariant
+          };
+
+          const button =
+            createImageChoice(
+              option.value,
+              getText().labels[
+                option.labelKey
+              ],
+              buildAvatarUrl(
+                previewState
+              ),
+              state.gender ===
+                option.value
+            );
+
+          button.addEventListener(
+            "click",
+            function () {
+              state.gender =
+                option.value;
+
+              if (
+                option.value === "boy"
+              ) {
+                state.topVariant =
+                  "shortFlat";
+              } else {
+                state.topVariant =
+                  "bob";
+              }
+
+              saveCharacter();
+              updateAvatar();
+              renderStep();
+            }
+          );
+
+          choices.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+    /* =========================
+       顯示第二題：膚色
+    ========================== */
+
+    function renderSkinStep() {
+      choices.className =
+        "choices colour-choices";
+
+      skinOptions.forEach(
+        function (option) {
+          const button =
+            createColourChoice(
+              option.value,
+              getText().labels[
+                option.labelKey
+              ],
+              state.skinColor ===
+                option.value
+            );
+
+          button.addEventListener(
+            "click",
+            function () {
+              state.skinColor =
+                option.value;
+
+              saveCharacter();
+              updateAvatar();
+              renderStep();
+            }
+          );
+
+          choices.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+    /* =========================
+       顯示第三題：髮型
+    ========================== */
+
+    function renderHairStyleStep() {
+      choices.className =
+        "choices compact";
+
+      hairStyleOptions.forEach(
+        function (option) {
+          const button =
+            createImageChoice(
+              option.value,
+              getText().labels[
+                option.labelKey
+              ],
+              buildAvatarUrl({
+                topVariant:
+                  option.value
+              }),
+              state.topVariant ===
+                option.value
+            );
+
+          button.addEventListener(
+            "click",
+            function () {
+              state.topVariant =
+                option.value;
+
+              saveCharacter();
+              updateAvatar();
+              renderStep();
+            }
+          );
+
+          choices.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+    /* =========================
+       顯示第四題：髮色
+    ========================== */
+
+    function renderHairColourStep() {
+      choices.className =
+        "choices colour-choices";
+
+      hairColourOptions.forEach(
+        function (option) {
+          const button =
+            createColourChoice(
+              option.value,
+              getText().labels[
+                option.labelKey
+              ],
+              state.hairColor ===
+                option.value
+            );
+
+          button.addEventListener(
+            "click",
+            function () {
+              state.hairColor =
+                option.value;
+
+              saveCharacter();
+              updateAvatar();
+              renderStep();
+            }
+          );
+
+          choices.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+    /* =========================
+       顯示第五題：衣服款式
+    ========================== */
+
+    function renderClothesStep() {
+      choices.className =
+        "choices compact";
+
+      clothesStyleOptions.forEach(
+        function (option) {
+          const button =
+            createImageChoice(
+              option.value,
+              getText().labels[
+                option.labelKey
+              ],
+              buildAvatarUrl({
+                clothesVariant:
+                  option.value
+              }),
+              state.clothesVariant ===
+                option.value
+            );
+
+          button.addEventListener(
+            "click",
+            function () {
+              state.clothesVariant =
+                option.value;
+
+              saveCharacter();
+              updateAvatar();
+              renderStep();
+            }
+          );
+
+          choices.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+    /* =========================
+       顯示第六題：衣服顏色
+    ========================== */
+
+    function renderClothesColourStep() {
+      choices.className =
+        "choices colour-choices";
+
+      clothesColourOptions.forEach(
+        function (option) {
+          const button =
+            createColourChoice(
+              option.value,
+              getText().labels[
+                option.labelKey
+              ],
+              state.clothesColor ===
+                option.value
+            );
+
+          button.addEventListener(
+            "click",
+            function () {
+              state.clothesColor =
+                option.value;
+
+              saveCharacter();
+              updateAvatar();
+              renderStep();
+            }
+          );
+
+          choices.appendChild(
+            button
+          );
+        }
+      );
+    }
+
+    /* =========================
+       顯示第七題：名字
+    ========================== */
+
+    function renderNameStep() {
+      choices.className =
+        "";
+
+      const wrapper =
+        document.createElement(
+          "div"
+        );
+
+      wrapper.className =
+        "name-step";
+
+      const label =
+        document.createElement(
+          "label"
+        );
+
+      label.className =
+        "name-label";
+
+      label.htmlFor =
+        "playerName";
+
+      label.textContent =
+        getText().labels.nameLabel;
+
+      const input =
+        document.createElement(
+          "input"
+        );
+
+      input.type =
+        "text";
+
+      input.id =
+        "playerName";
+
+      input.className =
+        "name-input";
+
+      input.maxLength =
+        18;
+
+      input.autocomplete =
+        "off";
+
+      input.placeholder =
+        getText().labels
+          .namePlaceholder;
+
+      input.value =
+        state.name;
+
+      const note =
+        document.createElement(
+          "p"
+        );
+
+      note.className =
+        "name-note";
+
+      note.textContent =
+        getText().labels.nameNote;
+
+      input.addEventListener(
+        "input",
+        function () {
+          state.name =
+            input.value
+              .replace(
+                /[<>]/g,
+                ""
+              )
+              .slice(
+                0,
+                18
+              );
+
+          if (
+            input.value !==
+            state.name
+          ) {
+            input.value =
+              state.name;
+          }
+
+          saveCharacter();
+          updateAvatar();
+          updateNavigation();
+        }
+      );
+
+      input.addEventListener(
+        "keydown",
+        function (event) {
+          if (
+            event.key === "Enter" &&
+            isCurrentStepComplete()
+          ) {
+            finishCharacter();
+          }
+        }
+      );
+
+      wrapper.appendChild(
+        label
+      );
+
+      wrapper.appendChild(
+        input
+      );
+
+      wrapper.appendChild(
+        note
+      );
+
+      choices.appendChild(
+        wrapper
+      );
+
+      setTimeout(
+        function () {
+          input.focus();
+        },
+        60
+      );
+    }
+
+    /* =========================
+       顯示目前步驟
+    ========================== */
+
+    function renderStep() {
+      const languageText =
+        getText();
+
+      const question =
+        languageText.questions[
+          currentStep
+        ];
+
+      questionHeading.textContent =
+        question.title;
+
+      questionHelp.textContent =
+        question.help;
+
+      choices.innerHTML =
+        "";
+
+      if (currentStep === 0) {
+        renderGenderStep();
+      }
+
+      if (currentStep === 1) {
+        renderSkinStep();
+      }
+
+      if (currentStep === 2) {
+        renderHairStyleStep();
+      }
+
+      if (currentStep === 3) {
+        renderHairColourStep();
+      }
+
+      if (currentStep === 4) {
+        renderClothesStep();
+      }
+
+      if (currentStep === 5) {
+        renderClothesColourStep();
+      }
+
+      if (currentStep === 6) {
+        renderNameStep();
+      }
+
+      updateNavigation();
+      updateProgress();
+    }
+
+    /* =========================
+       檢查每步是否完成
+    ========================== */
+
+    function isCurrentStepComplete() {
+      if (currentStep === 0) {
+        return state.gender !== "";
+      }
+
+      if (currentStep === 6) {
+        return (
+          state.name.trim().length > 0
+        );
+      }
+
+      return true;
+    }
+
+    /* =========================
+       更新底部導航
+    ========================== */
+
+    function updateNavigation() {
+      const languageText =
+        getText();
+
+      previousButton.textContent =
+        currentStep === 0
+          ? languageText.previous
+          : languageText.previous;
+
+      nextButton.textContent =
+        currentStep ===
+        totalSteps - 1
+          ? languageText.finish
+          : languageText.next;
+
+      nextButton.disabled =
+        !isCurrentStepComplete();
+    }
+
+    /* =========================
+       更新進度
+    ========================== */
+
+    function updateProgress() {
+      const language =
+        getLanguage();
+
+      if (language === "zh-HK") {
+        progressText.textContent =
+          "第 " +
+          (currentStep + 1) +
+          "／" +
+          totalSteps +
+          " 步";
+      } else {
+        progressText.textContent =
+          "Step " +
+          (currentStep + 1) +
+          " / " +
+          totalSteps;
+      }
+
+      progressDots.innerHTML =
+        "";
+
+      for (
+        let index = 0;
+        index < totalSteps;
+        index += 1
+      ) {
+        const dot =
+          document.createElement(
+            "span"
+          );
+
+        dot.className =
+          "progress-dot";
+
+        if (index < currentStep) {
+          dot.classList.add(
+            "complete"
+          );
+        }
+
+        if (index === currentStep) {
+          dot.classList.add(
+            "current"
+          );
+        }
+
+        progressDots.appendChild(
+          dot
+        );
+      }
+    }
+
+    /* =========================
+       上一步
+    ========================== */
+
+    previousButton.addEventListener(
+      "click",
+      function () {
+        if (currentStep === 0) {
+          window.location.href =
+            "index.html";
+
+          return;
+        }
+
+        currentStep -= 1;
+
+        renderStep();
+      }
+    );
+
+    /* =========================
+       下一步
+    ========================== */
+
+    nextButton.addEventListener(
+      "click",
+      function () {
+        if (
+          !isCurrentStepComplete()
+        ) {
+          return;
+        }
+
+        if (
+          currentStep <
+          totalSteps - 1
+        ) {
+          currentStep += 1;
+
+          renderStep();
+
+          return;
+        }
+
+        finishCharacter();
+      }
+    );
+
+    /* =========================
+       儲存角色
+    ========================== */
+
+    function saveCharacter() {
+      localStorage.setItem(
+        "bibleKidsCharacter",
+        JSON.stringify(state)
+      );
+
+      localStorage.setItem(
+        "bibleKidsGender",
+        state.gender
+      );
+
+      localStorage.setItem(
+        "bibleKidsSkinColor",
+        state.skinColor
+      );
+
+      localStorage.setItem(
+        "bibleKidsHairStyle",
+        state.topVariant
+      );
+
+      localStorage.setItem(
+        "bibleKidsHairColour",
+        state.hairColor
+      );
+
+      localStorage.setItem(
+        "bibleKidsOutfit",
+        state.clothesVariant
+      );
+
+      localStorage.setItem(
+        "bibleKidsClothesColour",
+        state.clothesColor
+      );
+
+      localStorage.setItem(
+        "bibleKidsPlayerName",
+        state.name.trim()
+      );
+
+      localStorage.setItem(
+        "bibleKidsAvatarUrl",
+        buildAvatarUrl()
+      );
+    }
+
+    /* =========================
+       完成建立角色
+    ========================== */
+
+    function finishCharacter() {
+      if (
+        state.gender === "" ||
+        state.name.trim() === ""
+      ) {
+        return;
+      }
+
+      saveCharacter();
+
+      nextButton.disabled =
+        true;
+
+      document.body.classList.add(
+        "leaving"
+      );
+
+      setTimeout(
+        function () {
+          window.location.href =
+            "map.html";
+        },
+        850
+      );
+    }
+
+    /* =========================
+       載入已保存角色
+    ========================== */
+
+    function loadCharacter() {
+      const saved =
+        localStorage.getItem(
+          "bibleKidsCharacter"
+        );
+
+      if (!saved) {
+        return;
+      }
+
+      try {
+        const savedState =
+          JSON.parse(saved);
+
+        if (
+          savedState &&
+          typeof savedState ===
+            "object"
+        ) {
+          Object.assign(
+            state,
+            savedState
+          );
+        }
+      } catch (error) {
+        console.warn(
+          "Could not load saved character.",
+          error
+        );
+      }
+    }
+
+    /* =========================
+       套用頁面語言
+    ========================== */
+
+    function applyLanguage() {
+      const language =
+        getLanguage();
+
+      const languageText =
+        text[language];
+
+      document.documentElement.lang =
+        language;
+
+      document.getElementById(
+        "topTitle"
+      ).textContent =
+        languageText.topTitle;
+
+      document.getElementById(
+        "previewTitle"
+      ).textContent =
+        languageText.previewTitle;
+
+      avatarError.textContent =
+        languageText.avatarError;
+    }
+
+    /* =========================
+       啟動頁面
+    ========================== */
+
+    window.addEventListener(
+      "load",
+      function () {
+        loadCharacter();
+        applyLanguage();
+        updateAvatar();
+        renderStep();
+      }
+    );
+  </script>
 
 </body>
 
