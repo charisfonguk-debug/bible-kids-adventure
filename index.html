@@ -86,21 +86,21 @@
     }
 
     /* =========================
-       木牌及吊繩外框
+       Logo 吊架
     ========================== */
 
     .logo-hanger {
       position: absolute;
       top: 0;
-      right: 34px;
+      right: 65px;
       z-index: 10;
 
-      width: 260px;
-      height: 175px;
+      width: 310px;
+      height: 195px;
     }
 
     /* =========================
-       兩條由畫面頂部開始嘅繩
+       兩條吊繩
     ========================== */
 
     .logo-rope {
@@ -108,14 +108,11 @@
       top: 0;
       z-index: 1;
 
-      width: 6px;
-      height: 80px;
+      width: 7px;
+      height: 84px;
 
-      border-radius: 0 0 5px 5px;
+      border-radius: 0 0 6px 6px;
 
-      /*
-        繩索編織紋理
-      */
       background:
         repeating-linear-gradient(
           135deg,
@@ -133,52 +130,62 @@
     }
 
     .logo-rope-left {
-      left: 47px;
+      left: 57px;
     }
 
     .logo-rope-right {
-      right: 47px;
+      right: 57px;
     }
 
     /* =========================
-       最初簡單木牌 Logo
+       木牌 Logo
     ========================== */
 
     .brand {
       position: absolute;
-      top: 74px;
+      top: 78px;
       left: 0;
       z-index: 2;
 
       width: 100%;
 
-      padding: 14px 22px 16px;
+      padding:
+        18px 28px 20px;
 
       border: 4px solid #4c2d16;
 
       border-radius:
-        18px 13px 20px 14px;
+        21px 14px 24px 16px;
 
       /*
-        只係簡單木色漸變，
-        冇木紋 texture。
+        第一層係非常淡嘅木紋。
+        第二層係原本簡單木色。
       */
       background:
+        repeating-linear-gradient(
+          3deg,
+          rgba(255, 235, 190, 0.055) 0,
+          rgba(255, 235, 190, 0.055) 2px,
+          rgba(79, 38, 15, 0.045) 3px,
+          rgba(79, 38, 15, 0.045) 5px,
+          transparent 6px,
+          transparent 14px
+        ),
         linear-gradient(
           180deg,
-          #a66a35 0%,
-          #805027 55%,
-          #663a1d 100%
+          #ae7440 0%,
+          #89542a 55%,
+          #683719 100%
         );
 
       box-shadow:
-        0 7px 0 #3b2413,
-        0 14px 26px rgba(42, 25, 13, 0.34),
+        0 8px 0 #3b2413,
+        0 15px 27px rgba(42, 25, 13, 0.34),
         inset 0 3px 0 rgba(255, 231, 176, 0.28);
 
       text-align: center;
 
-      transform: rotate(-1deg);
+      transform: rotate(-1.5deg);
     }
 
     /* =========================
@@ -188,12 +195,18 @@
     .brand-small {
       display: block;
 
-      font-size: 13px;
+      font-family:
+        "Trebuchet MS",
+        "Arial Rounded MT Bold",
+        Arial,
+        sans-serif;
+
+      font-size: 15px;
       font-weight: 900;
-      letter-spacing: 3px;
+      letter-spacing: 2.2px;
       line-height: 1;
 
-      color: #fff0c1;
+      color: #fff1c9;
 
       text-shadow:
         1px 2px 0 #4b2812;
@@ -205,19 +218,22 @@
       margin-top: 7px;
 
       font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
+        "Trebuchet MS",
+        "Arial Rounded MT Bold",
+        Arial,
+        sans-serif;
 
-      font-size: 31px;
+      font-size: 38px;
       font-weight: 900;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       line-height: 0.95;
 
       color: #ffd96c;
 
       text-shadow:
         2px 3px 0 #4d2913;
+
+      transform: rotate(0.5deg);
     }
 
     /* =========================
@@ -363,7 +379,8 @@
     }
 
     .language-button:hover {
-      transform: translateY(-4px);
+      transform:
+        translateY(-4px);
 
       box-shadow:
         0 10px 0 #55371b;
@@ -372,7 +389,8 @@
     }
 
     .language-button:active {
-      transform: translateY(3px);
+      transform:
+        translateY(3px);
 
       box-shadow:
         0 2px 0 #55371b;
@@ -468,7 +486,8 @@
     }
 
     .start-button:active:not(:disabled) {
-      transform: translateY(3px);
+      transform:
+        translateY(3px);
 
       box-shadow:
         0 3px 0 #3e2b17;
@@ -524,7 +543,8 @@
     }
 
     body.leaving .page {
-      transform: scale(1.1);
+      transform:
+        scale(1.1);
 
       filter:
         brightness(1.25)
@@ -565,7 +585,7 @@
         align-items: flex-start;
 
         padding-top:
-          max(175px, env(safe-area-inset-top));
+          max(195px, env(safe-area-inset-top));
 
         background-position:
           52% center;
@@ -576,41 +596,43 @@
         right: auto;
         left: 50%;
 
-        width: 235px;
-        height: 155px;
+        width: 270px;
+        height: 175px;
 
-        transform: translateX(-50%);
+        transform:
+          translateX(-50%);
       }
 
       .logo-rope {
-        width: 5px;
-        height: 69px;
+        width: 6px;
+        height: 73px;
       }
 
       .logo-rope-left {
-        left: 41px;
+        left: 49px;
       }
 
       .logo-rope-right {
-        right: 41px;
+        right: 49px;
       }
 
       .brand {
-        top: 64px;
+        top: 68px;
 
         padding:
-          12px 17px 14px;
+          15px 20px 17px;
 
-        transform: rotate(0deg);
+        transform:
+          rotate(-1deg);
       }
 
       .brand-small {
-        font-size: 11px;
-        letter-spacing: 2.3px;
+        font-size: 12px;
+        letter-spacing: 1.9px;
       }
 
       .brand-large {
-        font-size: 25px;
+        font-size: 30px;
       }
 
       .welcome-panel {
@@ -651,6 +673,43 @@
     }
 
     /* =========================
+       較窄電腦畫面
+    ========================== */
+
+    @media
+    (min-width: 701px)
+    and
+    (max-width: 1050px) {
+
+      .logo-hanger {
+        right: 28px;
+
+        width: 270px;
+      }
+
+      .logo-rope-left {
+        left: 49px;
+      }
+
+      .logo-rope-right {
+        right: 49px;
+      }
+
+      .brand {
+        padding:
+          15px 21px 18px;
+      }
+
+      .brand-small {
+        font-size: 13px;
+      }
+
+      .brand-large {
+        font-size: 32px;
+      }
+    }
+
+    /* =========================
        較矮電腦畫面
     ========================== */
 
@@ -666,7 +725,7 @@
       }
 
       .welcome-panel {
-        margin-top: 105px;
+        margin-top: 110px;
         margin-bottom: 35px;
 
         padding:
@@ -718,19 +777,16 @@
       aria-label="Bible Kids Adventure"
     >
 
-      <!-- 左邊繩 -->
       <span
         class="logo-rope logo-rope-left"
         aria-hidden="true"
       ></span>
 
-      <!-- 右邊繩 -->
       <span
         class="logo-rope logo-rope-right"
         aria-hidden="true"
       ></span>
 
-      <!-- 簡單木牌 -->
       <div class="brand">
         <span class="brand-small">
           BIBLE KIDS
