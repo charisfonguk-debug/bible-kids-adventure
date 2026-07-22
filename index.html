@@ -39,7 +39,7 @@
         "Microsoft JhengHei",
         sans-serif;
 
-      background-color: #9fc47f;
+      background-color: #9dc47d;
     }
 
     button {
@@ -71,15 +71,11 @@
 
       background-image:
         linear-gradient(
-          rgba(25, 45, 27, 0.03),
-          rgba(25, 45, 27, 0.11)
+          rgba(24, 48, 28, 0.04),
+          rgba(24, 48, 28, 0.12)
         ),
         url("images/home-background.png");
 
-      /*
-        cover 會填滿畫面，
-        但唔會拉長或者壓扁圖片。
-      */
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -90,221 +86,99 @@
     }
 
     /* =========================
-       木牌 Logo
+       木牌及吊繩外框
     ========================== */
 
-    .brand {
+    .logo-hanger {
       position: absolute;
-      top: 46px;
+      top: 0;
       right: 34px;
       z-index: 10;
 
-      min-width: 270px;
-
-      padding: 15px 26px 17px;
-
-      border: 4px solid #4b2a13;
-      border-radius:
-        18px 13px 20px 14px;
-
-      /*
-        多層漸變製造木紋。
-      */
-      background:
-        repeating-linear-gradient(
-          4deg,
-          rgba(255, 224, 161, 0.08) 0,
-          rgba(255, 224, 161, 0.08) 3px,
-          rgba(70, 34, 13, 0.08) 4px,
-          rgba(70, 34, 13, 0.08) 7px
-        ),
-
-        repeating-linear-gradient(
-          96deg,
-          transparent 0,
-          transparent 18px,
-          rgba(73, 34, 13, 0.09) 20px,
-          transparent 24px
-        ),
-
-        linear-gradient(
-          180deg,
-          #ae7541 0%,
-          #93592d 35%,
-          #78431f 70%,
-          #603316 100%
-        );
-
-      box-shadow:
-        0 7px 0 #3b2110,
-        0 15px 28px rgba(43, 25, 12, 0.36),
-        inset 0 3px 0 rgba(255, 231, 178, 0.25),
-        inset 0 -4px 0 rgba(67, 31, 13, 0.22);
-
-      text-align: center;
-
-      transform: rotate(-1deg);
-    }
-
-    /*
-      木牌內框，
-      令木牌更似真正雕刻招牌。
-    */
-    .brand::before {
-      content: "";
-
-      position: absolute;
-      inset: 7px;
-
-      border:
-        1px solid rgba(255, 218, 147, 0.25);
-
-      border-radius:
-        11px 8px 13px 9px;
-
-      pointer-events: none;
-    }
-
-    /*
-      木牌底部淡淡木紋。
-    */
-    .brand::after {
-      content: "";
-
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 10px;
-
-      height: 2px;
-
-      border-radius: 50%;
-
-      background:
-        rgba(61, 28, 11, 0.28);
-
-      box-shadow:
-        0 -14px 0 rgba(255, 217, 144, 0.07),
-        0 -28px 0 rgba(61, 28, 11, 0.08);
-
-      pointer-events: none;
+      width: 260px;
+      height: 175px;
     }
 
     /* =========================
-       吊木牌嘅兩條繩
+       兩條由畫面頂部開始嘅繩
     ========================== */
 
-    .brand-rope {
+    .logo-rope {
       position: absolute;
-      top: -48px;
+      top: 0;
+      z-index: 1;
 
-      width: 5px;
-      height: 50px;
+      width: 6px;
+      height: 80px;
 
-      border-radius: 5px;
+      border-radius: 0 0 5px 5px;
 
+      /*
+        繩索編織紋理
+      */
       background:
         repeating-linear-gradient(
-          0deg,
-          #5b4026 0,
-          #5b4026 4px,
-          #826142 5px,
-          #826142 8px
+          135deg,
+          #3d2818 0,
+          #3d2818 3px,
+          #8a6745 3px,
+          #8a6745 6px,
+          #594029 6px,
+          #594029 9px
         );
 
       box-shadow:
         1px 0 0 rgba(255, 255, 255, 0.18),
-        -1px 0 0 rgba(48, 29, 16, 0.35);
-
-      transform-origin: bottom;
+        -1px 0 0 rgba(42, 25, 13, 0.35);
     }
 
-    .rope-left {
-      left: 49px;
-
-      transform: rotate(-6deg);
+    .logo-rope-left {
+      left: 47px;
     }
 
-    .rope-right {
-      right: 49px;
-
-      transform: rotate(6deg);
-    }
-
-    /*
-      繩同木牌連接位置嘅釘。
-    */
-    .rope-nail {
-      position: absolute;
-      top: 10px;
-
-      width: 10px;
-      height: 10px;
-
-      border: 2px solid #38200f;
-      border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #d7bb8c,
-          #765333 55%,
-          #3d2918 100%
-        );
-
-      box-shadow:
-        0 2px 2px rgba(32, 18, 8, 0.45);
-    }
-
-    .nail-left {
-      left: 44px;
-    }
-
-    .nail-right {
-      right: 44px;
+    .logo-rope-right {
+      right: 47px;
     }
 
     /* =========================
-       木結紋理
+       最初簡單木牌 Logo
     ========================== */
 
-    .wood-knot {
+    .brand {
       position: absolute;
+      top: 74px;
+      left: 0;
+      z-index: 2;
 
-      width: 24px;
-      height: 13px;
+      width: 100%;
 
-      border:
-        2px solid rgba(68, 30, 11, 0.42);
+      padding: 14px 22px 16px;
 
-      border-radius: 50%;
+      border: 4px solid #4c2d16;
 
+      border-radius:
+        18px 13px 20px 14px;
+
+      /*
+        只係簡單木色漸變，
+        冇木紋 texture。
+      */
       background:
-        radial-gradient(
-          ellipse at center,
-          rgba(82, 37, 14, 0.5) 0%,
-          rgba(132, 76, 36, 0.42) 36%,
-          rgba(66, 29, 10, 0.3) 40%,
-          transparent 70%
+        linear-gradient(
+          180deg,
+          #a66a35 0%,
+          #805027 55%,
+          #663a1d 100%
         );
 
-      opacity: 0.7;
+      box-shadow:
+        0 7px 0 #3b2413,
+        0 14px 26px rgba(42, 25, 13, 0.34),
+        inset 0 3px 0 rgba(255, 231, 176, 0.28);
 
-      pointer-events: none;
-    }
+      text-align: center;
 
-    .knot-left {
-      left: 18px;
-      bottom: 19px;
-
-      transform: rotate(-13deg);
-    }
-
-    .knot-right {
-      right: 17px;
-      top: 20px;
-
-      transform: rotate(11deg) scale(0.8);
+      transform: rotate(-1deg);
     }
 
     /* =========================
@@ -312,9 +186,6 @@
     ========================== */
 
     .brand-small {
-      position: relative;
-      z-index: 2;
-
       display: block;
 
       font-size: 13px;
@@ -322,16 +193,13 @@
       letter-spacing: 3px;
       line-height: 1;
 
-      color: #fff0c7;
+      color: #fff0c1;
 
       text-shadow:
-        1px 2px 0 #4c2811;
+        1px 2px 0 #4b2812;
     }
 
     .brand-large {
-      position: relative;
-      z-index: 2;
-
       display: block;
 
       margin-top: 7px;
@@ -346,35 +214,10 @@
       letter-spacing: 1px;
       line-height: 0.95;
 
-      color: #ffd66b;
+      color: #ffd96c;
 
       text-shadow:
-        2px 3px 0 #4d2811,
-        0 0 2px rgba(255, 235, 166, 0.35);
-    }
-
-    .brand-meaning {
-      position: relative;
-      z-index: 2;
-
-      display: block;
-
-      margin-top: 8px;
-
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-      font-size: 12px;
-      font-style: italic;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-
-      color: #fff0c9;
-
-      text-shadow:
-        1px 1px 0 rgba(68, 35, 14, 0.7);
+        2px 3px 0 #4d2913;
     }
 
     /* =========================
@@ -520,19 +363,16 @@
     }
 
     .language-button:hover {
-      transform:
-        translateY(-4px);
+      transform: translateY(-4px);
 
       box-shadow:
         0 10px 0 #55371b;
 
-      filter:
-        brightness(1.04);
+      filter: brightness(1.04);
     }
 
     .language-button:active {
-      transform:
-        translateY(3px);
+      transform: translateY(3px);
 
       box-shadow:
         0 2px 0 #55371b;
@@ -624,13 +464,11 @@
         0 13px 0 #3e2b17,
         0 18px 30px rgba(43, 54, 24, 0.35);
 
-      filter:
-        brightness(1.08);
+      filter: brightness(1.08);
     }
 
     .start-button:active:not(:disabled) {
-      transform:
-        translateY(3px);
+      transform: translateY(3px);
 
       box-shadow:
         0 3px 0 #3e2b17;
@@ -686,8 +524,7 @@
     }
 
     body.leaving .page {
-      transform:
-        scale(1.1);
+      transform: scale(1.1);
 
       filter:
         brightness(1.25)
@@ -728,60 +565,52 @@
         align-items: flex-start;
 
         padding-top:
-          max(165px, env(safe-area-inset-top));
+          max(175px, env(safe-area-inset-top));
 
         background-position:
           52% center;
       }
 
-      .brand {
-        top: 51px;
-        right: 50%;
+      .logo-hanger {
+        top: 0;
+        right: auto;
+        left: 50%;
 
-        min-width: 245px;
+        width: 235px;
+        height: 155px;
+
+        transform: translateX(-50%);
+      }
+
+      .logo-rope {
+        width: 5px;
+        height: 69px;
+      }
+
+      .logo-rope-left {
+        left: 41px;
+      }
+
+      .logo-rope-right {
+        right: 41px;
+      }
+
+      .brand {
+        top: 64px;
 
         padding:
-          13px 20px 15px;
+          12px 17px 14px;
 
-        transform:
-          translateX(50%)
-          rotate(0deg);
-      }
-
-      .brand-rope {
-        top: -40px;
-
-        height: 42px;
-      }
-
-      .rope-left {
-        left: 44px;
-      }
-
-      .rope-right {
-        right: 44px;
-      }
-
-      .nail-left {
-        left: 39px;
-      }
-
-      .nail-right {
-        right: 39px;
+        transform: rotate(0deg);
       }
 
       .brand-small {
         font-size: 11px;
-
-        letter-spacing: 2.4px;
+        letter-spacing: 2.3px;
       }
 
       .brand-large {
         font-size: 25px;
-      }
-
-      .brand-meaning {
-        font-size: 10px;
       }
 
       .welcome-panel {
@@ -822,7 +651,7 @@
     }
 
     /* =========================
-       矮螢幕電腦
+       較矮電腦畫面
     ========================== */
 
     @media
@@ -836,12 +665,8 @@
         overflow-y: auto;
       }
 
-      .brand {
-        top: 44px;
-      }
-
       .welcome-panel {
-        margin-top: 90px;
+        margin-top: 105px;
         margin-bottom: 35px;
 
         padding:
@@ -867,7 +692,7 @@
     }
 
     /* =========================
-       減少動畫設定
+       減少動畫
     ========================== */
 
     @media (prefers-reduced-motion: reduce) {
@@ -887,26 +712,37 @@
 
   <main class="page">
 
-    <!-- 木牌 Logo -->
-      <div
-      class="brand"
+    <!-- 吊掛木牌 Logo -->
+    <div
+      class="logo-hanger"
       aria-label="Bible Kids Adventure"
     >
-      <span class="brand-small">
-        BIBLE KIDS
-      </span>
-    
-      <span class="brand-large">
-        ADVENTURE
-      </span>
-    
+
+      <!-- 左邊繩 -->
       <span
-        class="brand-meaning"
-        id="brandMeaning"
-      >
-        Faith · Promise · Journey
-      </span>
+        class="logo-rope logo-rope-left"
+        aria-hidden="true"
+      ></span>
+
+      <!-- 右邊繩 -->
+      <span
+        class="logo-rope logo-rope-right"
+        aria-hidden="true"
+      ></span>
+
+      <!-- 簡單木牌 -->
+      <div class="brand">
+        <span class="brand-small">
+          BIBLE KIDS
+        </span>
+
+        <span class="brand-large">
+          ADVENTURE
+        </span>
+      </div>
+
     </div>
+
     <!-- 中央內容 -->
     <section class="welcome-panel">
 
@@ -991,14 +827,8 @@
   </main>
 
   <script>
-    /*
-      記錄玩家選擇嘅語言
-    */
     let selectedLanguage = "";
 
-    /*
-      取得網頁元素
-    */
     const englishButton =
       document.getElementById(
         "englishButton"
@@ -1044,14 +874,6 @@
         "smallNote"
       );
 
-    const brandMeaning =
-      document.getElementById(
-        "brandMeaning"
-      );
-
-    /*
-      玩家選擇語言
-    */
     function chooseLanguage(language) {
       selectedLanguage = language;
 
@@ -1065,9 +887,6 @@
 
       startButton.disabled = false;
 
-      /*
-        English
-      */
       if (language === "en") {
         document.documentElement.lang =
           "en";
@@ -1096,15 +915,7 @@
 
         smallNote.textContent =
           "Follow the path and begin your Bible adventure.";
-
-        brandMeaning.textContent =
-          "Faith · Promise · Journey";
-      }
-
-      /*
-        廣東話
-      */
-      else {
+      } else {
         document.documentElement.lang =
           "zh-HK";
 
@@ -1132,31 +943,19 @@
 
         smallNote.textContent =
           "沿住小路，展開你嘅聖經冒險。";
-
-        brandMeaning.textContent =
-          "信心 · 應許 · 旅程";
       }
 
-      /*
-        保存語言選擇
-      */
       localStorage.setItem(
         "bibleKidsLanguage",
         language
       );
     }
 
-    /*
-      開始冒險
-    */
     function startAdventure() {
       if (!selectedLanguage) {
         return;
       }
 
-      /*
-        防止重複按掣
-      */
       if (
         document.body.classList.contains(
           "leaving"
@@ -1167,16 +966,10 @@
 
       startButton.disabled = true;
 
-      /*
-        開始轉場動畫
-      */
       document.body.classList.add(
         "leaving"
       );
 
-      /*
-        1.1 秒後進入角色選擇頁
-      */
       setTimeout(
         function () {
           window.location.href =
@@ -1186,9 +979,6 @@
       );
     }
 
-    /*
-      載入之前保存嘅語言
-    */
     window.addEventListener(
       "load",
       function () {
