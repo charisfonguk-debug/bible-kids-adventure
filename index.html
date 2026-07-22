@@ -97,122 +97,81 @@
    升級版 Logo
 ========================== */
 
+  /* =========================
+   乾淨故事書 Logo
+========================== */
+
 .brand {
   position: absolute;
-  top: 26px;
+  top: 28px;
   right: 32px;
   z-index: 5;
 
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 13px 20px 15px;
 
-  padding: 12px 20px 13px 14px;
+  border: 2px solid rgba(91, 59, 32, 0.55);
+  border-radius: 14px;
 
-  border: 3px solid #59391f;
-  border-radius: 18px 13px 20px 14px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 249, 218, 0.98),
-      rgba(231, 199, 126, 0.97)
-    );
+  background: rgba(255, 248, 218, 0.88);
 
   box-shadow:
-    0 6px 0 #4a2e18,
-    0 12px 25px rgba(50, 31, 16, 0.3),
-    inset 0 2px 0 rgba(255, 255, 255, 0.85);
+    0 7px 18px rgba(45, 30, 18, 0.2);
 
-  color: #55351d;
+  text-align: center;
 
-  transform: rotate(-1.2deg);
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  backdrop-filter: blur(4px);
 }
 
-.brand:hover {
-  transform:
-    rotate(0deg)
-    translateY(-3px);
+.brand-small {
+  display: block;
 
-  box-shadow:
-    0 9px 0 #4a2e18,
-    0 16px 30px rgba(50, 31, 16, 0.34),
-    inset 0 2px 0 rgba(255, 255, 255, 0.85);
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 3px;
+
+  color: #6e5032;
 }
 
-/*
-  左邊小徽章
-*/
-    .brand::before {
-      content: "+";
-    
-      display: grid;
-      place-items: center;
-    
-      width: 48px;
-      height: 48px;
-    
-      flex-shrink: 0;
-    
-      border: 3px solid #5a391e;
-      border-radius: 50%;
-    
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #fff1a8,
-          #cf8d32
-        );
-    
-      box-shadow:
-        0 4px 0 #4a2e18,
-        inset 0 2px 0 rgba(255, 255, 255, 0.65);
-    
-      color: #fff8dc;
-      font-family: Georgia, serif;
-      font-size: 38px;
-      font-weight: 900;
-      line-height: 1;
-    
-      text-shadow:
-        1px 2px 0 #74411f;
-    }
-    
-    .brand-small {
-      display: block;
-    
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: 2.4px;
-      line-height: 1;
-    
-      color: #76502b;
-    }
-    
-    .brand-large {
-      display: block;
-    
-      margin-top: 5px;
-    
-      font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-    
-      font-size: 29px;
-      font-weight: 900;
-      letter-spacing: 0.5px;
-      line-height: 0.95;
-    
-      color: #7c411d;
-    
-      text-shadow:
-        1px 2px 0 #ffd775;
-    }
+.brand-large {
+  display: block;
+
+  margin-top: 5px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 29px;
+  font-weight: 900;
+  line-height: 1;
+
+  color: #70401f;
+
+  text-shadow:
+    1px 2px 0 rgba(244, 196, 102, 0.75);
+}
+
+@media (max-width: 700px) {
+  .brand {
+    top: 16px;
+    right: 50%;
+
+    padding: 10px 15px 12px;
+
+    transform: translateX(50%);
+  }
+
+  .brand-small {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+  }
+
+  .brand-large {
+    font-size: 22px;
+  }
+}
     /* =========================
        中央內容卡
     ========================== */
