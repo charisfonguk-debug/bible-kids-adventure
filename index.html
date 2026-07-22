@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 
 <head>
   <meta charset="UTF-8">
@@ -12,6 +12,7 @@
   <title>Bible Kids Adventure</title>
 
   <style>
+    /* 令所有元素尺寸計算更容易 */
     * {
       box-sizing: border-box;
     }
@@ -23,395 +24,144 @@
     }
 
     body {
-      font-family: Georgia, "Times New Roman", serif;
-      color: #2f3a2d;
-      background-color: #9fd3df;
-      overflow-x: hidden;
-    }
-    .logo {
-    position: absolute;
-    top: 30px;
-    right: 40px;
-    width: 230px;
-    height: auto;
-    z-index: 100;
-    }  
-   .game-screen {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
+      min-height: 100vh;
 
-    background-image:
-      linear-gradient(
-        rgba(20, 35, 30, 0.12),
-        rgba(20, 35, 30, 0.18)
-      ),
-      url("images/home-background.jpg");
-  
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  
-    transition:
-      transform 1.2s ease,
-      filter 1.2s ease;
-  }
+      display: grid;
+      place-items: center;
 
-    .sun {
-      position: absolute;
-      top: 55px;
-      left: 8%;
-      width: 100px;
-      height: 100px;
+      overflow: hidden;
 
-      border: 5px solid #d69838;
-      border-radius: 50%;
+      background-color: #17281c;
 
-      background-color: #f6cb62;
+      font-family:
+        Arial,
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
     }
 
-    .cloud {
-      position: absolute;
-      width: 160px;
-      height: 45px;
-
-      border-radius: 60px;
-
-      background-color: rgba(255, 255, 255, 0.88);
-    }
-
-    .cloud::before,
-    .cloud::after {
-      content: "";
-      position: absolute;
-
-      border-radius: 50%;
-
-      background-color: inherit;
-    }
-
-    .cloud::before {
-      width: 65px;
-      height: 65px;
-      left: 22px;
-      top: -28px;
-    }
-
-    .cloud::after {
-      width: 80px;
-      height: 80px;
-      right: 18px;
-      top: -40px;
-    }
-
-    .cloud-one {
-      top: 100px;
-      right: 17%;
-      transform: rotate(2deg);
-    }
-
-    .cloud-two {
-      top: 220px;
-      left: 15%;
-      transform: scale(0.7) rotate(-2deg);
-    }
-
-    .mountain {
-      position: absolute;
-      bottom: 31%;
-
-      width: 0;
-      height: 0;
-
-      border-left: 300px solid transparent;
-      border-right: 300px solid transparent;
-      border-bottom: 330px solid #6d8765;
-    }
-
-    .mountain-left {
-      left: -180px;
-    }
-
-    .mountain-right {
-      right: -190px;
-      border-bottom-color: #607a5c;
-    }
-
-    .hill {
-      position: absolute;
-      bottom: -150px;
-
-      width: 850px;
-      height: 430px;
-
-      border-radius: 50%;
-
-      background-color: #6ea14e;
-    }
-
-    .hill-left {
-      left: -330px;
-      transform: rotate(5deg);
-    }
-
-    .hill-right {
-      right: -330px;
-      transform: rotate(-5deg);
-
-      background-color: #5f9348;
-    }
-
-    .path {
-      position: absolute;
-      left: 50%;
-      bottom: -120px;
-
-      width: 250px;
-      height: 520px;
-
-      background-color: #d8bc83;
-
-      transform: translateX(-50%);
-
-      clip-path: polygon(
-        42% 0,
-        58% 0,
-        100% 100%,
-        0 100%
-      );
-    }
-
-    .logo {
-      position: absolute;
-      top: 28px;
-      right: 34px;
-      z-index: 20;
-
-      width: 230px;
-      padding: 12px 16px;
-
-      border: 4px solid #60452c;
-      border-radius: 14px 9px 15px 10px;
-
-      background-color: #f4df9e;
-
-      box-shadow: 6px 7px 0 rgba(62, 45, 29, 0.28);
-
-      transform: rotate(1deg);
-    }
-
-    .logo-small {
-      display: block;
-
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: bold;
-      letter-spacing: 2px;
-
-      color: #6e4b2d;
-    }
-
-    .logo-big {
-      display: block;
-
-      margin-top: 3px;
-
-      font-size: 31px;
-      font-weight: bold;
-      line-height: 0.95;
-
-      color: #7d4723;
-
-      text-shadow: 2px 2px 0 #f6c65d;
-    }
-
-    .content {
+    /*
+      首頁畫面比例是 1536 × 1024，即 3:2。
+      這個設定會保留完整圖片，不會切走兩邊。
+    */
+    .game-screen {
       position: relative;
+
+      width: min(100vw, 150vh);
+      aspect-ratio: 3 / 2;
+
+      overflow: hidden;
+
+      background-image:
+        url("images/home-background.png");
+
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      transition:
+        transform 1s ease,
+        filter 1s ease,
+        opacity 1s ease;
+    }
+
+    /*
+      圖片本身已有按鈕，
+      所以這些按鈕是透明的，
+      但仍然可以真正點擊。
+    */
+    .image-button {
+      position: absolute;
       z-index: 10;
 
-      width: min(92%, 760px);
+      display: block;
 
-      margin: 0 auto;
-      padding-top: 180px;
-
-      text-align: center;
-    }
-
-    .main-title {
       margin: 0;
+      padding: 0;
 
-      font-size: clamp(46px, 8vw, 78px);
-      line-height: 0.95;
+      border: 0;
+      border-radius: 18px;
 
-      color: #5d3d25;
+      background-color: transparent;
 
-      text-shadow:
-        3px 3px 0 #f1d47d,
-        6px 6px 0 rgba(64, 45, 30, 0.16);
-    }
-
-    .tagline {
-      max-width: 580px;
-
-      margin: 24px auto 18px;
-
-      font-family: Arial, sans-serif;
-      font-size: clamp(19px, 3vw, 27px);
-      font-weight: bold;
-      line-height: 1.4;
-
-      color: #294536;
-    }
-
-    .language-label {
-      margin-top: 32px;
-      margin-bottom: 15px;
-
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .language-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-
-      gap: 18px;
-    }
-
-    .language-button,
-    .start-button {
-      border: 4px solid #563e28;
-
-      font-family: Arial, sans-serif;
-      font-weight: bold;
+      color: transparent;
+      font-size: 0;
 
       cursor: pointer;
 
       transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        background-color 0.16s ease;
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        outline 0.18s ease;
     }
 
-    .language-button {
-      min-width: 165px;
+    .image-button:hover {
+      transform: translateY(-2px) scale(1.025);
 
-      padding: 15px 25px;
-
-      border-radius: 8px 14px 9px 12px;
-
-      background-color: #dfad5d;
-
-      box-shadow: 5px 6px 0 #563e28;
-
-      color: #382a1e;
-      font-size: 19px;
+      box-shadow:
+        inset 0 0 0 5px rgba(255, 255, 255, 0.3),
+        0 0 22px rgba(255, 235, 155, 0.65);
     }
 
-    .language-button:hover {
-      transform: translateY(-4px) rotate(-1deg);
-
-      box-shadow: 7px 9px 0 #563e28;
+    .image-button:focus-visible {
+      outline: 5px solid white;
+      outline-offset: 3px;
     }
 
-    .language-button.selected {
-      background-color: #fff0b4;
+    .image-button.selected {
+      outline: 5px solid rgba(255, 255, 255, 0.92);
+      outline-offset: 3px;
 
-      outline: 5px solid rgba(255, 255, 255, 0.65);
+      box-shadow:
+        0 0 25px rgba(255, 240, 170, 0.9);
     }
 
-    .welcome-message {
-      min-height: 32px;
+    /*
+      English 按鈕位置
+    */
+    #englishButton {
+      left: 32.7%;
+      top: 51.5%;
 
-      margin: 26px 0 15px;
-
-      font-family: Arial, sans-serif;
-      font-size: 20px;
-      font-weight: bold;
-
-      color: #2b4335;
+      width: 17%;
+      height: 9.5%;
     }
 
-    .start-button {
-      display: none;
+    /*
+      廣東話按鈕位置
+    */
+    #cantoneseButton {
+      left: 50.5%;
+      top: 51.5%;
 
-      margin: 10px auto 0;
-
-      padding: 17px 36px;
-
-      border-radius: 13px 8px 14px 9px;
-
-      background-color: #cc6845;
-
-      box-shadow: 6px 7px 0 #563e28;
-
-      color: white;
-      font-size: 21px;
+      width: 17%;
+      height: 9.5%;
     }
 
-    .start-button:hover {
-      transform: translateY(-4px) scale(1.02);
+    /*
+      開始冒險按鈕位置
+    */
+    #startButton {
+      left: 38.2%;
+      top: 64.1%;
 
-      box-shadow: 8px 10px 0 #563e28;
+      width: 23.7%;
+      height: 10.7%;
+
+      border-radius: 24px;
     }
 
-    .small-character {
-      position: absolute;
-      left: 50%;
-      bottom: 70px;
-      z-index: 9;
+    #startButton:hover {
+      transform: translateY(-3px) scale(1.035);
 
-      width: 80px;
-      height: 150px;
-
-      transform: translateX(-50%);
+      box-shadow:
+        inset 0 0 0 6px rgba(255, 255, 255, 0.28),
+        0 0 30px rgba(219, 255, 127, 0.65);
     }
 
-    .character-head {
-      width: 52px;
-      height: 52px;
-
-      margin: 0 auto;
-
-      border: 4px solid #4b3425;
-      border-radius: 50%;
-
-      background-color: #d59b68;
-    }
-
-    .character-body {
-      width: 68px;
-      height: 76px;
-
-      margin: -2px auto 0;
-
-      border: 4px solid #4b3425;
-      border-radius: 18px 18px 8px 8px;
-
-      background-color: #4e7f94;
-    }
-
-    .character-legs {
-      display: flex;
-      justify-content: center;
-
-      gap: 8px;
-
-      margin-top: -2px;
-    }
-
-    .leg {
-      width: 16px;
-      height: 38px;
-
-      border: 4px solid #4b3425;
-      border-top: none;
-
-      background-color: #654b39;
-    }
-
+    /*
+      按開始冒險後的白色轉場
+    */
     body::after {
       content: "";
 
@@ -421,11 +171,11 @@
 
       pointer-events: none;
 
-      background-color: #fff4c9;
+      background-color: #fff6d8;
 
       opacity: 0;
 
-      transition: opacity 1.2s ease;
+      transition: opacity 1s ease;
     }
 
     body.leaving::after {
@@ -433,71 +183,107 @@
     }
 
     body.leaving .game-screen {
-      transform: scale(1.12);
+      transform: scale(1.08);
 
       filter:
-        brightness(1.3)
+        brightness(1.25)
         blur(2px);
     }
 
-    body.leaving .small-character {
-      animation: walkForward 1.2s ease forwards;
+    /*
+      未選語言時，兩個語言按鈕會搖動
+    */
+    .shake {
+      animation: shakeButtons 0.45s ease;
     }
 
-    @keyframes walkForward {
+    @keyframes shakeButtons {
       0% {
-        transform:
-          translateX(-50%)
-          translateY(0)
-          scale(1);
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-8px);
+      }
+
+      50% {
+        transform: translateX(8px);
+      }
+
+      75% {
+        transform: translateX(-5px);
       }
 
       100% {
-        transform:
-          translateX(-50%)
-          translateY(-120px)
-          scale(0.6);
+        transform: translateX(0);
       }
     }
 
-    @media (max-width: 760px) {
-      .logo {
-        top: 18px;
-        right: 16px;
+    /*
+      給讀屏軟件使用，畫面上不會看見
+    */
+    .screen-reader-only {
+      position: absolute;
 
-        width: 170px;
+      width: 1px;
+      height: 1px;
+
+      padding: 0;
+      margin: -1px;
+
+      overflow: hidden;
+
+      clip: rect(0, 0, 0, 0);
+
+      white-space: nowrap;
+
+      border: 0;
+    }
+
+    /*
+      手機直向時提醒用戶轉橫向
+    */
+    .rotate-message {
+      display: none;
+
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 50;
+
+      width: max-content;
+      max-width: 90%;
+
+      padding: 10px 16px;
+
+      border-radius: 10px;
+
+      background-color: rgba(24, 37, 25, 0.82);
+
+      color: white;
+      font-size: 14px;
+
+      transform: translateX(-50%);
+    }
+
+    @media (orientation: portrait) and (max-width: 700px) {
+      .rotate-message {
+        display: block;
+      }
+    }
+
+    /*
+      尊重不喜歡動畫的用戶設定
+    */
+    @media (prefers-reduced-motion: reduce) {
+      .game-screen,
+      body::after,
+      .image-button {
+        transition: none;
       }
 
-      .logo-big {
-        font-size: 23px;
-      }
-
-      .content {
-        padding-top: 155px;
-      }
-
-      .main-title {
-        font-size: 48px;
-      }
-
-      .sun {
-        width: 75px;
-        height: 75px;
-
-        top: 35px;
-        left: 5%;
-      }
-
-      .cloud-one {
-        right: -45px;
-      }
-
-      .small-character {
-        bottom: 35px;
-
-        transform:
-          translateX(-50%)
-          scale(0.8);
+      .shake {
+        animation: none;
       }
     }
   </style>
@@ -505,86 +291,69 @@
 
 <body>
 
-  <main class="game-screen">
+  <main
+    class="game-screen"
+    aria-label="Bible Kids Adventure home page"
+  >
 
-  <img src="images/logo.png" class="logo">
-  
-
-    <section class="content">
-
-      <h1 class="main-title">
-        Begin Your Journey
-      </h1>
-
-      <p
-        class="tagline"
-        id="tagline"
-      >
-        Explore the Bible and discover a world of faith,
-        courage and adventure.
-      </p>
-
-      <p
-        class="language-label"
-        id="languageLabel"
-      >
-        Choose your language · 請選擇語言
-      </p>
-
-      <div class="language-buttons">
-
-        <button
-          class="language-button"
-          id="englishButton"
-          onclick="chooseLanguage('en')"
-        >
-          English
-        </button>
-
-        <button
-          class="language-button"
-          id="cantoneseButton"
-          onclick="chooseLanguage('zh-HK')"
-        >
-          廣東話
-        </button>
-
-      </div>
-
-      <p
-        class="welcome-message"
-        id="welcomeMessage"
-      ></p>
-
-      <button
-        class="start-button"
-        id="startButton"
-        onclick="startAdventure()"
-      >
-        Start Adventure
-      </button>
-
-    </section>
-
-    <div
-      class="small-character"
-      aria-hidden="true"
+    <!--
+      圖片本身已有 English 圖案，
+      這個透明按鈕放在圖片按鈕上面。
+    -->
+    <button
+      type="button"
+      class="image-button"
+      id="englishButton"
+      aria-label="Choose English"
+      onclick="chooseLanguage('en')"
     >
-      <div class="character-head"></div>
+      English
+    </button>
 
-      <div class="character-body"></div>
+    <!-- 廣東話透明按鈕 -->
+    <button
+      type="button"
+      class="image-button"
+      id="cantoneseButton"
+      aria-label="選擇廣東話"
+      onclick="chooseLanguage('zh-HK')"
+    >
+      廣東話
+    </button>
 
-      <div class="character-legs">
-        <div class="leg"></div>
-        <div class="leg"></div>
-      </div>
-    </div>
+    <!-- 開始冒險透明按鈕 -->
+    <button
+      type="button"
+      class="image-button"
+      id="startButton"
+      aria-label="開始冒險"
+      onclick="startAdventure()"
+    >
+      開始冒險
+    </button>
+
+    <p
+      class="screen-reader-only"
+      id="statusMessage"
+      aria-live="polite"
+    ></p>
 
   </main>
 
+  <div class="rotate-message">
+    將手機打橫，畫面會更加完整
+  </div>
+
   <script>
+    /*
+      selectedLanguage 用來記錄玩家選擇的語言。
+      一開始暫時沒有選擇。
+    */
     let selectedLanguage = "";
 
+    /*
+      選擇語言
+    */
     function chooseLanguage(language) {
       selectedLanguage = language;
 
@@ -594,75 +363,106 @@
       const cantoneseButton =
         document.getElementById("cantoneseButton");
 
-      const tagline =
-        document.getElementById("tagline");
-
-      const languageLabel =
-        document.getElementById("languageLabel");
-
-      const welcomeMessage =
-        document.getElementById("welcomeMessage");
-
       const startButton =
         document.getElementById("startButton");
 
+      const statusMessage =
+        document.getElementById("statusMessage");
+
+      /*
+        先清除兩個按鈕的選擇效果
+      */
       englishButton.classList.remove("selected");
       cantoneseButton.classList.remove("selected");
 
+      /*
+        按照玩家選擇加入效果
+      */
       if (language === "en") {
         document.documentElement.lang = "en";
 
         englishButton.classList.add("selected");
 
-        tagline.textContent =
-          "Explore the Bible and discover a world of faith, courage and adventure.";
+        startButton.setAttribute(
+          "aria-label",
+          "Start Adventure"
+        );
 
-        languageLabel.textContent =
-          "Choose your language";
-
-        welcomeMessage.textContent =
-          "Welcome, young explorer.";
-
-        startButton.textContent =
-          "Start Adventure";
+        statusMessage.textContent =
+          "English selected. Press Start Adventure.";
       } else {
         document.documentElement.lang = "zh-HK";
 
         cantoneseButton.classList.add("selected");
 
-        tagline.textContent =
-          "探索聖經，發現一個充滿信心、勇氣同冒險嘅世界。";
+        startButton.setAttribute(
+          "aria-label",
+          "開始冒險"
+        );
 
-        languageLabel.textContent =
-          "請選擇語言";
-
-        welcomeMessage.textContent =
-          "歡迎你，小小探險家。";
-
-        startButton.textContent =
-          "開始冒險";
+        statusMessage.textContent =
+          "已選擇廣東話，請按開始冒險。";
       }
 
-      startButton.style.display = "block";
-
+      /*
+        記住玩家語言。
+        即使重新開啟網站，也會保留選擇。
+      */
       localStorage.setItem(
         "bibleKidsLanguage",
         language
       );
     }
 
+    /*
+      按開始冒險
+    */
     function startAdventure() {
+      const englishButton =
+        document.getElementById("englishButton");
+
+      const cantoneseButton =
+        document.getElementById("cantoneseButton");
+
+      /*
+        如果玩家未選擇語言，
+        兩個語言按鈕會搖動。
+      */
       if (!selectedLanguage) {
+        englishButton.classList.add("shake");
+        cantoneseButton.classList.add("shake");
+
+        setTimeout(function () {
+          englishButton.classList.remove("shake");
+          cantoneseButton.classList.remove("shake");
+        }, 500);
+
         return;
       }
 
+      /*
+        防止玩家重複按開始按鈕
+      */
+      if (document.body.classList.contains("leaving")) {
+        return;
+      }
+
+      /*
+        開始畫面放大和變光動畫
+      */
       document.body.classList.add("leaving");
 
+      /*
+        1 秒後進入角色選擇頁面
+      */
       setTimeout(function () {
         window.location.href = "character.html";
-      }, 1200);
+      }, 1000);
     }
 
+    /*
+      網頁載入時，檢查之前保存的語言。
+    */
     window.addEventListener(
       "load",
       function () {
