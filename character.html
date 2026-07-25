@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Create Your Character | Bible Kids Adventure</title>
 
   <style>
-    /* ========================================
-       基本設定
-    ======================================== */
+    * { box-sizing: border-box; }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
+    html, body {
       width: 100%;
       min-height: 100%;
       margin: 0;
@@ -29,442 +16,205 @@
 
     body {
       min-height: 100vh;
-      min-height: 100svh;
-
       overflow-x: hidden;
-
-      font-family:
-        "Trebuchet MS",
-        Arial,
-        "Noto Sans TC",
-        "Microsoft JhengHei",
-        sans-serif;
-
-      background-color: #7b9968;
+      font-family: "Trebuchet MS", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: #789766;
     }
 
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    /* ========================================
-       頁面背景
-    ======================================== */
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
     .page {
-      position: relative;
-
-      width: 100%;
       min-height: 100vh;
-      min-height: 100svh;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
-      padding:
-        max(18px, env(safe-area-inset-top))
-        max(18px, env(safe-area-inset-right))
-        max(18px, env(safe-area-inset-bottom))
-        max(18px, env(safe-area-inset-left));
-
-      background-image:
-        linear-gradient(
-          rgba(32, 57, 34, 0.27),
-          rgba(52, 67, 37, 0.28)
-        ),
-        url("images/home-background.png");
-
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      padding: max(14px, env(safe-area-inset-top))
+               max(14px, env(safe-area-inset-right))
+               max(14px, env(safe-area-inset-bottom))
+               max(14px, env(safe-area-inset-left));
+      background:
+        linear-gradient(rgba(32,57,34,.28), rgba(52,67,37,.30)),
+        url("images/home-background.png") center / cover no-repeat,
+        #789766;
     }
-
-    /* ========================================
-       整個角色建立器
-    ======================================== */
 
     .creator-shell {
-      position: relative;
-      z-index: 2;
-
       width: min(97vw, 1400px);
       min-height: min(94vh, 900px);
-
       display: grid;
-      grid-template-rows:
-        auto
-        minmax(0, 1fr)
-        auto;
-
-      border: 8px solid #4c2b15;
-
-      border-radius:
-        25px 17px 28px 19px;
-
-      background:
-        linear-gradient(
-          180deg,
-          #9b6030,
-          #653919
-        );
-
-      box-shadow:
-        0 12px 0 #321c0e,
-        0 28px 55px rgba(25, 17, 10, 0.43),
-        inset 0 3px 0 rgba(255, 228, 174, 0.24);
-
+      grid-template-rows: auto 1fr auto;
       overflow: hidden;
+      border: 8px solid #4c2b15;
+      border-radius: 25px 17px 28px 19px;
+      background: linear-gradient(#9b6030, #653919);
+      box-shadow: 0 12px 0 #321c0e, 0 28px 55px rgba(25,17,10,.43);
     }
-
-    /* ========================================
-       頂部木框
-    ======================================== */
 
     .top-wood {
       display: grid;
-      grid-template-columns:
-        150px
-        minmax(0, 1fr)
-        150px;
-
+      grid-template-columns: 150px 1fr 150px;
       align-items: center;
-
       min-height: 86px;
-
-      padding:
-        14px
-        clamp(18px, 3vw, 34px);
-
-      border-bottom:
-        7px solid #482712;
-
+      padding: 14px clamp(18px,3vw,34px);
+      border-bottom: 7px solid #482712;
       background:
-        repeating-linear-gradient(
-          3deg,
-          rgba(255, 232, 182, 0.045) 0,
-          rgba(255, 232, 182, 0.045) 2px,
-          transparent 3px,
-          transparent 16px
-        ),
-        linear-gradient(
-          180deg,
-          #b4743b,
-          #7e4b23
-        );
-
-      box-shadow:
-        inset 0 3px 0 rgba(255, 225, 170, 0.25),
-        inset 0 -4px 0 rgba(68, 34, 14, 0.3);
+        repeating-linear-gradient(3deg, rgba(255,232,182,.05) 0 2px, transparent 3px 16px),
+        linear-gradient(#b4743b, #7e4b23);
     }
 
     .brand {
       justify-self: start;
-
-      padding:
-        9px
-        14px
-        10px;
-
+      padding: 9px 14px 10px;
       border: 3px solid #472713;
-
-      border-radius:
-        14px 10px 16px 11px;
-
-      background:
-        linear-gradient(
-          180deg,
-          #9c602e,
-          #693919
-        );
-
-      box-shadow:
-        0 4px 0 #3a200f;
-
+      border-radius: 14px 10px 16px 11px;
+      background: linear-gradient(#9c602e, #693919);
+      box-shadow: 0 4px 0 #3a200f;
       text-align: center;
-
       transform: rotate(-1deg);
     }
 
     .brand-small {
       display: block;
-
       color: #fff0c7;
-
       font-size: 10px;
       font-weight: 900;
       letter-spacing: 2px;
-      line-height: 1;
     }
 
     .brand-large {
       display: block;
-
       margin-top: 4px;
-
       color: #ffd66b;
-
       font-size: 20px;
       font-weight: 900;
-      line-height: 1;
-
-      text-shadow:
-        1px 2px 0 #47240f;
+      text-shadow: 1px 2px 0 #47240f;
     }
 
     .top-title {
       margin: 0;
-
       color: #fff0c9;
-
-      font-size:
-        clamp(27px, 4vw, 44px);
-
+      font-size: clamp(27px,4vw,44px);
       font-weight: 900;
-      line-height: 1;
-
       text-align: center;
-
-      text-shadow:
-        2px 3px 0 #472612;
+      text-shadow: 2px 3px 0 #472612;
     }
-
-    /* ========================================
-       中間區域
-    ======================================== */
 
     .main-area {
       display: grid;
-      grid-template-columns:
-        minmax(330px, 0.86fr)
-        minmax(500px, 1.34fr);
-
+      grid-template-columns: minmax(330px,.86fr) minmax(500px,1.34fr);
       min-height: 0;
     }
 
-    /* ========================================
-       左邊角色預覽
-    ======================================== */
-
     .preview-side {
       position: relative;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
       min-width: 0;
-
-      padding:
-        clamp(22px, 3vw, 40px);
-
-      border-right:
-        7px solid #503019;
-
+      padding: clamp(22px,3vw,40px);
       overflow: hidden;
-
-      background-image:
-        linear-gradient(
-          rgba(235, 244, 218, 0.1),
-          rgba(55, 84, 46, 0.25)
-        ),
-        url("images/home-background.png");
-
-      background-size: cover;
-      background-position: center;
+      border-right: 7px solid #503019;
+      background:
+        linear-gradient(rgba(235,244,218,.12), rgba(55,84,46,.28)),
+        url("images/home-background.png") center / cover no-repeat,
+        #7c9a68;
     }
 
     .preview-side::before {
       content: "";
-
       position: absolute;
       inset: 0;
-
-      background:
-        radial-gradient(
-          circle at 50% 42%,
-          rgba(255, 252, 220, 0.54),
-          rgba(123, 154, 96, 0.17) 52%,
-          rgba(43, 70, 40, 0.31)
-        );
-
+      background: radial-gradient(circle at 50% 42%, rgba(255,252,220,.55), rgba(123,154,96,.17) 52%, rgba(43,70,40,.31));
       pointer-events: none;
     }
 
-    .preview-title {
+    .preview-title,
+    .character-name {
       position: relative;
-      z-index: 4;
-
-      margin:
-        0
-        0
-        16px;
-
-      padding:
-        8px
-        19px;
-
+      z-index: 3;
+      padding: 8px 19px;
       border: 3px solid #523319;
       border-radius: 999px;
-
-      background:
-        rgba(255, 243, 203, 0.95);
-
-      box-shadow:
-        0 5px 0 #462914;
-
+      background: rgba(255,243,203,.96);
+      box-shadow: 0 5px 0 #462914;
       color: #53351e;
-
-      font-size:
-        clamp(15px, 2vw, 19px);
-
       font-weight: 900;
+      text-align: center;
+    }
+
+    .preview-title {
+      margin: 0 0 16px;
+      font-size: clamp(15px,2vw,19px);
+    }
+
+    .character-name {
+      min-height: 39px;
+      margin: 19px 0 0;
+      font-size: clamp(21px,3vw,29px);
+      line-height: 1;
     }
 
     .avatar-stage {
       position: relative;
-      z-index: 3;
-
+      z-index: 2;
+      width: min(100%, 430px);
+      min-height: 475px;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-
-      width: min(100%, 430px);
-      min-height: 475px;
-
-      border: 5px solid rgba(76, 46, 22, 0.84);
-
-      border-radius:
-        32px 22px 35px 24px;
-
-      background:
-        radial-gradient(
-          circle at 50% 33%,
-          rgba(255, 255, 237, 0.96),
-          rgba(196, 223, 161, 0.84) 55%,
-          rgba(89, 139, 74, 0.88)
-        );
-
-      box-shadow:
-        0 9px 0 rgba(66, 38, 17, 0.88),
-        0 18px 34px rgba(36, 25, 14, 0.28),
-        inset 0 3px 0 rgba(255, 255, 255, 0.65);
-
       overflow: hidden;
-
-      transition:
-        min-height 0.3s ease;
+      border: 5px solid rgba(76,46,22,.84);
+      border-radius: 32px 22px 35px 24px;
+      background: radial-gradient(circle at 50% 33%, rgba(255,255,237,.98), rgba(196,223,161,.86) 55%, rgba(89,139,74,.9));
+      box-shadow: 0 9px 0 rgba(66,38,17,.88), 0 18px 34px rgba(36,25,14,.28);
     }
 
     .avatar-stage::before {
       content: "";
-
       position: absolute;
       left: -10%;
       right: -10%;
       bottom: -65px;
-
       height: 150px;
-
       border-radius: 50%;
-
-      background:
-        linear-gradient(
-          rgba(76, 121, 62, 0.73),
-          rgba(55, 95, 47, 0.91)
-        );
-
-      box-shadow:
-        inset 0 5px 0 rgba(171, 205, 132, 0.32);
+      background: linear-gradient(rgba(76,121,62,.73), rgba(55,95,47,.91));
     }
 
     .avatar-glow {
       position: absolute;
-      top: 32px;
+      top: 28px;
       left: 50%;
-
-      width: 300px;
-      height: 300px;
-
+      width: 310px;
+      height: 310px;
+      transform: translateX(-50%);
       border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(255, 249, 194, 0.56),
-          transparent 68%
-        );
-
-      transform:
-        translateX(-50%);
+      background: radial-gradient(circle, rgba(255,249,194,.60), transparent 68%);
     }
 
-    .avatar-image {
+    #avatarSvg {
       position: relative;
       z-index: 3;
-
       display: block;
-
-      width: min(98%, 420px);
+      width: min(94%, 395px);
       height: auto;
-
-      margin-bottom: -5px;
-
-      object-fit: contain;
-
-      filter:
-        drop-shadow(
-          0 12px 8px
-          rgba(51, 38, 23, 0.23)
-        );
-
-      transition:
-        opacity 0.2s ease,
-        width 0.3s ease,
-        transform 0.3s ease,
-        margin 0.3s ease;
+      margin-bottom: -2px;
+      filter: drop-shadow(0 12px 8px rgba(51,38,23,.23));
+      transition: transform .25s ease, width .25s ease, margin .25s ease;
     }
-
-    .avatar-image.loading {
-      opacity: 0.36;
-    }
-
-    /* ========================================
-       頭部放大模式
-
-       第 2、3、4 步：
-       膚色、髮型、髮色
-    ======================================== */
 
     .avatar-stage.focus-head {
       align-items: flex-start;
     }
 
-    .avatar-stage.focus-head .avatar-image {
-      width: 150%;
+    .avatar-stage.focus-head #avatarSvg {
+      width: 145%;
       max-width: none;
-
-      margin-top: -25px;
-      margin-bottom: -190px;
-
-      transform:
-        scale(1.08);
-
-      transform-origin:
-        center top;
-    }
-
-    .avatar-stage.focus-head .avatar-glow {
-      top: 4px;
-
-      width: 350px;
-      height: 350px;
+      margin-top: -55px;
+      margin-bottom: -205px;
+      transform: scale(1.05);
+      transform-origin: center top;
     }
 
     .focus-label {
@@ -472,3013 +222,1139 @@
       top: 14px;
       right: 14px;
       z-index: 6;
-
       display: none;
-
-      padding:
-        6px
-        11px;
-
+      padding: 6px 11px;
       border: 2px solid #57351a;
       border-radius: 999px;
-
-      background:
-        rgba(255, 245, 207, 0.94);
-
+      background: rgba(255,245,207,.95);
       color: #58381f;
-
       font-size: 12px;
       font-weight: 900;
-
-      box-shadow:
-        0 3px 0 #4b2d16;
+      box-shadow: 0 3px 0 #4b2d16;
     }
 
-    .avatar-stage.focus-head .focus-label {
-      display: block;
-    }
-
-    .avatar-error {
-      position: absolute;
-      z-index: 7;
-
-      display: none;
-
-      width: 76%;
-
-      padding: 16px;
-
-      border-radius: 14px;
-
-      background:
-        rgba(255, 246, 214, 0.95);
-
-      color: #57371f;
-
-      font-weight: 900;
-      line-height: 1.45;
-
-      text-align: center;
-    }
-
-    .avatar-error.visible {
-      display: block;
-    }
-
-    .character-name {
-      position: relative;
-      z-index: 4;
-
-      min-height: 39px;
-
-      margin:
-        19px
-        0
-        0;
-
-      padding:
-        7px
-        20px;
-
-      border: 3px solid #4e2f17;
-      border-radius: 999px;
-
-      background:
-        rgba(255, 242, 201, 0.96);
-
-      box-shadow:
-        0 5px 0 #442814;
-
-      color: #54331c;
-
-      font-size:
-        clamp(21px, 3vw, 29px);
-
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    /* ========================================
-       右邊問題區
-    ======================================== */
+    .avatar-stage.focus-head .focus-label { display: block; }
 
     .question-side {
       display: flex;
       align-items: center;
       justify-content: center;
-
       min-width: 0;
-
-      padding:
-        clamp(24px, 4vw, 45px);
-
-      background:
-        linear-gradient(
-          140deg,
-          rgba(124, 76, 36, 0.83),
-          rgba(90, 49, 23, 0.93)
-        );
+      padding: clamp(24px,4vw,45px);
+      background: linear-gradient(140deg, rgba(124,76,36,.83), rgba(90,49,23,.93));
     }
 
     .parchment {
       position: relative;
-
-      width: min(100%, 760px);
+      width: min(100%,760px);
       min-height: 510px;
-
       display: flex;
       flex-direction: column;
-
-      padding:
-        clamp(35px, 5vw, 54px)
-        clamp(24px, 5vw, 54px)
-        34px;
-
-      border:
-        3px solid rgba(90, 55, 25, 0.7);
-
-      border-radius:
-        12px 7px 15px 9px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #fff4cf,
-          #f5dfaa 50%,
-          #ecd095
-        );
-
-      box-shadow:
-        0 9px 0 rgba(59, 35, 16, 0.68),
-        0 20px 38px rgba(33, 22, 13, 0.33),
-        inset 0 2px 0 rgba(255, 255, 255, 0.76);
-
+      padding: clamp(35px,5vw,54px) clamp(24px,5vw,54px) 34px;
       overflow: hidden;
+      border: 3px solid rgba(90,55,25,.7);
+      border-radius: 12px 7px 15px 9px;
+      background: linear-gradient(145deg,#fff4cf,#f5dfaa 50%,#ecd095);
+      box-shadow: 0 9px 0 rgba(59,35,16,.68), 0 20px 38px rgba(33,22,13,.33);
     }
 
     .parchment::before {
       content: "";
-
       position: absolute;
       inset: 0;
-
-      opacity: 0.21;
-
-      background:
-        repeating-linear-gradient(
-          3deg,
-          rgba(116, 72, 33, 0.09) 0,
-          rgba(116, 72, 33, 0.09) 1px,
-          transparent 2px,
-          transparent 11px
-        );
-
+      opacity: .21;
+      background: repeating-linear-gradient(3deg,rgba(116,72,33,.09) 0 1px,transparent 2px 11px);
       pointer-events: none;
     }
 
     .nail {
       position: absolute;
       z-index: 5;
-
       width: 21px;
       height: 21px;
-
       border: 3px solid #474137;
       border-radius: 50%;
-
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #e5e6e0,
-          #8e968f 55%,
-          #4c504b
-        );
-
-      box-shadow:
-        0 3px 4px rgba(42, 30, 18, 0.45);
+      background: radial-gradient(circle at 35% 30%,#e5e6e0,#8e968f 55%,#4c504b);
+      box-shadow: 0 3px 4px rgba(42,30,18,.45);
     }
 
-    .nail-top-left {
-      top: 17px;
-      left: 18px;
-    }
-
-    .nail-top-right {
-      top: 17px;
-      right: 18px;
-    }
-
-    .nail-bottom-left {
-      bottom: 17px;
-      left: 18px;
-    }
-
-    .nail-bottom-right {
-      right: 18px;
-      bottom: 17px;
-    }
+    .nail.tl { top: 17px; left: 18px; }
+    .nail.tr { top: 17px; right: 18px; }
+    .nail.bl { bottom: 17px; left: 18px; }
+    .nail.br { bottom: 17px; right: 18px; }
 
     .question-heading {
       position: relative;
       z-index: 3;
-
       margin: 0;
-
       color: #a34116;
-
-      font-size:
-        clamp(29px, 4.5vw, 47px);
-
+      font-size: clamp(29px,4.5vw,47px);
       font-weight: 900;
       line-height: 1.1;
-
       text-align: center;
-
-      text-shadow:
-        1px 2px 0
-        rgba(255, 238, 181, 0.86);
+      text-shadow: 1px 2px 0 rgba(255,238,181,.86);
     }
 
     .heading-line {
       position: relative;
       z-index: 3;
-
-      width: min(90%, 510px);
+      width: min(90%,510px);
       height: 4px;
-
-      margin:
-        17px
-        auto
-        20px;
-
+      margin: 17px auto 20px;
       border-radius: 999px;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          #936331 20%,
-          #936331 80%,
-          transparent
-        );
+      background: linear-gradient(90deg,transparent,#936331 20%,#936331 80%,transparent);
     }
 
     .question-help {
       position: relative;
       z-index: 3;
-
       max-width: 590px;
-
-      margin:
-        0
-        auto
-        23px;
-
+      margin: 0 auto 23px;
       color: #685036;
-
-      font-size:
-        clamp(14px, 2vw, 17px);
-
+      font-size: clamp(14px,2vw,17px);
       font-weight: 800;
       line-height: 1.45;
-
       text-align: center;
     }
 
     .choices {
       position: relative;
       z-index: 3;
-
       display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
+      grid-template-columns: repeat(2,minmax(0,1fr));
       gap: 17px;
-
       width: 100%;
       max-width: 650px;
-
       margin: auto;
     }
 
-    /* ========================================
-       圖像選項
-    ======================================== */
+    .choices.compact {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 14px;
+    }
 
     .choice-card {
       position: relative;
-
       min-width: 0;
       min-height: 156px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
-      padding:
-        13px
-        11px
-        14px;
-
+      padding: 13px 11px 14px;
       border: 4px solid #68401f;
-
-      border-radius:
-        17px 12px 19px 13px;
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255, 252, 231, 0.99),
-          rgba(230, 197, 126, 0.97)
-        );
-
-      box-shadow:
-        0 6px 0 #513018,
-        0 12px 20px rgba(52, 36, 20, 0.2);
-
+      border-radius: 17px 12px 19px 13px;
+      background: linear-gradient(145deg,rgba(255,252,231,.99),rgba(230,197,126,.97));
+      box-shadow: 0 6px 0 #513018, 0 12px 20px rgba(52,36,20,.2);
       color: #49311d;
-
       font-weight: 900;
-
-      transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        filter 0.18s ease;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
 
-    .choice-card:hover {
-      transform:
-        translateY(-5px);
-
-      box-shadow:
-        0 11px 0 #513018,
-        0 17px 25px rgba(52, 36, 20, 0.24);
-
-      filter: brightness(1.04);
-    }
-
-    .choice-card:active {
-      transform:
-        translateY(2px);
-
-      box-shadow:
-        0 3px 0 #513018;
-    }
-
+    .choice-card:hover { transform: translateY(-5px); box-shadow: 0 11px 0 #513018; }
     .choice-card.selected {
       border-color: #406124;
-
-      outline:
-        5px solid rgba(119, 165, 70, 0.63);
-
+      outline: 5px solid rgba(119,165,70,.63);
       outline-offset: 3px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #fffdeb,
-          #ddea9a
-        );
-
-      box-shadow:
-        0 7px 0 #3e5b28,
-        0 0 20px rgba(105, 147, 62, 0.41);
+      background: linear-gradient(145deg,#fffdeb,#ddea9a);
+      box-shadow: 0 7px 0 #3e5b28;
     }
 
-    .choice-card.selected::after {
+    .choice-card.selected::after,
+    .colour-choice.selected::after {
       content: "✓";
-
       position: absolute;
-      top: -13px;
-      right: -11px;
-
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 50%;
+      background: #538033;
+      color: white;
+      font-weight: 900;
+    }
 
+    .choice-card.selected::after {
+      top: -13px;
+      right: -11px;
       width: 37px;
       height: 37px;
-
       border: 3px solid #fff8d8;
-      border-radius: 50%;
-
-      background: #538033;
-
-      color: white;
-
       font-size: 22px;
-      font-weight: 900;
-
-      box-shadow:
-        0 3px 0 #334e20;
     }
 
-    .choice-image-box {
+    .choice-preview {
       width: 118px;
       height: 118px;
-
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
-
       margin-bottom: 8px;
-
-      border:
-        3px solid rgba(92, 57, 28, 0.45);
-
-      border-radius: 16px;
-
-      background:
-        radial-gradient(
-          circle at center,
-          #ffffea,
-          #b9dc97
-        );
-
       overflow: hidden;
+      border: 3px solid rgba(92,57,28,.45);
+      border-radius: 16px;
+      background: radial-gradient(circle,#ffffea,#b9dc97);
     }
 
-    .choice-image {
-      display: block;
-
-      width: 112px;
-      height: 112px;
-
-      object-fit: contain;
+    .choice-preview svg {
+      width: 135px;
+      height: 135px;
+      flex: 0 0 auto;
     }
 
     .choice-label {
-      display: block;
-
-      font-size:
-        clamp(15px, 2vw, 18px);
-
+      font-size: clamp(15px,2vw,18px);
       font-weight: 900;
-      line-height: 1.2;
-
       text-align: center;
     }
 
-    /* ========================================
-       髮型選項放大
-
-       令長髮同短髮更易分辨
-    ======================================== */
-
-    .hair-choice .choice-image-box {
-      align-items: flex-start;
-    }
-
-    .hair-choice .choice-image {
-      width: 155px;
-      height: 155px;
-      max-width: none;
-
-      transform:
-        translateY(-7px)
-        scale(1.08);
-
-      transform-origin:
-        center top;
-    }
-
-    /* ========================================
-       緊密三欄選項
-    ======================================== */
-
-    .choices.compact {
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-      gap: 14px;
-    }
-
-    .choices.compact .choice-card {
-      min-height: 147px;
-
-      padding:
-        10px
-        7px
-        12px;
-    }
-
-    .choices.compact .choice-image-box {
-      width: 95px;
-      height: 95px;
-    }
-
-    .choices.compact .choice-image {
-      width: 92px;
-      height: 92px;
-    }
-
-    .choices.compact .hair-choice .choice-image {
-      width: 138px;
-      height: 138px;
-
-      transform:
-        translateY(-6px)
-        scale(1.06);
-    }
-
-    .choices.compact .choice-label {
-      font-size: 14px;
-    }
-
-    /* ========================================
-       顏色選項
-    ======================================== */
-
-    .choices.colour-choices {
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
+    .colour-choices {
+      grid-template-columns: repeat(3,minmax(0,1fr));
       max-width: 520px;
     }
 
     .colour-choice {
       position: relative;
-
       min-height: 101px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
       gap: 10px;
-
-      padding:
-        12px
-        8px;
-
+      padding: 12px 8px;
       border: 4px solid #67411f;
-
-      border-radius:
-        16px 11px 18px 12px;
-
-      background:
-        rgba(255, 248, 220, 0.94);
-
-      box-shadow:
-        0 6px 0 #513018;
-
+      border-radius: 16px 11px 18px 12px;
+      background: rgba(255,248,220,.94);
+      box-shadow: 0 6px 0 #513018;
       color: #4b321e;
-
       font-weight: 900;
-
-      transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-    }
-
-    .colour-choice:hover {
-      transform:
-        translateY(-4px);
-
-      box-shadow:
-        0 10px 0 #513018;
     }
 
     .colour-choice.selected {
       border-color: #406124;
-
-      outline:
-        5px solid rgba(119, 165, 70, 0.63);
-
+      outline: 5px solid rgba(119,165,70,.63);
       outline-offset: 3px;
-
       background: #ffffe6;
     }
 
     .colour-choice.selected::after {
-      content: "✓";
-
-      position: absolute;
       top: 7px;
       right: 8px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
       width: 27px;
       height: 27px;
-
-      border-radius: 50%;
-
-      background: #517a33;
-
-      color: white;
-
       font-size: 18px;
-      font-weight: 900;
     }
 
     .colour-circle {
       width: 55px;
       height: 55px;
-
       border: 5px solid #fff9e1;
       border-radius: 50%;
-
-      box-shadow:
-        0 0 0 3px #5c3a20,
-        0 5px 0 rgba(72, 43, 20, 0.5);
+      box-shadow: 0 0 0 3px #5c3a20, 0 5px 0 rgba(72,43,20,.5);
     }
 
-    .colour-label {
-      font-size: 14px;
-      line-height: 1.15;
-    }
-
-    /* ========================================
-       名字輸入
-    ======================================== */
+    .colour-label { font-size: 14px; }
 
     .name-step {
       position: relative;
       z-index: 3;
-
-      width: min(100%, 520px);
-
+      width: min(100%,520px);
       margin: auto;
     }
 
     .name-label {
       display: block;
-
       margin-bottom: 13px;
-
       color: #593b24;
-
       font-size: 18px;
       font-weight: 900;
-
       text-align: center;
     }
 
     .name-input {
       width: 100%;
       min-height: 67px;
-
-      padding:
-        14px
-        19px;
-
+      padding: 14px 19px;
       border: 4px solid #66411f;
-
-      border-radius:
-        17px 12px 19px 13px;
-
+      border-radius: 17px 12px 19px 13px;
       outline: none;
-
-      background:
-        rgba(255, 254, 235, 0.99);
-
-      box-shadow:
-        inset 0 4px 6px rgba(93, 57, 26, 0.13),
-        0 6px 0 #513018;
-
+      background: rgba(255,254,235,.99);
+      box-shadow: inset 0 4px 6px rgba(93,57,26,.13), 0 6px 0 #513018;
       color: #442d1c;
-
       font-size: 23px;
       font-weight: 900;
-
       text-align: center;
-
-      transition:
-        border-color 0.18s ease,
-        box-shadow 0.18s ease;
     }
 
     .name-input:focus {
       border-color: #4e7130;
-
-      box-shadow:
-        inset 0 4px 6px rgba(93, 57, 26, 0.13),
-        0 6px 0 #3a5625,
-        0 0 0 5px rgba(113, 155, 67, 0.3);
+      box-shadow: inset 0 4px 6px rgba(93,57,26,.13), 0 6px 0 #3a5625, 0 0 0 5px rgba(113,155,67,.3);
     }
 
     .name-note {
-      margin:
-        17px
-        0
-        0;
-
+      margin: 17px 0 0;
       color: #6c5337;
-
       font-size: 14px;
       font-weight: 800;
       line-height: 1.45;
-
       text-align: center;
     }
 
-    /* ========================================
-       底部導航
-    ======================================== */
-
     .navigation-bar {
       display: grid;
-      grid-template-columns:
-        minmax(130px, 1fr)
-        auto
-        minmax(130px, 1fr);
-
+      grid-template-columns: minmax(130px,1fr) auto minmax(130px,1fr);
       align-items: center;
-
       min-height: 86px;
-
-      padding:
-        14px
-        clamp(16px, 3vw, 35px);
-
-      border-top:
-        7px solid #482611;
-
+      padding: 14px clamp(16px,3vw,35px);
+      border-top: 7px solid #482611;
       background:
-        repeating-linear-gradient(
-          2deg,
-          rgba(255, 230, 176, 0.045) 0,
-          rgba(255, 230, 176, 0.045) 2px,
-          transparent 3px,
-          transparent 15px
-        ),
-        linear-gradient(
-          180deg,
-          #9c5e2e,
-          #703f1d
-        );
-
-      box-shadow:
-        inset 0 3px 0 rgba(255, 223, 166, 0.22);
+        repeating-linear-gradient(2deg,rgba(255,230,176,.05) 0 2px,transparent 3px 15px),
+        linear-gradient(#9c5e2e,#703f1d);
     }
 
     .nav-button {
       min-width: 145px;
       min-height: 52px;
-
-      padding:
-        11px
-        19px;
-
+      padding: 11px 19px;
       border: 4px solid #472914;
-
-      border-radius:
-        15px 10px 17px 11px;
-
-      background:
-        linear-gradient(
-          to bottom,
-          #f2c76c,
-          #ae6c2d
-        );
-
-      box-shadow:
-        0 6px 0 #3b2110;
-
+      border-radius: 15px 10px 17px 11px;
+      background: linear-gradient(#f2c76c,#ae6c2d);
+      box-shadow: 0 6px 0 #3b2110;
       color: #fff4d5;
-
-      font-size:
-        clamp(15px, 2vw, 19px);
-
+      font-size: clamp(15px,2vw,19px);
       font-weight: 900;
-
-      text-shadow:
-        1px 2px 0 rgba(66, 34, 14, 0.75);
-
-      transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        filter 0.18s ease;
+      text-shadow: 1px 2px 0 rgba(66,34,14,.75);
     }
 
-    .previous-button {
-      justify-self: start;
-    }
-
-    .next-button {
-      justify-self: end;
-    }
-
-    .nav-button:hover:not(:disabled) {
-      transform:
-        translateY(-4px);
-
-      box-shadow:
-        0 10px 0 #3b2110;
-
-      filter: brightness(1.06);
-    }
-
-    .nav-button:active:not(:disabled) {
-      transform:
-        translateY(2px);
-
-      box-shadow:
-        0 3px 0 #3b2110;
-    }
-
-    .nav-button:disabled {
-      opacity: 0.44;
-
-      cursor: not-allowed;
-
-      filter:
-        grayscale(0.35);
-    }
+    .previous-button { justify-self: start; }
+    .next-button { justify-self: end; }
+    .nav-button:disabled { opacity: .44; cursor: not-allowed; }
 
     .progress-area {
       min-width: 180px;
-
       text-align: center;
     }
 
     .progress-text {
       display: block;
-
       color: #fff1cd;
-
-      font-size:
-        clamp(16px, 2.2vw, 21px);
-
+      font-size: clamp(16px,2.2vw,21px);
       font-weight: 900;
-
-      text-shadow:
-        1px 2px 0 #472611;
+      text-shadow: 1px 2px 0 #472611;
     }
 
     .progress-dots {
       display: flex;
       justify-content: center;
-
       gap: 6px;
-
       margin-top: 8px;
     }
 
     .progress-dot {
       width: 10px;
       height: 10px;
-
-      border:
-        2px solid rgba(255, 244, 207, 0.88);
-
+      border: 2px solid rgba(255,244,207,.88);
       border-radius: 50%;
-
-      background:
-        rgba(75, 39, 18, 0.62);
+      background: rgba(75,39,18,.62);
     }
 
-    .progress-dot.complete {
-      background: #d5ee86;
-    }
-
+    .progress-dot.complete { background: #d5ee86; }
     .progress-dot.current {
-      transform:
-        scale(1.35);
-
+      transform: scale(1.35);
       background: #fff6b3;
-
-      box-shadow:
-        0 0 8px rgba(255, 246, 179, 0.82);
+      box-shadow: 0 0 8px rgba(255,246,179,.82);
     }
-
-    /* ========================================
-       頁面轉場
-    ======================================== */
 
     body::after {
       content: "";
-
       position: fixed;
       inset: 0;
       z-index: 100;
-
       pointer-events: none;
-
-      background:
-        radial-gradient(
-          circle at center,
-          rgba(255, 255, 234, 0.99),
-          rgba(247, 224, 158, 1)
-        );
-
       opacity: 0;
-
-      transition:
-        opacity 0.85s ease;
+      background: radial-gradient(circle,rgba(255,255,234,.99),rgba(247,224,158,1));
+      transition: opacity .85s ease;
     }
 
-    body.leaving::after {
-      opacity: 1;
-    }
-
-    body.leaving .creator-shell {
-      animation:
-        leavePage
-        0.85s ease
-        forwards;
-    }
-
-    @keyframes leavePage {
-      to {
-        transform:
-          scale(1.06);
-
-        filter:
-          brightness(1.18)
-          blur(2px);
-      }
-    }
-
-    /* ========================================
-       平板
-    ======================================== */
-
-    @media (max-width: 1050px) {
-      .main-area {
-        grid-template-columns:
-          minmax(280px, 0.8fr)
-          minmax(430px, 1.2fr);
-      }
-
-      .preview-side {
-        padding:
-          24px
-          20px;
-      }
-
-      .avatar-stage {
-        min-height: 410px;
-      }
-
-      .avatar-stage.focus-head .avatar-image {
-        width: 155%;
-
-        margin-bottom: -170px;
-      }
-
-      .question-side {
-        padding:
-          27px
-          23px;
-      }
-
-      .parchment {
-        min-height: 475px;
-
-        padding:
-          42px
-          25px
-          30px;
-      }
-    }
-
-    /* ========================================
-       手機
-    ======================================== */
+    body.leaving::after { opacity: 1; }
 
     @media (max-width: 760px) {
-      .page {
-        display: block;
-
-        padding:
-          max(9px, env(safe-area-inset-top))
-          8px
-          max(13px, env(safe-area-inset-bottom));
-      }
-
-      .creator-shell {
-        width: 100%;
-        min-height: auto;
-
-        border-width: 5px;
-
-        border-radius:
-          18px 13px 20px 14px;
-      }
-
-      .top-wood {
-        grid-template-columns: 1fr;
-
-        min-height: 73px;
-
-        justify-items: center;
-
-        padding:
-          12px
-          10px;
-
-        border-bottom-width: 5px;
-      }
-
-      .brand {
-        display: none;
-      }
-
-      .top-title {
-        font-size:
-          clamp(24px, 8vw, 34px);
-      }
-
-      .main-area {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .preview-side {
-        min-height: auto;
-
-        padding:
-          17px
-          13px
-          22px;
-
-        border-right: 0;
-
-        border-bottom:
-          5px solid #503019;
-      }
-
-      .preview-title {
-        margin-bottom: 11px;
-
-        font-size: 14px;
-      }
-
-      .avatar-stage {
-        width: min(88vw, 335px);
-        min-height: 315px;
-
-        border-width: 4px;
-      }
-
-      .avatar-image {
-        width: min(96%, 315px);
-      }
-
-      .avatar-stage.focus-head .avatar-image {
-        width: 152%;
-
-        margin-top: -17px;
-        margin-bottom: -145px;
-
-        transform:
-          scale(1.06);
-      }
-
-      .avatar-stage.focus-head .focus-label {
-        top: 10px;
-        right: 10px;
-
-        font-size: 10px;
-      }
-
-      .character-name {
-        margin-top: 14px;
-
-        font-size: 21px;
-      }
-
-      .question-side {
-        padding:
-          18px
-          10px
-          21px;
-      }
-
-      .parchment {
-        width: 100%;
-        min-height: 435px;
-
-        padding:
-          39px
-          15px
-          29px;
-      }
-
-      .question-heading {
-        font-size:
-          clamp(27px, 8vw, 36px);
-      }
-
-      .question-help {
-        margin-bottom: 19px;
-
-        font-size: 14px;
-      }
-
-      .choices,
-      .choices.compact,
-      .choices.colour-choices {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
-
-        gap: 13px;
-      }
-
-      .choice-card,
-      .choices.compact .choice-card {
-        min-height: 138px;
-
-        padding:
-          9px
-          6px
-          11px;
-      }
-
-      .choice-image-box,
-      .choices.compact .choice-image-box {
-        width: 87px;
-        height: 87px;
-      }
-
-      .choice-image,
-      .choices.compact .choice-image {
-        width: 84px;
-        height: 84px;
-      }
-
-      .hair-choice .choice-image,
-      .choices.compact .hair-choice .choice-image {
-        width: 130px;
-        height: 130px;
-
-        transform:
-          translateY(-5px)
-          scale(1.05);
-      }
-
-      .choice-label,
-      .choices.compact .choice-label {
-        font-size: 13px;
-      }
-
-      .colour-choice {
-        min-height: 91px;
-      }
-
-      .colour-circle {
-        width: 46px;
-        height: 46px;
-      }
-
-      .navigation-bar {
-        grid-template-columns:
-          1fr
-          auto
-          1fr;
-
-        min-height: 76px;
-
-        padding:
-          11px
-          8px;
-
-        border-top-width: 5px;
-      }
-
-      .nav-button {
-        min-width: 0;
-        min-height: 48px;
-
-        padding:
-          9px
-          9px;
-
-        border-width: 3px;
-
-        font-size: 13px;
-      }
-
-      .progress-area {
-        min-width: 112px;
-      }
-
-      .progress-text {
-        font-size: 14px;
-      }
-
-      .progress-dot {
-        width: 8px;
-        height: 8px;
-      }
+      .page { display: block; padding: 9px 8px 13px; }
+      .creator-shell { width: 100%; min-height: auto; border-width: 5px; }
+      .top-wood { grid-template-columns: 1fr; min-height: 73px; justify-items: center; border-bottom-width: 5px; }
+      .brand { display: none; }
+      .main-area { display: flex; flex-direction: column; }
+      .preview-side { padding: 17px 13px 22px; border-right: 0; border-bottom: 5px solid #503019; }
+      .avatar-stage { width: min(88vw,335px); min-height: 330px; }
+      #avatarSvg { width: min(92%,310px); }
+      .avatar-stage.focus-head #avatarSvg { width: 150%; margin-top: -50px; margin-bottom: -160px; }
+      .question-side { padding: 18px 10px 21px; }
+      .parchment { width: 100%; min-height: 435px; padding: 39px 15px 29px; }
+      .choices, .choices.compact, .colour-choices { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; }
+      .choice-card { min-height: 138px; padding: 9px 6px 11px; }
+      .choice-preview { width: 88px; height: 88px; }
+      .choice-preview svg { width: 112px; height: 112px; }
+      .navigation-bar { min-height: 76px; padding: 11px 8px; border-top-width: 5px; }
+      .nav-button { min-width: 0; min-height: 48px; padding: 9px; border-width: 3px; font-size: 13px; }
+      .progress-area { min-width: 112px; }
+      .progress-text { font-size: 14px; }
     }
-
-    /* ========================================
-       非常細手機
-    ======================================== */
 
     @media (max-width: 390px) {
-      .choices,
-      .choices.compact {
-        grid-template-columns: 1fr;
-      }
-
-      .choices.colour-choices {
-        grid-template-columns:
-          repeat(2, minmax(0, 1fr));
-      }
-
-      .choice-card {
-        flex-direction: row;
-
-        min-height: 106px;
-
-        gap: 13px;
-      }
-
-      .choice-image-box {
-        flex-shrink: 0;
-
-        margin-bottom: 0;
-      }
-
-      .navigation-bar {
-        grid-template-columns:
-          1fr
-          98px
-          1fr;
-      }
-
-      .nav-button {
-        font-size: 12px;
-      }
-
-      .progress-dots {
-        gap: 4px;
-      }
+      .choices, .choices.compact { grid-template-columns: 1fr; }
+      .colour-choices { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .choice-card { flex-direction: row; min-height: 106px; gap: 13px; }
+      .choice-preview { flex-shrink: 0; margin-bottom: 0; }
+      .navigation-bar { grid-template-columns: 1fr 98px 1fr; }
     }
 
-    /* ========================================
-       減少動畫
-    ======================================== */
-
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-        animation: none !important;
-      }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
   </style>
 </head>
 
 <body>
-
   <main class="page">
-
     <section class="creator-shell">
-
-      <!-- 頂部 -->
       <header class="top-wood">
-
-        <div
-          class="brand"
-          aria-label="Bible Kids Adventure"
-        >
-          <span class="brand-small">
-            BIBLE KIDS
-          </span>
-
-          <span class="brand-large">
-            ADVENTURE
-          </span>
+        <div class="brand" aria-label="Bible Kids Adventure">
+          <span class="brand-small">BIBLE KIDS</span>
+          <span class="brand-large">ADVENTURE</span>
         </div>
 
-        <h1
-          class="top-title"
-          id="topTitle"
-        >
-          Create Your Character!
-        </h1>
-
+        <h1 class="top-title" id="topTitle">Create Your Character!</h1>
         <div aria-hidden="true"></div>
-
       </header>
 
-      <!-- 中間 -->
       <div class="main-area">
-
-        <!-- 角色預覽 -->
         <section class="preview-side">
+          <p class="preview-title" id="previewTitle">Your Character</p>
 
-          <p
-            class="preview-title"
-            id="previewTitle"
-          >
-            Your Character
-          </p>
-
-          <div
-            class="avatar-stage"
-            id="avatarStage"
-          >
-
+          <div class="avatar-stage" id="avatarStage">
             <div class="avatar-glow"></div>
-
-            <span
-              class="focus-label"
-              id="focusLabel"
-            >
-              Close-up view
-            </span>
-
-            <img
-              class="avatar-image loading"
-              id="avatarImage"
-              alt="Character preview"
-              loading="eager"
-            >
-
-            <p
-              class="avatar-error"
-              id="avatarError"
-            >
-              The character could not load.
-            </p>
-
+            <span class="focus-label" id="focusLabel">Close-up view</span>
+            <svg id="avatarSvg" viewBox="0 0 360 500" role="img" aria-label="Character preview"></svg>
           </div>
 
-          <p
-            class="character-name"
-            id="characterName"
-          >
-            Young Explorer
-          </p>
-
+          <p class="character-name" id="characterName">Young Explorer</p>
         </section>
 
-        <!-- 問題區 -->
         <section class="question-side">
-
           <div class="parchment">
+            <span class="nail tl" aria-hidden="true"></span>
+            <span class="nail tr" aria-hidden="true"></span>
+            <span class="nail bl" aria-hidden="true"></span>
+            <span class="nail br" aria-hidden="true"></span>
 
-            <span
-              class="nail nail-top-left"
-              aria-hidden="true"
-            ></span>
-
-            <span
-              class="nail nail-top-right"
-              aria-hidden="true"
-            ></span>
-
-            <span
-              class="nail nail-bottom-left"
-              aria-hidden="true"
-            ></span>
-
-            <span
-              class="nail nail-bottom-right"
-              aria-hidden="true"
-            ></span>
-
-            <h2
-              class="question-heading"
-              id="questionHeading"
-            >
-              Boy or Girl?
-            </h2>
-
+            <h2 class="question-heading" id="questionHeading">Boy or Girl?</h2>
             <div class="heading-line"></div>
-
-            <p
-              class="question-help"
-              id="questionHelp"
-            >
-              Choose the character you would like to create.
-            </p>
-
-            <div
-              class="choices"
-              id="choices"
-            ></div>
-
+            <p class="question-help" id="questionHelp">Choose the character you would like to create.</p>
+            <div class="choices" id="choices"></div>
           </div>
-
         </section>
-
       </div>
 
-      <!-- 底部導航 -->
-      <nav
-        class="navigation-bar"
-        aria-label="Character creation steps"
-      >
-
-        <button
-          type="button"
-          class="nav-button previous-button"
-          id="previousButton"
-        >
-          ← Back
-        </button>
+      <nav class="navigation-bar" aria-label="Character creation steps">
+        <button type="button" class="nav-button previous-button" id="previousButton">← Back</button>
 
         <div class="progress-area">
-
-          <span
-            class="progress-text"
-            id="progressText"
-          >
-            Step 1 / 7
-          </span>
-
-          <div
-            class="progress-dots"
-            id="progressDots"
-            aria-hidden="true"
-          ></div>
-
+          <span class="progress-text" id="progressText">Step 1 / 7</span>
+          <div class="progress-dots" id="progressDots" aria-hidden="true"></div>
         </div>
 
-        <button
-          type="button"
-          class="nav-button next-button"
-          id="nextButton"
-          disabled
-        >
-          Next →
-        </button>
-
+        <button type="button" class="nav-button next-button" id="nextButton" disabled>Next →</button>
       </nav>
-
     </section>
-
   </main>
 
   <script>
-    /* ========================================
-       基本設定
-    ======================================== */
-
     const totalSteps = 7;
-
     let currentStep = 0;
 
     const state = {
       gender: "",
       skinColor: "ffdbb4",
-      topVariant: "shortFlat",
+      hairStyle: "short",
       hairColor: "724133",
-      clothesVariant: "hoodie",
+      clothesStyle: "hoodie",
       clothesColor: "5199e4",
       name: ""
     };
 
-    const avatarStage =
-      document.getElementById(
-        "avatarStage"
-      );
+    const $ = (id) => document.getElementById(id);
 
-    const avatarImage =
-      document.getElementById(
-        "avatarImage"
-      );
-
-    const avatarError =
-      document.getElementById(
-        "avatarError"
-      );
-
-    const characterName =
-      document.getElementById(
-        "characterName"
-      );
-
-    const questionHeading =
-      document.getElementById(
-        "questionHeading"
-      );
-
-    const questionHelp =
-      document.getElementById(
-        "questionHelp"
-      );
-
-    const choices =
-      document.getElementById(
-        "choices"
-      );
-
-    const previousButton =
-      document.getElementById(
-        "previousButton"
-      );
-
-    const nextButton =
-      document.getElementById(
-        "nextButton"
-      );
-
-    const progressText =
-      document.getElementById(
-        "progressText"
-      );
-
-    const progressDots =
-      document.getElementById(
-        "progressDots"
-      );
-
-    /* ========================================
-       英文／廣東話
-    ======================================== */
+    const avatarStage = $("avatarStage");
+    const avatarSvg = $("avatarSvg");
+    const characterName = $("characterName");
+    const questionHeading = $("questionHeading");
+    const questionHelp = $("questionHelp");
+    const choices = $("choices");
+    const previousButton = $("previousButton");
+    const nextButton = $("nextButton");
+    const progressText = $("progressText");
+    const progressDots = $("progressDots");
 
     const text = {
       en: {
-        topTitle:
-          "Create Your Character!",
-
-        previewTitle:
-          "Your Character",
-
-        defaultName:
-          "Young Explorer",
-
-        focusLabel:
-          "Close-up view",
-
-        previous:
-          "← Back",
-
-        next:
-          "Next →",
-
-        finish:
-          "Begin Adventure →",
-
-        avatarError:
-          "The character could not load. Please check your internet connection.",
-
+        topTitle: "Create Your Character!",
+        previewTitle: "Your Character",
+        defaultName: "Young Explorer",
+        focusLabel: "Close-up view",
+        previous: "← Back",
+        next: "Next →",
+        finish: "Begin Adventure →",
         questions: [
-          {
-            title:
-              "Boy or Girl?",
-
-            help:
-              "Choose the character you would like to create."
-          },
-          {
-            title:
-              "Choose a Skin Tone",
-
-            help:
-              "The preview is enlarged so you can see the face clearly."
-          },
-          {
-            title:
-              "Choose a Hairstyle",
-
-            help:
-              "The head and shoulders are enlarged so long and short hair are easier to compare."
-          },
-          {
-            title:
-              "Choose Hair Colour",
-
-            help:
-              "Choose your character's hair colour."
-          },
-          {
-            title:
-              "Choose Some Clothes",
-
-            help:
-              "The preview is now zoomed out so you can see the outfit."
-          },
-          {
-            title:
-              "Choose Clothes Colour",
-
-            help:
-              "Choose a colour for your character's outfit."
-          },
-          {
-            title:
-              "What Is Your Name?",
-
-            help:
-              "Your name will appear during your Bible adventure."
-          }
+          ["Boy or Girl?", "Choose the character you would like to create."],
+          ["Choose a Skin Tone", "The preview is enlarged so you can see the face clearly."],
+          ["Choose a Hairstyle", "Choose a hairstyle for your explorer."],
+          ["Choose Hair Colour", "Choose your character's hair colour."],
+          ["Choose Some Clothes", "Choose an outfit for the adventure."],
+          ["Choose Clothes Colour", "Choose a colour for your character's outfit."],
+          ["What Is Your Name?", "Your name will appear during your Bible adventure."]
         ],
-
         labels: {
-          boy: "Boy",
-          girl: "Girl",
-
-          skinLight: "Light",
-          skinWarm: "Warm",
-          skinTan: "Tan",
-          skinBrown: "Brown",
-          skinDeep: "Deep",
-
-          short: "Short",
-          shortCurly: "Short Curly",
-          wavy: "Wavy",
-          bob: "Bob",
-          long: "Long",
-          bigHair: "Long Wavy",
-
-          darkBrown: "Dark Brown",
-          brown: "Brown",
-          lightBrown: "Light Brown",
-          golden: "Golden",
-          auburn: "Auburn",
-          red: "Red",
-
-          hoodie: "Hoodie",
-          overall: "Overalls",
-          tshirt: "T-Shirt",
-          sweater: "Sweater",
-          graphic: "Picture Shirt",
-          smart: "Smart Shirt",
-
-          blue: "Blue",
-          green: "Green",
-          redClothes: "Red",
-          yellow: "Yellow",
-          pink: "Pink",
-          grey: "Grey",
-
-          nameLabel:
-            "Enter your name",
-
-          namePlaceholder:
-            "Type your name",
-
-          nameNote:
-            "Use 1–18 letters, Chinese characters or numbers."
+          boy:"Boy", girl:"Girl",
+          skinLight:"Light", skinWarm:"Warm", skinTan:"Tan", skinBrown:"Brown", skinDeep:"Deep",
+          short:"Short", curly:"Curly", side:"Side Sweep", bob:"Bob", long:"Long", ponytail:"Ponytail",
+          darkBrown:"Dark Brown", brown:"Brown", lightBrown:"Light Brown", golden:"Golden", auburn:"Auburn", red:"Red",
+          hoodie:"Hoodie", overalls:"Overalls", tshirt:"T-Shirt", sweater:"Sweater", tunic:"Adventure Tunic", smart:"Smart Shirt",
+          blue:"Blue", green:"Green", redClothes:"Red", yellow:"Yellow", pink:"Pink", grey:"Grey",
+          nameLabel:"Enter your name", namePlaceholder:"Type your name",
+          nameNote:"Use 1–18 letters, Chinese characters or numbers."
         }
       },
 
       "zh-HK": {
-        topTitle:
-          "建立你嘅角色！",
-
-        previewTitle:
-          "你嘅角色",
-
-        defaultName:
-          "小小探險家",
-
-        focusLabel:
-          "放大預覽",
-
-        previous:
-          "← 上一步",
-
-        next:
-          "下一步 →",
-
-        finish:
-          "開始冒險 →",
-
-        avatarError:
-          "角色暫時未能載入，請檢查網絡連線。",
-
+        topTitle: "建立你嘅角色！",
+        previewTitle: "你嘅角色",
+        defaultName: "小小探險家",
+        focusLabel: "放大預覽",
+        previous: "← 上一步",
+        next: "下一步 →",
+        finish: "開始冒險 →",
         questions: [
-          {
-            title:
-              "你係男仔定女仔？",
-
-            help:
-              "揀選你想建立嘅角色。"
-          },
-          {
-            title:
-              "揀選膚色",
-
-            help:
-              "角色會自動放大，等你清楚睇到面部。"
-          },
-          {
-            title:
-              "揀選髮型",
-
-            help:
-              "而家會放大頭部同肩膊，長髮同短髮會更容易分辨。"
-          },
-          {
-            title:
-              "揀選頭髮顏色",
-
-            help:
-              "揀選你角色嘅頭髮顏色。"
-          },
-          {
-            title:
-              "揀選衣服",
-
-            help:
-              "角色會縮返正常大小，等你睇清楚整套衣服。"
-          },
-          {
-            title:
-              "揀選衣服顏色",
-
-            help:
-              "揀選你最鍾意嘅衣服顏色。"
-          },
-          {
-            title:
-              "你叫咩名？",
-
-            help:
-              "你嘅名字會喺聖經冒險旅程中出現。"
-          }
+          ["你係男仔定女仔？", "揀選你想建立嘅角色。"],
+          ["揀選膚色", "角色會自動放大，等你清楚睇到面部。"],
+          ["揀選髮型", "揀選你最鍾意嘅髮型。"],
+          ["揀選頭髮顏色", "揀選你角色嘅頭髮顏色。"],
+          ["揀選衣服", "揀一套適合冒險嘅衣服。"],
+          ["揀選衣服顏色", "揀選你最鍾意嘅衣服顏色。"],
+          ["你叫咩名？", "你嘅名字會喺聖經冒險旅程中出現。"]
         ],
-
         labels: {
-          boy: "男仔",
-          girl: "女仔",
-
-          skinLight: "淺膚色",
-          skinWarm: "暖膚色",
-          skinTan: "小麥色",
-          skinBrown: "啡膚色",
-          skinDeep: "深膚色",
-
-          short: "短髮",
-          shortCurly: "短曲髮",
-          wavy: "波浪短髮",
-          bob: "齊肩髮",
-          long: "長髮",
-          bigHair: "長波浪髮",
-
-          darkBrown: "深啡色",
-          brown: "啡色",
-          lightBrown: "淺啡色",
-          golden: "金色",
-          auburn: "紅啡色",
-          red: "紅色",
-
-          hoodie: "連帽衫",
-          overall: "工人褲",
-          tshirt: "短袖上衣",
-          sweater: "冷衫",
-          graphic: "圖案上衣",
-          smart: "醒目恤衫",
-
-          blue: "藍色",
-          green: "綠色",
-          redClothes: "紅色",
-          yellow: "黃色",
-          pink: "粉紅色",
-          grey: "灰色",
-
-          nameLabel:
-            "輸入你嘅名字",
-
-          namePlaceholder:
-            "喺度輸入名字",
-
-          nameNote:
-            "請輸入 1 至 18 個中文字、英文字或數字。"
+          boy:"男仔", girl:"女仔",
+          skinLight:"淺膚色", skinWarm:"暖膚色", skinTan:"小麥色", skinBrown:"啡膚色", skinDeep:"深膚色",
+          short:"短髮", curly:"曲髮", side:"側分髮", bob:"齊肩髮", long:"長髮", ponytail:"馬尾",
+          darkBrown:"深啡色", brown:"啡色", lightBrown:"淺啡色", golden:"金色", auburn:"紅啡色", red:"紅色",
+          hoodie:"連帽衫", overalls:"工人褲", tshirt:"短袖上衣", sweater:"冷衫", tunic:"探險衣", smart:"醒目恤衫",
+          blue:"藍色", green:"綠色", redClothes:"紅色", yellow:"黃色", pink:"粉紅色", grey:"灰色",
+          nameLabel:"輸入你嘅名字", namePlaceholder:"喺度輸入名字",
+          nameNote:"請輸入 1 至 18 個中文字、英文字或數字。"
         }
       }
     };
 
-    /* ========================================
-       選項
-    ======================================== */
-
     const genderOptions = [
-      {
-        value: "boy",
-        labelKey: "boy",
-        topVariant: "shortFlat"
-      },
-      {
-        value: "girl",
-        labelKey: "girl",
-        topVariant: "longButNotTooLong"
-      }
+      { value:"boy", labelKey:"boy", hairStyle:"short" },
+      { value:"girl", labelKey:"girl", hairStyle:"long" }
     ];
 
     const skinOptions = [
-      {
-        value: "ffdbb4",
-        labelKey: "skinLight"
-      },
-      {
-        value: "edb98a",
-        labelKey: "skinWarm"
-      },
-      {
-        value: "d08b5b",
-        labelKey: "skinTan"
-      },
-      {
-        value: "ae5d29",
-        labelKey: "skinBrown"
-      },
-      {
-        value: "614335",
-        labelKey: "skinDeep"
-      }
+      { value:"ffdbb4", labelKey:"skinLight" },
+      { value:"edb98a", labelKey:"skinWarm" },
+      { value:"d08b5b", labelKey:"skinTan" },
+      { value:"ae5d29", labelKey:"skinBrown" },
+      { value:"614335", labelKey:"skinDeep" }
     ];
 
     const hairStyleOptions = [
-      {
-        value: "shortFlat",
-        labelKey: "short"
-      },
-      {
-        value: "shortCurly",
-        labelKey: "shortCurly"
-      },
-      {
-        value: "shortWaved",
-        labelKey: "wavy"
-      },
-      {
-        value: "bob",
-        labelKey: "bob"
-      },
-      {
-        value: "longButNotTooLong",
-        labelKey: "long"
-      },
-      {
-        value: "bigHair",
-        labelKey: "bigHair"
-      }
+      { value:"short", labelKey:"short" },
+      { value:"curly", labelKey:"curly" },
+      { value:"side", labelKey:"side" },
+      { value:"bob", labelKey:"bob" },
+      { value:"long", labelKey:"long" },
+      { value:"ponytail", labelKey:"ponytail" }
     ];
 
     const hairColourOptions = [
-      {
-        value: "2c1b18",
-        labelKey: "darkBrown"
-      },
-      {
-        value: "724133",
-        labelKey: "brown"
-      },
-      {
-        value: "a55728",
-        labelKey: "lightBrown"
-      },
-      {
-        value: "d6b370",
-        labelKey: "golden"
-      },
-      {
-        value: "b58143",
-        labelKey: "auburn"
-      },
-      {
-        value: "c93305",
-        labelKey: "red"
-      }
+      { value:"2c1b18", labelKey:"darkBrown" },
+      { value:"724133", labelKey:"brown" },
+      { value:"a55728", labelKey:"lightBrown" },
+      { value:"d6b370", labelKey:"golden" },
+      { value:"b45f3b", labelKey:"auburn" },
+      { value:"c93305", labelKey:"red" }
     ];
 
     const clothesStyleOptions = [
-      {
-        value: "hoodie",
-        labelKey: "hoodie"
-      },
-      {
-        value: "overall",
-        labelKey: "overall"
-      },
-      {
-        value: "shirtCrewNeck",
-        labelKey: "tshirt"
-      },
-      {
-        value: "collarAndSweater",
-        labelKey: "sweater"
-      },
-      {
-        value: "graphicShirt",
-        labelKey: "graphic"
-      },
-      {
-        value: "blazerAndShirt",
-        labelKey: "smart"
-      }
+      { value:"hoodie", labelKey:"hoodie" },
+      { value:"overalls", labelKey:"overalls" },
+      { value:"tshirt", labelKey:"tshirt" },
+      { value:"sweater", labelKey:"sweater" },
+      { value:"tunic", labelKey:"tunic" },
+      { value:"smart", labelKey:"smart" }
     ];
 
     const clothesColourOptions = [
-      {
-        value: "5199e4",
-        labelKey: "blue"
-      },
-      {
-        value: "a7ffc4",
-        labelKey: "green"
-      },
-      {
-        value: "ff5c5c",
-        labelKey: "redClothes"
-      },
-      {
-        value: "ffffb1",
-        labelKey: "yellow"
-      },
-      {
-        value: "ff488e",
-        labelKey: "pink"
-      },
-      {
-        value: "929598",
-        labelKey: "grey"
-      }
+      { value:"5199e4", labelKey:"blue" },
+      { value:"65b87a", labelKey:"green" },
+      { value:"ef5b5b", labelKey:"redClothes" },
+      { value:"e8c85d", labelKey:"yellow" },
+      { value:"ec75a5", labelKey:"pink" },
+      { value:"929598", labelKey:"grey" }
     ];
 
-    /* ========================================
-       語言
-    ======================================== */
-
     function getLanguage() {
-      const savedLanguage =
-        localStorage.getItem(
-          "bibleKidsLanguage"
-        );
-
-      return savedLanguage === "zh-HK"
-        ? "zh-HK"
-        : "en";
+      return localStorage.getItem("bibleKidsLanguage") === "zh-HK" ? "zh-HK" : "en";
     }
 
     function getText() {
       return text[getLanguage()];
     }
 
-    /* ========================================
-       建立 DiceBear 角色 URL
-    ======================================== */
+    function esc(value) {
+      return String(value).replace(/[&<>"']/g, function(char) {
+        return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[char];
+      });
+    }
 
-    function buildAvatarUrl(
-      overrides = {}
-    ) {
-      const avatarState = {
-        ...state,
-        ...overrides
+    function createHair(style, color) {
+      const c = "#" + color;
+
+      const styles = {
+        short: `
+          <path d="M112 144 Q122 73 180 71 Q239 72 249 143
+                   Q225 121 198 116 Q161 107 112 144Z"
+                fill="${c}" stroke="#3a261f" stroke-width="6"/>
+          <path d="M119 122 Q145 87 182 84 Q220 85 244 122"
+                fill="none" stroke="${c}" stroke-width="26" stroke-linecap="round"/>`,
+
+        curly: `
+          <g fill="${c}" stroke="#3a261f" stroke-width="5">
+            <circle cx="126" cy="116" r="27"/><circle cx="151" cy="91" r="28"/>
+            <circle cx="183" cy="83" r="29"/><circle cx="216" cy="94" r="28"/>
+            <circle cx="238" cy="121" r="27"/><circle cx="111" cy="143" r="23"/>
+            <circle cx="248" cy="145" r="23"/>
+          </g>`,
+
+        side: `
+          <path d="M105 148 Q111 77 178 68 Q236 65 257 135
+                   Q223 111 183 117 Q139 122 105 148Z"
+                fill="${c}" stroke="#3a261f" stroke-width="6"/>
+          <path d="M176 73 Q146 99 117 130" fill="none"
+                stroke="#3a261f" stroke-width="6" stroke-linecap="round"/>`,
+
+        bob: `
+          <path d="M101 151 Q101 69 180 66 Q259 69 259 153
+                   L248 225 Q226 202 214 164
+                   Q180 183 144 164 Q132 202 111 225Z"
+                fill="${c}" stroke="#3a261f" stroke-width="6"/>`,
+
+        long: `
+          <path d="M96 151 Q99 63 180 62 Q262 65 265 153
+                   L257 300 Q231 288 219 225
+                   Q205 174 180 170 Q154 174 141 225
+                   Q129 288 103 300Z"
+                fill="${c}" stroke="#3a261f" stroke-width="6"/>`,
+
+        ponytail: `
+          <path d="M103 150 Q106 70 179 66 Q245 68 257 143
+                   Q221 113 181 116 Q140 116 103 150Z"
+                fill="${c}" stroke="#3a261f" stroke-width="6"/>
+          <path d="M242 108 Q292 107 285 172 Q280 219 246 239
+                   Q263 185 242 108Z"
+                fill="${c}" stroke="#3a261f" stroke-width="6"/>`
       };
 
-      const seed =
-        avatarState.gender === "girl"
-          ? "bible-kids-girl"
-          : "bible-kids-boy";
-
-      const url =
-        new URL(
-          "https://api.dicebear.com/10.x/avataaars/svg"
-        );
-
-      url.searchParams.set(
-        "seed",
-        seed
-      );
-
-      url.searchParams.set(
-        "topVariant",
-        avatarState.topVariant
-      );
-
-      url.searchParams.set(
-        "hairColor",
-        avatarState.hairColor
-      );
-
-      url.searchParams.set(
-        "skinColor",
-        avatarState.skinColor
-      );
-
-      url.searchParams.set(
-        "clothesVariant",
-        avatarState.clothesVariant
-      );
-
-      url.searchParams.set(
-        "clothesColor",
-        avatarState.clothesColor
-      );
-
-      url.searchParams.set(
-        "eyesVariant",
-        "happy"
-      );
-
-      url.searchParams.set(
-        "eyebrowsVariant",
-        "raisedExcitedNatural"
-      );
-
-      url.searchParams.set(
-        "mouthVariant",
-        "smile"
-      );
-
-      url.searchParams.set(
-        "facialHairProbability",
-        "0"
-      );
-
-      url.searchParams.set(
-        "accessoriesProbability",
-        "0"
-      );
-
-      url.searchParams.set(
-        "scale",
-        "91"
-      );
-
-      url.searchParams.set(
-        "translateY",
-        "5"
-      );
-
-      if (
-        avatarState.clothesVariant ===
-        "graphicShirt"
-      ) {
-        url.searchParams.set(
-          "clothesGraphicVariant",
-          "bear"
-        );
-      }
-
-      return url.toString();
+      return styles[style] || styles.short;
     }
 
-    /* ========================================
-       更新主角色
-    ======================================== */
+    function createClothes(style, color) {
+      const c = "#" + color;
+      const dark = "#3d4a55";
+      const light = "#fff1d4";
+
+      const styles = {
+        hoodie: `
+          <path d="M107 282 Q180 249 253 282 L281 449 L79 449Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M137 278 Q180 317 223 278 Q218 247 180 244 Q142 247 137 278Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M159 294 L154 342 M201 294 L206 342"
+                stroke="${light}" stroke-width="6" stroke-linecap="round"/>
+          <rect x="144" y="357" width="72" height="45" rx="20"
+                fill="none" stroke="#493020" stroke-width="6"/>`,
+
+        overalls: `
+          <path d="M107 282 Q180 249 253 282 L281 449 L79 449Z"
+                fill="${light}" stroke="#493020" stroke-width="7"/>
+          <path d="M125 302 L235 302 L244 449 L116 449Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M130 281 L151 354 M230 281 L209 354"
+                stroke="${c}" stroke-width="18" stroke-linecap="round"/>
+          <rect x="151" y="333" width="58" height="48" rx="8"
+                fill="${c}" stroke="#493020" stroke-width="6"/>`,
+
+        tshirt: `
+          <path d="M108 284 L139 265 Q180 289 221 265 L252 284
+                   L282 336 L247 356 L244 449 L116 449 L113 356
+                   L78 336Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M150 270 Q180 299 210 270"
+                fill="none" stroke="#493020" stroke-width="6"/>`,
+
+        sweater: `
+          <path d="M107 282 Q180 248 253 282 L281 449 L79 449Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M142 271 Q180 315 218 271"
+                fill="${light}" stroke="#493020" stroke-width="6"/>
+          <path d="M108 340 H252 M112 384 H248"
+                stroke="rgba(255,255,255,.45)" stroke-width="8"/>`,
+
+        tunic: `
+          <path d="M112 277 Q180 251 248 277 L265 449 L95 449Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M179 274 V449" stroke="#493020" stroke-width="6"/>
+          <path d="M139 292 Q180 319 221 292"
+                fill="none" stroke="${light}" stroke-width="8"/>
+          <path d="M104 360 H256" stroke="#8a5b2e" stroke-width="15"/>
+          <circle cx="180" cy="360" r="14" fill="#e8c85d" stroke="#493020" stroke-width="5"/>`,
+
+        smart: `
+          <path d="M107 282 Q180 249 253 282 L281 449 L79 449Z"
+                fill="${c}" stroke="#493020" stroke-width="7"/>
+          <path d="M145 269 L180 319 L215 269 L225 449 L135 449Z"
+                fill="${light}" stroke="#493020" stroke-width="6"/>
+          <path d="M145 269 L180 319 L159 345 L124 289Z"
+                fill="${c}" stroke="#493020" stroke-width="5"/>
+          <path d="M215 269 L180 319 L201 345 L236 289Z"
+                fill="${c}" stroke="#493020" stroke-width="5"/>
+          <path d="M180 319 L167 355 L180 384 L193 355Z"
+                fill="#b3433d" stroke="#493020" stroke-width="4"/>`
+      };
+
+      return styles[style] || styles.hoodie;
+    }
+
+    function avatarMarkup(custom = {}, small = false) {
+      const s = { ...state, ...custom };
+      const skin = "#" + s.skinColor;
+      const eye = "#3b2a24";
+      const outline = "#493020";
+
+      return `
+        <defs>
+          <linearGradient id="legShade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#4c6480"/>
+            <stop offset="1" stop-color="#35485f"/>
+          </linearGradient>
+        </defs>
+
+        <!-- back hair -->
+        ${["bob","long","ponytail"].includes(s.hairStyle) ? createHair(s.hairStyle, s.hairColor) : ""}
+
+        <!-- legs -->
+        <path d="M120 423 L174 423 L170 487 L112 487Z"
+              fill="url(#legShade)" stroke="${outline}" stroke-width="7"/>
+        <path d="M186 423 L240 423 L248 487 L190 487Z"
+              fill="url(#legShade)" stroke="${outline}" stroke-width="7"/>
+
+        <!-- shoes -->
+        <path d="M107 474 Q143 462 174 477 L174 495 L104 495Z"
+              fill="#5f4029" stroke="${outline}" stroke-width="6"/>
+        <path d="M186 477 Q218 462 253 474 L256 495 L186 495Z"
+              fill="#5f4029" stroke="${outline}" stroke-width="6"/>
+
+        <!-- ears -->
+        <ellipse cx="106" cy="171" rx="22" ry="30" fill="${skin}" stroke="${outline}" stroke-width="6"/>
+        <ellipse cx="254" cy="171" rx="22" ry="30" fill="${skin}" stroke="${outline}" stroke-width="6"/>
+
+        <!-- neck -->
+        <path d="M151 231 L209 231 L216 282 Q180 304 144 282Z"
+              fill="${skin}" stroke="${outline}" stroke-width="7"/>
+
+        <!-- body clothes -->
+        ${createClothes(s.clothesStyle, s.clothesColor)}
+
+        <!-- arms -->
+        <path d="M104 296 Q72 329 73 410 Q75 432 95 425 L122 342Z"
+              fill="${skin}" stroke="${outline}" stroke-width="7"/>
+        <path d="M256 296 Q288 329 287 410 Q285 432 265 425 L238 342Z"
+              fill="${skin}" stroke="${outline}" stroke-width="7"/>
+
+        <!-- face -->
+        <ellipse cx="180" cy="165" rx="76" ry="91"
+                 fill="${skin}" stroke="${outline}" stroke-width="7"/>
+
+        <!-- front hair -->
+        ${!["bob","long","ponytail"].includes(s.hairStyle) ? createHair(s.hairStyle, s.hairColor) : `
+          <path d="M108 144 Q119 83 180 76 Q240 83 252 143
+                   Q222 120 190 118 Q154 116 108 144Z"
+                fill="#${s.hairColor}" stroke="${outline}" stroke-width="6"/>
+        `}
+
+        <!-- eyebrows -->
+        <path d="M135 151 Q151 140 165 151" fill="none" stroke="${eye}" stroke-width="7" stroke-linecap="round"/>
+        <path d="M195 151 Q209 140 225 151" fill="none" stroke="${eye}" stroke-width="7" stroke-linecap="round"/>
+
+        <!-- eyes -->
+        <ellipse cx="151" cy="172" rx="10" ry="13" fill="${eye}"/>
+        <ellipse cx="209" cy="172" rx="10" ry="13" fill="${eye}"/>
+        <circle cx="154" cy="168" r="3" fill="white"/>
+        <circle cx="212" cy="168" r="3" fill="white"/>
+
+        <!-- nose -->
+        <path d="M180 177 Q171 199 183 201" fill="none" stroke="#a66d50" stroke-width="5" stroke-linecap="round"/>
+
+        <!-- smile -->
+        <path d="M151 216 Q180 239 209 216"
+              fill="#fff8e9" stroke="${outline}" stroke-width="6" stroke-linejoin="round"/>
+
+        <!-- cheeks -->
+        <ellipse cx="133" cy="205" rx="13" ry="7" fill="#ef8f86" opacity=".45"/>
+        <ellipse cx="227" cy="205" rx="13" ry="7" fill="#ef8f86" opacity=".45"/>
+
+        <!-- optional details -->
+        ${s.gender === "girl" ? `
+          <circle cx="105" cy="187" r="6" fill="#f2cf60" stroke="${outline}" stroke-width="3"/>
+          <circle cx="255" cy="187" r="6" fill="#f2cf60" stroke="${outline}" stroke-width="3"/>
+        ` : ""}
+
+        <!-- backpack straps -->
+        <path d="M120 302 Q104 335 111 384 M240 302 Q256 335 249 384"
+              fill="none" stroke="#70482d" stroke-width="8" opacity=".75"/>
+      `;
+    }
 
     function updateAvatar() {
-      avatarImage.classList.add(
-        "loading"
-      );
-
-      avatarError.classList.remove(
-        "visible"
-      );
-
-      avatarImage.src =
-        buildAvatarUrl();
-
-      characterName.textContent =
-        state.name.trim() ||
-        getText().defaultName;
+      avatarSvg.innerHTML = avatarMarkup();
+      characterName.textContent = state.name.trim() || getText().defaultName;
     }
 
-    avatarImage.addEventListener(
-      "load",
-      function () {
-        avatarImage.classList.remove(
-          "loading"
-        );
+    function makeSvgPreview(custom) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "70 55 220 315");
+      svg.innerHTML = avatarMarkup(custom, true);
+      return svg;
+    }
 
-        avatarError.classList.remove(
-          "visible"
-        );
-      }
-    );
+    function createImageChoice(value, label, custom, selected) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "choice-card" + (selected ? " selected" : "");
+      button.dataset.value = value;
+      button.setAttribute("aria-pressed", selected ? "true" : "false");
 
-    avatarImage.addEventListener(
-      "error",
-      function () {
-        avatarImage.classList.remove(
-          "loading"
-        );
+      const preview = document.createElement("span");
+      preview.className = "choice-preview";
+      preview.appendChild(makeSvgPreview(custom));
 
-        avatarError.textContent =
-          getText().avatarError;
+      const labelElement = document.createElement("span");
+      labelElement.className = "choice-label";
+      labelElement.textContent = label;
 
-        avatarError.classList.add(
-          "visible"
-        );
-      }
-    );
-
-    /* ========================================
-       建立圖片選項
-    ======================================== */
-
-    function createImageChoice(
-      value,
-      label,
-      imageUrl,
-      isSelected
-    ) {
-      const button =
-        document.createElement(
-          "button"
-        );
-
-      button.type =
-        "button";
-
-      button.className =
-        "choice-card" +
-        (
-          isSelected
-            ? " selected"
-            : ""
-        );
-
-      button.dataset.value =
-        value;
-
-      button.setAttribute(
-        "aria-pressed",
-        isSelected
-          ? "true"
-          : "false"
-      );
-
-      const imageBox =
-        document.createElement(
-          "span"
-        );
-
-      imageBox.className =
-        "choice-image-box";
-
-      const image =
-        document.createElement(
-          "img"
-        );
-
-      image.className =
-        "choice-image";
-
-      image.src =
-        imageUrl;
-
-      image.alt =
-        "";
-
-      image.loading =
-        "lazy";
-
-      const labelElement =
-        document.createElement(
-          "span"
-        );
-
-      labelElement.className =
-        "choice-label";
-
-      labelElement.textContent =
-        label;
-
-      imageBox.appendChild(
-        image
-      );
-
-      button.appendChild(
-        imageBox
-      );
-
-      button.appendChild(
-        labelElement
-      );
-
+      button.append(preview, labelElement);
       return button;
     }
 
-    /* ========================================
-       建立顏色選項
-    ======================================== */
+    function createColourChoice(value, label, selected) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "colour-choice" + (selected ? " selected" : "");
+      button.dataset.value = value;
 
-    function createColourChoice(
-      value,
-      label,
-      isSelected
-    ) {
-      const button =
-        document.createElement(
-          "button"
-        );
+      const circle = document.createElement("span");
+      circle.className = "colour-circle";
+      circle.style.backgroundColor = "#" + value;
 
-      button.type =
-        "button";
+      const labelElement = document.createElement("span");
+      labelElement.className = "colour-label";
+      labelElement.textContent = label;
 
-      button.className =
-        "colour-choice" +
-        (
-          isSelected
-            ? " selected"
-            : ""
-        );
-
-      button.dataset.value =
-        value;
-
-      button.setAttribute(
-        "aria-pressed",
-        isSelected
-          ? "true"
-          : "false"
-      );
-
-      const circle =
-        document.createElement(
-          "span"
-        );
-
-      circle.className =
-        "colour-circle";
-
-      circle.style.backgroundColor =
-        "#" + value;
-
-      const labelElement =
-        document.createElement(
-          "span"
-        );
-
-      labelElement.className =
-        "colour-label";
-
-      labelElement.textContent =
-        label;
-
-      button.appendChild(
-        circle
-      );
-
-      button.appendChild(
-        labelElement
-      );
-
+      button.append(circle, labelElement);
       return button;
     }
 
-    /* ========================================
-       第 1 步：男仔／女仔
-    ======================================== */
+    function saveCharacter() {
+      localStorage.setItem("bibleKidsCharacter", JSON.stringify(state));
+      localStorage.setItem("bibleKidsGender", state.gender);
+      localStorage.setItem("bibleKidsSkinColor", state.skinColor);
+      localStorage.setItem("bibleKidsHairStyle", state.hairStyle);
+      localStorage.setItem("bibleKidsHairColour", state.hairColor);
+      localStorage.setItem("bibleKidsOutfit", state.clothesStyle);
+      localStorage.setItem("bibleKidsClothesColour", state.clothesColor);
+      localStorage.setItem("bibleKidsPlayerName", state.name.trim());
+    }
+
+    function selectAndRefresh(key, value) {
+      state[key] = value;
+      saveCharacter();
+      updateAvatar();
+      renderStep();
+    }
 
     function renderGenderStep() {
-      choices.className =
-        "choices";
+      choices.className = "choices";
 
-      genderOptions.forEach(
-        function (option) {
-          const button =
-            createImageChoice(
-              option.value,
-              getText().labels[
-                option.labelKey
-              ],
-              buildAvatarUrl({
-                gender:
-                  option.value,
-
-                topVariant:
-                  option.topVariant
-              }),
-              state.gender ===
-                option.value
-            );
-
-          button.addEventListener(
-            "click",
-            function () {
-              state.gender =
-                option.value;
-
-              state.topVariant =
-                option.topVariant;
-
-              saveCharacter();
-              updateAvatar();
-              renderStep();
-            }
-          );
-
-          choices.appendChild(
-            button
-          );
-        }
-      );
-    }
-
-    /* ========================================
-       第 2 步：膚色
-    ======================================== */
-
-    function renderSkinStep() {
-      choices.className =
-        "choices colour-choices";
-
-      skinOptions.forEach(
-        function (option) {
-          const button =
-            createColourChoice(
-              option.value,
-              getText().labels[
-                option.labelKey
-              ],
-              state.skinColor ===
-                option.value
-            );
-
-          button.addEventListener(
-            "click",
-            function () {
-              state.skinColor =
-                option.value;
-
-              saveCharacter();
-              updateAvatar();
-              renderStep();
-            }
-          );
-
-          choices.appendChild(
-            button
-          );
-        }
-      );
-    }
-
-    /* ========================================
-       第 3 步：髮型
-    ======================================== */
-
-    function renderHairStyleStep() {
-      choices.className =
-        "choices compact";
-
-      hairStyleOptions.forEach(
-        function (option) {
-          const button =
-            createImageChoice(
-              option.value,
-              getText().labels[
-                option.labelKey
-              ],
-              buildAvatarUrl({
-                topVariant:
-                  option.value
-              }),
-              state.topVariant ===
-                option.value
-            );
-
-          /*
-            髮型選項使用放大模式
-          */
-
-          button.classList.add(
-            "hair-choice"
-          );
-
-          button.addEventListener(
-            "click",
-            function () {
-              state.topVariant =
-                option.value;
-
-              saveCharacter();
-              updateAvatar();
-              renderStep();
-            }
-          );
-
-          choices.appendChild(
-            button
-          );
-        }
-      );
-    }
-
-    /* ========================================
-       第 4 步：髮色
-    ======================================== */
-
-    function renderHairColourStep() {
-      choices.className =
-        "choices colour-choices";
-
-      hairColourOptions.forEach(
-        function (option) {
-          const button =
-            createColourChoice(
-              option.value,
-              getText().labels[
-                option.labelKey
-              ],
-              state.hairColor ===
-                option.value
-            );
-
-          button.addEventListener(
-            "click",
-            function () {
-              state.hairColor =
-                option.value;
-
-              saveCharacter();
-              updateAvatar();
-              renderStep();
-            }
-          );
-
-          choices.appendChild(
-            button
-          );
-        }
-      );
-    }
-
-    /* ========================================
-       第 5 步：衣服
-    ======================================== */
-
-    function renderClothesStep() {
-      choices.className =
-        "choices compact";
-
-      clothesStyleOptions.forEach(
-        function (option) {
-          const button =
-            createImageChoice(
-              option.value,
-              getText().labels[
-                option.labelKey
-              ],
-              buildAvatarUrl({
-                clothesVariant:
-                  option.value
-              }),
-              state.clothesVariant ===
-                option.value
-            );
-
-          button.addEventListener(
-            "click",
-            function () {
-              state.clothesVariant =
-                option.value;
-
-              saveCharacter();
-              updateAvatar();
-              renderStep();
-            }
-          );
-
-          choices.appendChild(
-            button
-          );
-        }
-      );
-    }
-
-    /* ========================================
-       第 6 步：衣服顏色
-    ======================================== */
-
-    function renderClothesColourStep() {
-      choices.className =
-        "choices colour-choices";
-
-      clothesColourOptions.forEach(
-        function (option) {
-          const button =
-            createColourChoice(
-              option.value,
-              getText().labels[
-                option.labelKey
-              ],
-              state.clothesColor ===
-                option.value
-            );
-
-          button.addEventListener(
-            "click",
-            function () {
-              state.clothesColor =
-                option.value;
-
-              saveCharacter();
-              updateAvatar();
-              renderStep();
-            }
-          );
-
-          choices.appendChild(
-            button
-          );
-        }
-      );
-    }
-
-    /* ========================================
-       第 7 步：名字
-    ======================================== */
-
-    function renderNameStep() {
-      choices.className =
-        "";
-
-      const wrapper =
-        document.createElement(
-          "div"
+      genderOptions.forEach(option => {
+        const button = createImageChoice(
+          option.value,
+          getText().labels[option.labelKey],
+          { gender:option.value, hairStyle:option.hairStyle },
+          state.gender === option.value
         );
 
-      wrapper.className =
-        "name-step";
-
-      const label =
-        document.createElement(
-          "label"
-        );
-
-      label.className =
-        "name-label";
-
-      label.htmlFor =
-        "playerName";
-
-      label.textContent =
-        getText().labels.nameLabel;
-
-      const input =
-        document.createElement(
-          "input"
-        );
-
-      input.type =
-        "text";
-
-      input.id =
-        "playerName";
-
-      input.className =
-        "name-input";
-
-      input.maxLength =
-        18;
-
-      input.autocomplete =
-        "off";
-
-      input.placeholder =
-        getText().labels
-          .namePlaceholder;
-
-      input.value =
-        state.name;
-
-      const note =
-        document.createElement(
-          "p"
-        );
-
-      note.className =
-        "name-note";
-
-      note.textContent =
-        getText().labels.nameNote;
-
-      input.addEventListener(
-        "input",
-        function () {
-          state.name =
-            input.value
-              .replace(
-                /[<>]/g,
-                ""
-              )
-              .slice(
-                0,
-                18
-              );
-
-          if (
-            input.value !==
-            state.name
-          ) {
-            input.value =
-              state.name;
-          }
-
+        button.addEventListener("click", () => {
+          state.gender = option.value;
+          state.hairStyle = option.hairStyle;
           saveCharacter();
           updateAvatar();
-          updateNavigation();
-        }
-      );
+          renderStep();
+        });
 
-      input.addEventListener(
-        "keydown",
-        function (event) {
-          if (
-            event.key === "Enter" &&
-            isCurrentStepComplete()
-          ) {
-            finishCharacter();
-          }
-        }
-      );
-
-      wrapper.appendChild(
-        label
-      );
-
-      wrapper.appendChild(
-        input
-      );
-
-      wrapper.appendChild(
-        note
-      );
-
-      choices.appendChild(
-        wrapper
-      );
-
-      setTimeout(
-        function () {
-          input.focus();
-        },
-        60
-      );
+        choices.appendChild(button);
+      });
     }
 
-    /* ========================================
-       顯示目前步驟
-    ======================================== */
+    function renderSkinStep() {
+      choices.className = "choices colour-choices";
+
+      skinOptions.forEach(option => {
+        const button = createColourChoice(
+          option.value,
+          getText().labels[option.labelKey],
+          state.skinColor === option.value
+        );
+
+        button.addEventListener("click", () => selectAndRefresh("skinColor", option.value));
+        choices.appendChild(button);
+      });
+    }
+
+    function renderHairStyleStep() {
+      choices.className = "choices compact";
+
+      hairStyleOptions.forEach(option => {
+        const button = createImageChoice(
+          option.value,
+          getText().labels[option.labelKey],
+          { hairStyle:option.value },
+          state.hairStyle === option.value
+        );
+
+        button.addEventListener("click", () => selectAndRefresh("hairStyle", option.value));
+        choices.appendChild(button);
+      });
+    }
+
+    function renderHairColourStep() {
+      choices.className = "choices colour-choices";
+
+      hairColourOptions.forEach(option => {
+        const button = createColourChoice(
+          option.value,
+          getText().labels[option.labelKey],
+          state.hairColor === option.value
+        );
+
+        button.addEventListener("click", () => selectAndRefresh("hairColor", option.value));
+        choices.appendChild(button);
+      });
+    }
+
+    function renderClothesStep() {
+      choices.className = "choices compact";
+
+      clothesStyleOptions.forEach(option => {
+        const button = createImageChoice(
+          option.value,
+          getText().labels[option.labelKey],
+          { clothesStyle:option.value },
+          state.clothesStyle === option.value
+        );
+
+        button.addEventListener("click", () => selectAndRefresh("clothesStyle", option.value));
+        choices.appendChild(button);
+      });
+    }
+
+    function renderClothesColourStep() {
+      choices.className = "choices colour-choices";
+
+      clothesColourOptions.forEach(option => {
+        const button = createColourChoice(
+          option.value,
+          getText().labels[option.labelKey],
+          state.clothesColor === option.value
+        );
+
+        button.addEventListener("click", () => selectAndRefresh("clothesColor", option.value));
+        choices.appendChild(button);
+      });
+    }
+
+    function renderNameStep() {
+      choices.className = "";
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "name-step";
+
+      const label = document.createElement("label");
+      label.className = "name-label";
+      label.htmlFor = "playerName";
+      label.textContent = getText().labels.nameLabel;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.id = "playerName";
+      input.className = "name-input";
+      input.maxLength = 18;
+      input.autocomplete = "off";
+      input.placeholder = getText().labels.namePlaceholder;
+      input.value = state.name;
+
+      const note = document.createElement("p");
+      note.className = "name-note";
+      note.textContent = getText().labels.nameNote;
+
+      input.addEventListener("input", () => {
+        state.name = input.value.replace(/[<>]/g, "").slice(0,18);
+        input.value = state.name;
+        saveCharacter();
+        updateAvatar();
+        updateNavigation();
+      });
+
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter" && isCurrentStepComplete()) finishCharacter();
+      });
+
+      wrapper.append(label, input, note);
+      choices.appendChild(wrapper);
+
+      setTimeout(() => input.focus(), 60);
+    }
 
     function renderStep() {
-      /*
-        第 2、3、4 步使用頭部放大：
-        膚色、髮型、髮色
-      */
+      avatarStage.classList.toggle("focus-head", [1,2,3].includes(currentStep));
 
-      const shouldFocusHead =
-        currentStep === 1 ||
-        currentStep === 2 ||
-        currentStep === 3;
+      const question = getText().questions[currentStep];
+      questionHeading.textContent = question[0];
+      questionHelp.textContent = question[1];
+      choices.innerHTML = "";
 
-      avatarStage.classList.toggle(
-        "focus-head",
-        shouldFocusHead
-      );
-
-      const question =
-        getText().questions[
-          currentStep
-        ];
-
-      questionHeading.textContent =
-        question.title;
-
-      questionHelp.textContent =
-        question.help;
-
-      choices.innerHTML =
-        "";
-
-      if (currentStep === 0) {
-        renderGenderStep();
-      }
-
-      if (currentStep === 1) {
-        renderSkinStep();
-      }
-
-      if (currentStep === 2) {
-        renderHairStyleStep();
-      }
-
-      if (currentStep === 3) {
-        renderHairColourStep();
-      }
-
-      if (currentStep === 4) {
-        renderClothesStep();
-      }
-
-      if (currentStep === 5) {
-        renderClothesColourStep();
-      }
-
-      if (currentStep === 6) {
-        renderNameStep();
-      }
+      if (currentStep === 0) renderGenderStep();
+      if (currentStep === 1) renderSkinStep();
+      if (currentStep === 2) renderHairStyleStep();
+      if (currentStep === 3) renderHairColourStep();
+      if (currentStep === 4) renderClothesStep();
+      if (currentStep === 5) renderClothesColourStep();
+      if (currentStep === 6) renderNameStep();
 
       updateNavigation();
       updateProgress();
     }
 
-    /* ========================================
-       檢查步驟
-    ======================================== */
-
     function isCurrentStepComplete() {
-      if (currentStep === 0) {
-        return state.gender !== "";
-      }
-
-      if (currentStep === 6) {
-        return (
-          state.name.trim().length > 0
-        );
-      }
-
+      if (currentStep === 0) return state.gender !== "";
+      if (currentStep === 6) return state.name.trim().length > 0;
       return true;
     }
 
-    /* ========================================
-       更新導航
-    ======================================== */
-
     function updateNavigation() {
-      previousButton.textContent =
-        getText().previous;
-
-      nextButton.textContent =
-        currentStep ===
-        totalSteps - 1
-          ? getText().finish
-          : getText().next;
-
-      nextButton.disabled =
-        !isCurrentStepComplete();
+      previousButton.textContent = getText().previous;
+      nextButton.textContent = currentStep === totalSteps - 1 ? getText().finish : getText().next;
+      nextButton.disabled = !isCurrentStepComplete();
     }
-
-    /* ========================================
-       更新進度
-    ======================================== */
 
     function updateProgress() {
-      if (
-        getLanguage() === "zh-HK"
-      ) {
-        progressText.textContent =
-          "第 " +
-          (currentStep + 1) +
-          "／" +
-          totalSteps +
-          " 步";
-      } else {
-        progressText.textContent =
-          "Step " +
-          (currentStep + 1) +
-          " / " +
-          totalSteps;
-      }
+      progressText.textContent = getLanguage() === "zh-HK"
+        ? `第 ${currentStep + 1}／${totalSteps} 步`
+        : `Step ${currentStep + 1} / ${totalSteps}`;
 
-      progressDots.innerHTML =
-        "";
+      progressDots.innerHTML = "";
 
-      for (
-        let index = 0;
-        index < totalSteps;
-        index += 1
-      ) {
-        const dot =
-          document.createElement(
-            "span"
-          );
-
-        dot.className =
-          "progress-dot";
-
-        if (index < currentStep) {
-          dot.classList.add(
-            "complete"
-          );
-        }
-
-        if (index === currentStep) {
-          dot.classList.add(
-            "current"
-          );
-        }
-
-        progressDots.appendChild(
-          dot
-        );
+      for (let index = 0; index < totalSteps; index += 1) {
+        const dot = document.createElement("span");
+        dot.className = "progress-dot";
+        if (index < currentStep) dot.classList.add("complete");
+        if (index === currentStep) dot.classList.add("current");
+        progressDots.appendChild(dot);
       }
     }
 
-    /* ========================================
-       上一步
-    ======================================== */
+    previousButton.addEventListener("click", () => {
+      if (currentStep === 0) {
+        window.location.href = "index.html";
+        return;
+      }
 
-    previousButton.addEventListener(
-      "click",
-      function () {
-        if (currentStep === 0) {
-          window.location.href =
-            "index.html";
+      currentStep -= 1;
+      renderStep();
+    });
 
-          return;
-        }
+    nextButton.addEventListener("click", () => {
+      if (!isCurrentStepComplete()) return;
 
-        currentStep -= 1;
-
+      if (currentStep < totalSteps - 1) {
+        currentStep += 1;
         renderStep();
+        return;
       }
-    );
 
-    /* ========================================
-       下一步
-    ======================================== */
-
-    nextButton.addEventListener(
-      "click",
-      function () {
-        if (
-          !isCurrentStepComplete()
-        ) {
-          return;
-        }
-
-        if (
-          currentStep <
-          totalSteps - 1
-        ) {
-          currentStep += 1;
-
-          renderStep();
-
-          return;
-        }
-
-        finishCharacter();
-      }
-    );
-
-    /* ========================================
-       儲存角色
-    ======================================== */
-
-    function saveCharacter() {
-      localStorage.setItem(
-        "bibleKidsCharacter",
-        JSON.stringify(state)
-      );
-
-      localStorage.setItem(
-        "bibleKidsGender",
-        state.gender
-      );
-
-      localStorage.setItem(
-        "bibleKidsSkinColor",
-        state.skinColor
-      );
-
-      localStorage.setItem(
-        "bibleKidsHairStyle",
-        state.topVariant
-      );
-
-      localStorage.setItem(
-        "bibleKidsHairColour",
-        state.hairColor
-      );
-
-      localStorage.setItem(
-        "bibleKidsOutfit",
-        state.clothesVariant
-      );
-
-      localStorage.setItem(
-        "bibleKidsClothesColour",
-        state.clothesColor
-      );
-
-      localStorage.setItem(
-        "bibleKidsPlayerName",
-        state.name.trim()
-      );
-
-      localStorage.setItem(
-        "bibleKidsAvatarUrl",
-        buildAvatarUrl()
-      );
-    }
-
-    /* ========================================
-       完成
-    ======================================== */
+      finishCharacter();
+    });
 
     function finishCharacter() {
-      if (
-        state.gender === "" ||
-        state.name.trim() === ""
-      ) {
-        return;
-      }
+      if (!state.gender || !state.name.trim()) return;
 
       saveCharacter();
+      nextButton.disabled = true;
+      document.body.classList.add("leaving");
 
-      nextButton.disabled =
-        true;
-
-      document.body.classList.add(
-        "leaving"
-      );
-
-      setTimeout(
-        function () {
-          window.location.href =
-            "map.html";
-        },
-        850
-      );
+      setTimeout(() => {
+        window.location.href = "map.html";
+      }, 850);
     }
-
-    /* ========================================
-       載入角色
-    ======================================== */
 
     function loadCharacter() {
-      const saved =
-        localStorage.getItem(
-          "bibleKidsCharacter"
-        );
-
-      if (!saved) {
-        return;
-      }
+      const saved = localStorage.getItem("bibleKidsCharacter");
+      if (!saved) return;
 
       try {
-        const savedState =
-          JSON.parse(saved);
+        const savedState = JSON.parse(saved);
 
-        if (
-          savedState &&
-          typeof savedState ===
-            "object"
-        ) {
-          Object.assign(
-            state,
-            savedState
-          );
+        if (savedState && typeof savedState === "object") {
+          if (savedState.topVariant && !savedState.hairStyle) {
+            savedState.hairStyle = savedState.topVariant;
+          }
+
+          if (savedState.clothesVariant && !savedState.clothesStyle) {
+            savedState.clothesStyle = savedState.clothesVariant;
+          }
+
+          Object.assign(state, savedState);
         }
       } catch (error) {
-        console.warn(
-          "Could not load saved character.",
-          error
-        );
+        console.warn("Could not load saved character.", error);
       }
     }
-
-    /* ========================================
-       套用語言
-    ======================================== */
 
     function applyLanguage() {
-      const language =
-        getLanguage();
+      const language = getLanguage();
+      const languageText = text[language];
 
-      const languageText =
-        text[language];
-
-      document.documentElement.lang =
-        language;
-
-      document.getElementById(
-        "topTitle"
-      ).textContent =
-        languageText.topTitle;
-
-      document.getElementById(
-        "previewTitle"
-      ).textContent =
-        languageText.previewTitle;
-
-      document.getElementById(
-        "focusLabel"
-      ).textContent =
-        languageText.focusLabel;
-
-      avatarError.textContent =
-        languageText.avatarError;
+      document.documentElement.lang = language;
+      $("topTitle").textContent = languageText.topTitle;
+      $("previewTitle").textContent = languageText.previewTitle;
+      $("focusLabel").textContent = languageText.focusLabel;
     }
 
-    /* ========================================
-       啟動
-    ======================================== */
-
-    window.addEventListener(
-      "load",
-      function () {
-        loadCharacter();
-        applyLanguage();
-        updateAvatar();
-        renderStep();
-      }
-    );
+    window.addEventListener("load", () => {
+      loadCharacter();
+      applyLanguage();
+      updateAvatar();
+      renderStep();
+    });
   </script>
-
 </body>
-
 </html>
