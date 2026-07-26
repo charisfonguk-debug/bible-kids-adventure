@@ -2,1359 +2,932 @@
 <html lang="zh-HK">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Create Your Character | Bible Kids Adventure</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bible Kids Adventure - Character Creator</title>
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --wood-dark: #3a2418;
+      --wood: #7b4a2c;
+      --wood-light: #a76a3c;
+      --paper: #f6e2ad;
+      --paper-dark: #d7b878;
+      --ink: #3d2b1f;
+      --green: #6b8f4e;
+      --green-dark: #3f5f2d;
+      --cream: #fff5d8;
+    }
 
-    html, body {
-      width: 100%;
-      min-height: 100%;
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
       margin: 0;
+      min-height: 100%;
+      font-family: Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: #6f8f5d;
+      color: var(--ink);
     }
 
     body {
       min-height: 100vh;
-      overflow-x: hidden;
-      font-family: "Trebuchet MS", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-      background: #789766;
+      background:
+        linear-gradient(rgba(48, 70, 39, .25), rgba(48, 70, 39, .25)),
+        url("images/home-background.png") center / cover no-repeat fixed;
     }
 
-    button, input { font: inherit; }
-    button { cursor: pointer; }
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
 
     .page {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: max(14px, env(safe-area-inset-top))
-               max(14px, env(safe-area-inset-right))
-               max(14px, env(safe-area-inset-bottom))
-               max(14px, env(safe-area-inset-left));
-      background:
-        linear-gradient(rgba(32,57,34,.28), rgba(52,67,37,.30)),
-        url("images/home-background.png") center / cover no-repeat,
-        #789766;
+      display: grid;
+      place-items: center;
+      padding: 18px;
     }
 
-    .creator-shell {
-      width: min(97vw, 1400px);
-      min-height: min(94vh, 900px);
+    .shell {
+      width: min(1180px, 100%);
+      min-height: 760px;
       display: grid;
       grid-template-rows: auto 1fr auto;
-      overflow: hidden;
-      border: 8px solid #4c2b15;
-      border-radius: 25px 17px 28px 19px;
-      background: linear-gradient(#9b6030, #653919);
-      box-shadow: 0 12px 0 #321c0e, 0 28px 55px rgba(25,17,10,.43);
+      border: 8px solid var(--wood-dark);
+      background: linear-gradient(var(--wood-light), var(--wood));
+      box-shadow: 0 12px 0 #27180f, 0 24px 55px rgba(0, 0, 0, .35);
+      image-rendering: pixelated;
     }
 
-    .top-wood {
-      display: grid;
-      grid-template-columns: 150px 1fr 150px;
-      align-items: center;
-      min-height: 86px;
-      padding: 14px clamp(18px,3vw,34px);
-      border-bottom: 7px solid #482712;
+    .header {
+      padding: 18px 22px;
+      border-bottom: 7px solid var(--wood-dark);
+      text-align: center;
+      color: var(--cream);
+      text-shadow: 3px 3px 0 #4b2c19;
       background:
-        repeating-linear-gradient(3deg, rgba(255,232,182,.05) 0 2px, transparent 3px 16px),
-        linear-gradient(#b4743b, #7e4b23);
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,.04) 0 2px,
+          transparent 2px 12px
+        ),
+        linear-gradient(#ad7040, #7b4828);
     }
 
-    .brand {
-      justify-self: start;
-      padding: 9px 14px 10px;
-      border: 3px solid #472713;
-      border-radius: 14px 10px 16px 11px;
-      background: linear-gradient(#9c602e, #693919);
-      box-shadow: 0 4px 0 #3a200f;
-      text-align: center;
-      transform: rotate(-1deg);
-    }
-
-    .brand-small {
-      display: block;
-      color: #fff0c7;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-
-    .brand-large {
-      display: block;
-      margin-top: 4px;
-      color: #ffd66b;
-      font-size: 20px;
-      font-weight: 900;
-      text-shadow: 1px 2px 0 #47240f;
-    }
-
-    .top-title {
+    .header h1 {
       margin: 0;
-      color: #fff0c9;
-      font-size: clamp(27px,4vw,44px);
-      font-weight: 900;
-      text-align: center;
-      text-shadow: 2px 3px 0 #472612;
+      font-size: clamp(28px, 4vw, 46px);
     }
 
-    .main-area {
+    .main {
       display: grid;
-      grid-template-columns: minmax(330px,.86fr) minmax(500px,1.34fr);
+      grid-template-columns: minmax(330px, .9fr) minmax(470px, 1.2fr);
       min-height: 0;
     }
 
-    .preview-side {
-      position: relative;
+    .preview-panel {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 0;
-      padding: clamp(22px,3vw,40px);
-      overflow: hidden;
-      border-right: 7px solid #503019;
+      padding: 28px;
+      border-right: 7px solid var(--wood-dark);
       background:
-        linear-gradient(rgba(235,244,218,.12), rgba(55,84,46,.28)),
-        url("images/home-background.png") center / cover no-repeat,
-        #7c9a68;
-    }
-
-    .preview-side::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 42%, rgba(255,252,220,.55), rgba(123,154,96,.17) 52%, rgba(43,70,40,.31));
-      pointer-events: none;
-    }
-
-    .preview-title,
-    .character-name {
-      position: relative;
-      z-index: 3;
-      padding: 8px 19px;
-      border: 3px solid #523319;
-      border-radius: 999px;
-      background: rgba(255,243,203,.96);
-      box-shadow: 0 5px 0 #462914;
-      color: #53351e;
-      font-weight: 900;
-      text-align: center;
+        radial-gradient(circle at center, rgba(255,255,220,.5), transparent 60%),
+        rgba(111, 148, 88, .75);
     }
 
     .preview-title {
-      margin: 0 0 16px;
-      font-size: clamp(15px,2vw,19px);
-    }
-
-    .character-name {
-      min-height: 39px;
-      margin: 19px 0 0;
-      font-size: clamp(21px,3vw,29px);
-      line-height: 1;
-    }
-
-    .avatar-stage {
-      position: relative;
-      z-index: 2;
-      width: min(100%, 430px);
-      min-height: 475px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      overflow: hidden;
-      border: 5px solid rgba(76,46,22,.84);
-      border-radius: 32px 22px 35px 24px;
-      background: radial-gradient(circle at 50% 33%, rgba(255,255,237,.98), rgba(196,223,161,.86) 55%, rgba(89,139,74,.9));
-      box-shadow: 0 9px 0 rgba(66,38,17,.88), 0 18px 34px rgba(36,25,14,.28);
-    }
-
-    .avatar-stage::before {
-      content: "";
-      position: absolute;
-      left: -10%;
-      right: -10%;
-      bottom: -65px;
-      height: 150px;
-      border-radius: 50%;
-      background: linear-gradient(rgba(76,121,62,.73), rgba(55,95,47,.91));
-    }
-
-    .avatar-glow {
-      position: absolute;
-      top: 28px;
-      left: 50%;
-      width: 310px;
-      height: 310px;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,249,194,.60), transparent 68%);
-    }
-
-    #avatarSvg {
-      position: relative;
-      z-index: 3;
-      display: block;
-      width: min(94%, 395px);
-      height: auto;
-      margin-bottom: -2px;
-      filter: drop-shadow(0 12px 8px rgba(51,38,23,.23));
-      transition: transform .25s ease, width .25s ease, margin .25s ease;
-    }
-
-    .avatar-stage.focus-head {
-      align-items: flex-start;
-    }
-
-    .avatar-stage.focus-head #avatarSvg {
-      width: 145%;
-      max-width: none;
-      margin-top: -55px;
-      margin-bottom: -205px;
-      transform: scale(1.05);
-      transform-origin: center top;
-    }
-
-    .focus-label {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 6;
-      display: none;
-      padding: 6px 11px;
-      border: 2px solid #57351a;
-      border-radius: 999px;
-      background: rgba(255,245,207,.95);
-      color: #58381f;
-      font-size: 12px;
+      margin: 0 0 14px;
+      padding: 8px 16px;
+      border: 4px solid var(--wood-dark);
+      background: var(--paper);
+      box-shadow: 0 5px 0 #4b2b18;
       font-weight: 900;
-      box-shadow: 0 3px 0 #4b2d16;
     }
 
-    .avatar-stage.focus-head .focus-label { display: block; }
-
-    .question-side {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 0;
-      padding: clamp(24px,4vw,45px);
-      background: linear-gradient(140deg, rgba(124,76,36,.83), rgba(90,49,23,.93));
-    }
-
-    .parchment {
-      position: relative;
-      width: min(100%,760px);
-      min-height: 510px;
-      display: flex;
-      flex-direction: column;
-      padding: clamp(35px,5vw,54px) clamp(24px,5vw,54px) 34px;
-      overflow: hidden;
-      border: 3px solid rgba(90,55,25,.7);
-      border-radius: 12px 7px 15px 9px;
-      background: linear-gradient(145deg,#fff4cf,#f5dfaa 50%,#ecd095);
-      box-shadow: 0 9px 0 rgba(59,35,16,.68), 0 20px 38px rgba(33,22,13,.33);
-    }
-
-    .parchment::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: .21;
-      background: repeating-linear-gradient(3deg,rgba(116,72,33,.09) 0 1px,transparent 2px 11px);
-      pointer-events: none;
-    }
-
-    .nail {
-      position: absolute;
-      z-index: 5;
-      width: 21px;
-      height: 21px;
-      border: 3px solid #474137;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%,#e5e6e0,#8e968f 55%,#4c504b);
-      box-shadow: 0 3px 4px rgba(42,30,18,.45);
-    }
-
-    .nail.tl { top: 17px; left: 18px; }
-    .nail.tr { top: 17px; right: 18px; }
-    .nail.bl { bottom: 17px; left: 18px; }
-    .nail.br { bottom: 17px; right: 18px; }
-
-    .question-heading {
-      position: relative;
-      z-index: 3;
-      margin: 0;
-      color: #a34116;
-      font-size: clamp(29px,4.5vw,47px);
-      font-weight: 900;
-      line-height: 1.1;
-      text-align: center;
-      text-shadow: 1px 2px 0 rgba(255,238,181,.86);
-    }
-
-    .heading-line {
-      position: relative;
-      z-index: 3;
-      width: min(90%,510px);
-      height: 4px;
-      margin: 17px auto 20px;
-      border-radius: 999px;
-      background: linear-gradient(90deg,transparent,#936331 20%,#936331 80%,transparent);
-    }
-
-    .question-help {
-      position: relative;
-      z-index: 3;
-      max-width: 590px;
-      margin: 0 auto 23px;
-      color: #685036;
-      font-size: clamp(14px,2vw,17px);
-      font-weight: 800;
-      line-height: 1.45;
-      text-align: center;
-    }
-
-    .choices {
-      position: relative;
-      z-index: 3;
+    .canvas-wrap {
+      width: min(100%, 420px);
+      aspect-ratio: 1 / 1;
       display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
-      gap: 17px;
-      width: 100%;
-      max-width: 650px;
-      margin: auto;
-    }
-
-    .choices.compact {
-      grid-template-columns: repeat(3,minmax(0,1fr));
-      gap: 14px;
-    }
-
-    .choice-card {
-      position: relative;
-      min-width: 0;
-      min-height: 156px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 13px 11px 14px;
-      border: 4px solid #68401f;
-      border-radius: 17px 12px 19px 13px;
-      background: linear-gradient(145deg,rgba(255,252,231,.99),rgba(230,197,126,.97));
-      box-shadow: 0 6px 0 #513018, 0 12px 20px rgba(52,36,20,.2);
-      color: #49311d;
-      font-weight: 900;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-
-    .choice-card:hover { transform: translateY(-5px); box-shadow: 0 11px 0 #513018; }
-    .choice-card.selected {
-      border-color: #406124;
-      outline: 5px solid rgba(119,165,70,.63);
-      outline-offset: 3px;
-      background: linear-gradient(145deg,#fffdeb,#ddea9a);
-      box-shadow: 0 7px 0 #3e5b28;
-    }
-
-    .choice-card.selected::after,
-    .colour-choice.selected::after {
-      content: "✓";
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: #538033;
-      color: white;
-      font-weight: 900;
-    }
-
-    .choice-card.selected::after {
-      top: -13px;
-      right: -11px;
-      width: 37px;
-      height: 37px;
-      border: 3px solid #fff8d8;
-      font-size: 22px;
-    }
-
-    .choice-preview {
-      width: 118px;
-      height: 118px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 8px;
+      place-items: center;
+      border: 6px solid var(--wood-dark);
+      background:
+        linear-gradient(#d8ecad 0 70%, #7ea95f 70% 100%);
+      box-shadow: inset 0 0 0 4px rgba(255,255,255,.25), 0 8px 0 #3b2417;
       overflow: hidden;
-      border: 3px solid rgba(92,57,28,.45);
-      border-radius: 16px;
-      background: radial-gradient(circle,#ffffea,#b9dc97);
     }
 
-    .choice-preview svg {
-      width: 135px;
-      height: 135px;
-      flex: 0 0 auto;
+    canvas {
+      width: 88%;
+      height: 88%;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
-    .choice-label {
-      font-size: clamp(15px,2vw,18px);
-      font-weight: 900;
-      text-align: center;
-    }
-
-    .colour-choices {
-      grid-template-columns: repeat(3,minmax(0,1fr));
-      max-width: 520px;
-    }
-
-    .colour-choice {
-      position: relative;
-      min-height: 101px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 8px;
-      border: 4px solid #67411f;
-      border-radius: 16px 11px 18px 12px;
-      background: rgba(255,248,220,.94);
-      box-shadow: 0 6px 0 #513018;
-      color: #4b321e;
-      font-weight: 900;
-    }
-
-    .colour-choice.selected {
-      border-color: #406124;
-      outline: 5px solid rgba(119,165,70,.63);
-      outline-offset: 3px;
-      background: #ffffe6;
-    }
-
-    .colour-choice.selected::after {
-      top: 7px;
-      right: 8px;
-      width: 27px;
-      height: 27px;
-      font-size: 18px;
-    }
-
-    .colour-circle {
-      width: 55px;
-      height: 55px;
-      border: 5px solid #fff9e1;
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px #5c3a20, 0 5px 0 rgba(72,43,20,.5);
-    }
-
-    .colour-label { font-size: 14px; }
-
-    .name-step {
-      position: relative;
-      z-index: 3;
-      width: min(100%,520px);
-      margin: auto;
-    }
-
-    .name-label {
-      display: block;
-      margin-bottom: 13px;
-      color: #593b24;
-      font-size: 18px;
-      font-weight: 900;
-      text-align: center;
-    }
-
-    .name-input {
-      width: 100%;
-      min-height: 67px;
-      padding: 14px 19px;
-      border: 4px solid #66411f;
-      border-radius: 17px 12px 19px 13px;
-      outline: none;
-      background: rgba(255,254,235,.99);
-      box-shadow: inset 0 4px 6px rgba(93,57,26,.13), 0 6px 0 #513018;
-      color: #442d1c;
+    .player-name {
+      min-height: 44px;
+      margin-top: 18px;
+      padding: 8px 18px;
+      border: 4px solid var(--wood-dark);
+      background: var(--paper);
+      box-shadow: 0 5px 0 #4b2b18;
       font-size: 23px;
       font-weight: 900;
       text-align: center;
     }
 
-    .name-input:focus {
-      border-color: #4e7130;
-      box-shadow: inset 0 4px 6px rgba(93,57,26,.13), 0 6px 0 #3a5625, 0 0 0 5px rgba(113,155,67,.3);
-    }
-
-    .name-note {
-      margin: 17px 0 0;
-      color: #6c5337;
-      font-size: 14px;
-      font-weight: 800;
-      line-height: 1.45;
-      text-align: center;
-    }
-
-    .navigation-bar {
-      display: grid;
-      grid-template-columns: minmax(130px,1fr) auto minmax(130px,1fr);
-      align-items: center;
-      min-height: 86px;
-      padding: 14px clamp(16px,3vw,35px);
-      border-top: 7px solid #482611;
-      background:
-        repeating-linear-gradient(2deg,rgba(255,230,176,.05) 0 2px,transparent 3px 15px),
-        linear-gradient(#9c5e2e,#703f1d);
-    }
-
-    .nav-button {
-      min-width: 145px;
-      min-height: 52px;
-      padding: 11px 19px;
-      border: 4px solid #472914;
-      border-radius: 15px 10px 17px 11px;
-      background: linear-gradient(#f2c76c,#ae6c2d);
-      box-shadow: 0 6px 0 #3b2110;
-      color: #fff4d5;
-      font-size: clamp(15px,2vw,19px);
-      font-weight: 900;
-      text-shadow: 1px 2px 0 rgba(66,34,14,.75);
-    }
-
-    .previous-button { justify-self: start; }
-    .next-button { justify-self: end; }
-    .nav-button:disabled { opacity: .44; cursor: not-allowed; }
-
-    .progress-area {
-      min-width: 180px;
-      text-align: center;
-    }
-
-    .progress-text {
-      display: block;
-      color: #fff1cd;
-      font-size: clamp(16px,2.2vw,21px);
-      font-weight: 900;
-      text-shadow: 1px 2px 0 #472611;
-    }
-
-    .progress-dots {
+    .options-panel {
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin-top: 8px;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(95,57,31,.95), rgba(73,42,23,.98));
     }
 
-    .progress-dot {
-      width: 10px;
-      height: 10px;
-      border: 2px solid rgba(255,244,207,.88);
-      border-radius: 50%;
-      background: rgba(75,39,18,.62);
+    .paper {
+      width: min(100%, 700px);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      padding: 34px;
+      border: 5px solid #6b4828;
+      background:
+        repeating-linear-gradient(
+          3deg,
+          rgba(110,75,38,.05) 0 1px,
+          transparent 1px 10px
+        ),
+        linear-gradient(145deg, #fff0c8, var(--paper));
+      box-shadow: 0 8px 0 #422615;
     }
 
-    .progress-dot.complete { background: #d5ee86; }
-    .progress-dot.current {
-      transform: scale(1.35);
-      background: #fff6b3;
-      box-shadow: 0 0 8px rgba(255,246,179,.82);
+    .question {
+      margin: 0;
+      text-align: center;
+      color: #9a3f1d;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
     }
 
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(circle,rgba(255,255,234,.99),rgba(247,224,158,1));
-      transition: opacity .85s ease;
+    .help {
+      margin: 10px auto 24px;
+      max-width: 560px;
+      text-align: center;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #684e35;
     }
 
-    body.leaving::after { opacity: 1; }
-
-    @media (max-width: 760px) {
-      .page { display: block; padding: 9px 8px 13px; }
-      .creator-shell { width: 100%; min-height: auto; border-width: 5px; }
-      .top-wood { grid-template-columns: 1fr; min-height: 73px; justify-items: center; border-bottom-width: 5px; }
-      .brand { display: none; }
-      .main-area { display: flex; flex-direction: column; }
-      .preview-side { padding: 17px 13px 22px; border-right: 0; border-bottom: 5px solid #503019; }
-      .avatar-stage { width: min(88vw,335px); min-height: 330px; }
-      #avatarSvg { width: min(92%,310px); }
-      .avatar-stage.focus-head #avatarSvg { width: 150%; margin-top: -50px; margin-bottom: -160px; }
-      .question-side { padding: 18px 10px 21px; }
-      .parchment { width: 100%; min-height: 435px; padding: 39px 15px 29px; }
-      .choices, .choices.compact, .colour-choices { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px; }
-      .choice-card { min-height: 138px; padding: 9px 6px 11px; }
-      .choice-preview { width: 88px; height: 88px; }
-      .choice-preview svg { width: 112px; height: 112px; }
-      .navigation-bar { min-height: 76px; padding: 11px 8px; border-top-width: 5px; }
-      .nav-button { min-width: 0; min-height: 48px; padding: 9px; border-width: 3px; font-size: 13px; }
-      .progress-area { min-width: 112px; }
-      .progress-text { font-size: 14px; }
+    .choices {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      align-content: center;
     }
 
-    @media (max-width: 390px) {
-      .choices, .choices.compact { grid-template-columns: 1fr; }
-      .colour-choices { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .choice-card { flex-direction: row; min-height: 106px; gap: 13px; }
-      .choice-preview { flex-shrink: 0; margin-bottom: 0; }
-      .navigation-bar { grid-template-columns: 1fr 98px 1fr; }
+    .choice {
+      min-height: 90px;
+      padding: 12px;
+      border: 4px solid #5f3b21;
+      background: #fff7da;
+      box-shadow: 0 5px 0 #4a2b18;
+      color: var(--ink);
+      font-weight: 900;
+      transition: transform .12s ease;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; animation: none !important; }
+    .choice:hover {
+      transform: translateY(-3px);
+    }
+
+    .choice.selected {
+      outline: 5px solid #7ba650;
+      background: #eef6c9;
+    }
+
+    .swatch {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 8px;
+      border: 4px solid #4c2d1b;
+      box-shadow: 0 3px 0 #3a2115;
+    }
+
+    .mini-canvas {
+      display: block;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 8px;
+      image-rendering: pixelated;
+    }
+
+    .name-box {
+      width: min(100%, 480px);
+      margin: auto;
+    }
+
+    .name-box label {
+      display: block;
+      margin-bottom: 12px;
+      text-align: center;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .name-box input {
+      width: 100%;
+      padding: 15px 18px;
+      border: 4px solid #5f3b21;
+      background: #fffdf0;
+      box-shadow: 0 5px 0 #4a2b18;
+      font-size: 22px;
+      font-weight: 900;
+      text-align: center;
+      outline: none;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      border-top: 7px solid var(--wood-dark);
+      background: linear-gradient(#9b5e35, #6b3d23);
+    }
+
+    .nav-btn {
+      min-height: 52px;
+      padding: 10px 18px;
+      border: 4px solid #3e2517;
+      background: linear-gradient(#f0c96d, #b87834);
+      box-shadow: 0 5px 0 #2f1c12;
+      color: #fff5dd;
+      font-weight: 900;
+      text-shadow: 2px 2px 0 #5a341e;
+    }
+
+    .nav-btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .back {
+      justify-self: start;
+    }
+
+    .next {
+      justify-self: end;
+    }
+
+    .progress {
+      color: #fff0c8;
+      font-weight: 900;
+      text-align: center;
+      text-shadow: 2px 2px 0 #4d2b19;
+    }
+
+    @media (max-width: 820px) {
+      .page {
+        padding: 8px;
+      }
+
+      .shell {
+        min-height: 0;
+        border-width: 5px;
+      }
+
+      .main {
+        grid-template-columns: 1fr;
+      }
+
+      .preview-panel {
+        border-right: 0;
+        border-bottom: 5px solid var(--wood-dark);
+        padding: 18px;
+      }
+
+      .canvas-wrap {
+        width: min(82vw, 330px);
+      }
+
+      .options-panel {
+        padding: 16px 10px 20px;
+      }
+
+      .paper {
+        min-height: 430px;
+        padding: 24px 16px;
+      }
+
+      .choices {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer {
+        padding: 12px 8px;
+      }
+
+      .nav-btn {
+        padding: 9px 11px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .choices {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .choice {
+        min-height: 82px;
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      .mini-canvas {
+        width: 60px;
+        height: 60px;
+      }
+
+      .footer {
+        grid-template-columns: 1fr 90px 1fr;
+      }
     }
   </style>
 </head>
-
 <body>
   <main class="page">
-    <section class="creator-shell">
-      <header class="top-wood">
-        <div class="brand" aria-label="Bible Kids Adventure">
-          <span class="brand-small">BIBLE KIDS</span>
-          <span class="brand-large">ADVENTURE</span>
-        </div>
-
-        <h1 class="top-title" id="topTitle">Create Your Character!</h1>
-        <div aria-hidden="true"></div>
+    <section class="shell">
+      <header class="header">
+        <h1 id="pageTitle">Create Your Pixel Character!</h1>
       </header>
 
-      <div class="main-area">
-        <section class="preview-side">
+      <section class="main">
+        <div class="preview-panel">
           <p class="preview-title" id="previewTitle">Your Character</p>
 
-          <div class="avatar-stage" id="avatarStage">
-            <div class="avatar-glow"></div>
-            <span class="focus-label" id="focusLabel">Close-up view</span>
-            <svg id="avatarSvg" viewBox="0 0 360 500" role="img" aria-label="Character preview"></svg>
+          <div class="canvas-wrap">
+            <canvas id="characterCanvas" width="160" height="160"></canvas>
           </div>
 
-          <p class="character-name" id="characterName">Young Explorer</p>
-        </section>
-
-        <section class="question-side">
-          <div class="parchment">
-            <span class="nail tl" aria-hidden="true"></span>
-            <span class="nail tr" aria-hidden="true"></span>
-            <span class="nail bl" aria-hidden="true"></span>
-            <span class="nail br" aria-hidden="true"></span>
-
-            <h2 class="question-heading" id="questionHeading">Boy or Girl?</h2>
-            <div class="heading-line"></div>
-            <p class="question-help" id="questionHelp">Choose the character you would like to create.</p>
-            <div class="choices" id="choices"></div>
-          </div>
-        </section>
-      </div>
-
-      <nav class="navigation-bar" aria-label="Character creation steps">
-        <button type="button" class="nav-button previous-button" id="previousButton">← Back</button>
-
-        <div class="progress-area">
-          <span class="progress-text" id="progressText">Step 1 / 7</span>
-          <div class="progress-dots" id="progressDots" aria-hidden="true"></div>
+          <div class="player-name" id="playerNameDisplay">Young Explorer</div>
         </div>
 
-        <button type="button" class="nav-button next-button" id="nextButton" disabled>Next →</button>
-      </nav>
+        <div class="options-panel">
+          <section class="paper">
+            <h2 class="question" id="questionTitle">Boy or Girl?</h2>
+            <p class="help" id="questionHelp">Choose your character.</p>
+            <div class="choices" id="choices"></div>
+          </section>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <button class="nav-btn back" id="backBtn" type="button">← Back</button>
+        <div class="progress" id="progressText">Step 1 / 7</div>
+        <button class="nav-btn next" id="nextBtn" type="button" disabled>Next →</button>
+      </footer>
     </section>
   </main>
 
   <script>
-    const totalSteps = 7;
+    const canvas = document.getElementById("characterCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+
+    const choices = document.getElementById("choices");
+    const questionTitle = document.getElementById("questionTitle");
+    const questionHelp = document.getElementById("questionHelp");
+    const progressText = document.getElementById("progressText");
+    const backBtn = document.getElementById("backBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const playerNameDisplay = document.getElementById("playerNameDisplay");
+
+    const TOTAL_STEPS = 7;
     let currentStep = 0;
 
     const state = {
       gender: "",
-      skinColor: "ffdbb4",
+      skin: "#d99a6c",
       hairStyle: "short",
-      hairColor: "724133",
-      clothesStyle: "hoodie",
-      clothesColor: "5199e4",
+      hair: "#5a3525",
+      outfit: "shirt",
+      clothes: "#3f78b5",
       name: ""
     };
 
-    const $ = (id) => document.getElementById(id);
+    const language = localStorage.getItem("bibleKidsLanguage") === "zh-HK" ? "zh-HK" : "en";
 
-    const avatarStage = $("avatarStage");
-    const avatarSvg = $("avatarSvg");
-    const characterName = $("characterName");
-    const questionHeading = $("questionHeading");
-    const questionHelp = $("questionHelp");
-    const choices = $("choices");
-    const previousButton = $("previousButton");
-    const nextButton = $("nextButton");
-    const progressText = $("progressText");
-    const progressDots = $("progressDots");
-
-    const text = {
+    const copy = {
       en: {
-        topTitle: "Create Your Character!",
-        previewTitle: "Your Character",
+        title: "Create Your Pixel Character!",
+        preview: "Your Character",
         defaultName: "Young Explorer",
-        focusLabel: "Close-up view",
-        previous: "← Back",
+        back: "← Back",
         next: "Next →",
         finish: "Begin Adventure →",
-        questions: [
-          ["Boy or Girl?", "Choose the character you would like to create."],
-          ["Choose a Skin Tone", "The preview is enlarged so you can see the face clearly."],
-          ["Choose a Hairstyle", "Choose a hairstyle for your explorer."],
+        steps: [
+          ["Boy or Girl?", "Choose your character."],
+          ["Choose Skin Tone", "Choose the skin tone you like."],
+          ["Choose Hairstyle", "Choose a clean pixel hairstyle."],
           ["Choose Hair Colour", "Choose your character's hair colour."],
-          ["Choose Some Clothes", "Choose an outfit for the adventure."],
-          ["Choose Clothes Colour", "Choose a colour for your character's outfit."],
-          ["What Is Your Name?", "Your name will appear during your Bible adventure."]
+          ["Choose Clothes", "Choose an outfit for the adventure."],
+          ["Choose Clothes Colour", "Choose the main colour of the clothes."],
+          ["What Is Your Name?", "Enter the name used in your adventure."]
         ],
         labels: {
-          boy:"Boy", girl:"Girl",
-          skinLight:"Light", skinWarm:"Warm", skinTan:"Tan", skinBrown:"Brown", skinDeep:"Deep",
-          short:"Short", curly:"Curly", side:"Side Sweep", bob:"Bob", long:"Long", ponytail:"Ponytail",
-          darkBrown:"Dark Brown", brown:"Brown", lightBrown:"Light Brown", golden:"Golden", auburn:"Auburn", red:"Red",
-          hoodie:"Hoodie", overalls:"Overalls", tshirt:"T-Shirt", sweater:"Sweater", tunic:"Adventure Tunic", smart:"Smart Shirt",
-          blue:"Blue", green:"Green", redClothes:"Red", yellow:"Yellow", pink:"Pink", grey:"Grey",
-          nameLabel:"Enter your name", namePlaceholder:"Type your name",
-          nameNote:"Use 1–18 letters, Chinese characters or numbers."
+          boy: "Boy",
+          girl: "Girl",
+          light: "Light",
+          warm: "Warm",
+          tan: "Tan",
+          brown: "Brown",
+          deep: "Deep",
+          short: "Short",
+          spiky: "Spiky",
+          side: "Side",
+          bob: "Bob",
+          long: "Long",
+          pony: "Ponytail",
+          dark: "Dark",
+          chestnut: "Chestnut",
+          golden: "Golden",
+          auburn: "Auburn",
+          red: "Red",
+          black: "Black",
+          shirt: "Shirt",
+          hoodie: "Hoodie",
+          overalls: "Overalls",
+          tunic: "Tunic",
+          dress: "Dress",
+          smart: "Smart",
+          blue: "Blue",
+          green: "Green",
+          redClothes: "Red",
+          yellow: "Yellow",
+          pink: "Pink",
+          grey: "Grey",
+          enterName: "Enter your name",
+          placeholder: "Type your name"
         }
       },
-
       "zh-HK": {
-        topTitle: "建立你嘅角色！",
-        previewTitle: "你嘅角色",
+        title: "建立你嘅像素角色！",
+        preview: "你嘅角色",
         defaultName: "小小探險家",
-        focusLabel: "放大預覽",
-        previous: "← 上一步",
+        back: "← 上一步",
         next: "下一步 →",
         finish: "開始冒險 →",
-        questions: [
+        steps: [
           ["你係男仔定女仔？", "揀選你想建立嘅角色。"],
-          ["揀選膚色", "角色會自動放大，等你清楚睇到面部。"],
-          ["揀選髮型", "揀選你最鍾意嘅髮型。"],
-          ["揀選頭髮顏色", "揀選你角色嘅頭髮顏色。"],
+          ["揀選膚色", "揀一個你鍾意嘅膚色。"],
+          ["揀選髮型", "揀一個整齊嘅像素髮型。"],
+          ["揀選頭髮顏色", "揀選角色嘅頭髮顏色。"],
           ["揀選衣服", "揀一套適合冒險嘅衣服。"],
-          ["揀選衣服顏色", "揀選你最鍾意嘅衣服顏色。"],
-          ["你叫咩名？", "你嘅名字會喺聖經冒險旅程中出現。"]
+          ["揀選衣服顏色", "揀選衣服嘅主要顏色。"],
+          ["你叫咩名？", "輸入冒險旅程中使用嘅名字。"]
         ],
         labels: {
-          boy:"男仔", girl:"女仔",
-          skinLight:"淺膚色", skinWarm:"暖膚色", skinTan:"小麥色", skinBrown:"啡膚色", skinDeep:"深膚色",
-          short:"短髮", curly:"曲髮", side:"側分髮", bob:"齊肩髮", long:"長髮", ponytail:"馬尾",
-          darkBrown:"深啡色", brown:"啡色", lightBrown:"淺啡色", golden:"金色", auburn:"紅啡色", red:"紅色",
-          hoodie:"連帽衫", overalls:"工人褲", tshirt:"短袖上衣", sweater:"冷衫", tunic:"探險衣", smart:"醒目恤衫",
-          blue:"藍色", green:"綠色", redClothes:"紅色", yellow:"黃色", pink:"粉紅色", grey:"灰色",
-          nameLabel:"輸入你嘅名字", namePlaceholder:"喺度輸入名字",
-          nameNote:"請輸入 1 至 18 個中文字、英文字或數字。"
+          boy: "男仔",
+          girl: "女仔",
+          light: "淺色",
+          warm: "暖色",
+          tan: "小麥色",
+          brown: "啡色",
+          deep: "深色",
+          short: "短髮",
+          spiky: "尖髮",
+          side: "側分",
+          bob: "齊肩",
+          long: "長髮",
+          pony: "馬尾",
+          dark: "深啡",
+          chestnut: "栗啡",
+          golden: "金色",
+          auburn: "紅啡",
+          red: "紅色",
+          black: "黑色",
+          shirt: "上衣",
+          hoodie: "連帽衫",
+          overalls: "工人褲",
+          tunic: "探險衣",
+          dress: "裙",
+          smart: "恤衫",
+          blue: "藍色",
+          green: "綠色",
+          redClothes: "紅色",
+          yellow: "黃色",
+          pink: "粉紅",
+          grey: "灰色",
+          enterName: "輸入你嘅名字",
+          placeholder: "喺度輸入名字"
         }
       }
     };
 
-    const genderOptions = [
-      { value:"boy", labelKey:"boy", hairStyle:"short" },
-      { value:"girl", labelKey:"girl", hairStyle:"long" }
-    ];
+    const t = copy[language];
+    document.documentElement.lang = language;
+    document.getElementById("pageTitle").textContent = t.title;
+    document.getElementById("previewTitle").textContent = t.preview;
 
-    const skinOptions = [
-      { value:"ffdbb4", labelKey:"skinLight" },
-      { value:"edb98a", labelKey:"skinWarm" },
-      { value:"d08b5b", labelKey:"skinTan" },
-      { value:"ae5d29", labelKey:"skinBrown" },
-      { value:"614335", labelKey:"skinDeep" }
-    ];
+    const options = {
+      gender: [
+        { value: "boy", label: "boy" },
+        { value: "girl", label: "girl" }
+      ],
+      skin: [
+        { value: "#f2c29b", label: "light" },
+        { value: "#dda06f", label: "warm" },
+        { value: "#bf7448", label: "tan" },
+        { value: "#8c4f35", label: "brown" },
+        { value: "#56372b", label: "deep" }
+      ],
+      hairStyle: [
+        { value: "short", label: "short" },
+        { value: "spiky", label: "spiky" },
+        { value: "side", label: "side" },
+        { value: "bob", label: "bob" },
+        { value: "long", label: "long" },
+        { value: "pony", label: "pony" }
+      ],
+      hair: [
+        { value: "#2c201c", label: "black" },
+        { value: "#5a3525", label: "dark" },
+        { value: "#8a4f2c", label: "chestnut" },
+        { value: "#d0a84d", label: "golden" },
+        { value: "#9e4b32", label: "auburn" },
+        { value: "#bb3d28", label: "red" }
+      ],
+      outfit: [
+        { value: "shirt", label: "shirt" },
+        { value: "hoodie", label: "hoodie" },
+        { value: "overalls", label: "overalls" },
+        { value: "tunic", label: "tunic" },
+        { value: "dress", label: "dress" },
+        { value: "smart", label: "smart" }
+      ],
+      clothes: [
+        { value: "#3f78b5", label: "blue" },
+        { value: "#4f8a52", label: "green" },
+        { value: "#b84b43", label: "redClothes" },
+        { value: "#d8b448", label: "yellow" },
+        { value: "#c76d96", label: "pink" },
+        { value: "#737b84", label: "grey" }
+      ]
+    };
 
-    const hairStyleOptions = [
-      { value:"short", labelKey:"short" },
-      { value:"curly", labelKey:"curly" },
-      { value:"side", labelKey:"side" },
-      { value:"bob", labelKey:"bob" },
-      { value:"long", labelKey:"long" },
-      { value:"ponytail", labelKey:"ponytail" }
-    ];
-
-    const hairColourOptions = [
-      { value:"2c1b18", labelKey:"darkBrown" },
-      { value:"724133", labelKey:"brown" },
-      { value:"a55728", labelKey:"lightBrown" },
-      { value:"d6b370", labelKey:"golden" },
-      { value:"b45f3b", labelKey:"auburn" },
-      { value:"c93305", labelKey:"red" }
-    ];
-
-    const clothesStyleOptions = [
-      { value:"hoodie", labelKey:"hoodie" },
-      { value:"overalls", labelKey:"overalls" },
-      { value:"tshirt", labelKey:"tshirt" },
-      { value:"sweater", labelKey:"sweater" },
-      { value:"tunic", labelKey:"tunic" },
-      { value:"smart", labelKey:"smart" }
-    ];
-
-    const clothesColourOptions = [
-      { value:"5199e4", labelKey:"blue" },
-      { value:"65b87a", labelKey:"green" },
-      { value:"ef5b5b", labelKey:"redClothes" },
-      { value:"e8c85d", labelKey:"yellow" },
-      { value:"ec75a5", labelKey:"pink" },
-      { value:"929598", labelKey:"grey" }
-    ];
-
-    function getLanguage() {
-      return localStorage.getItem("bibleKidsLanguage") === "zh-HK" ? "zh-HK" : "en";
+    function pixelRect(context, x, y, w, h, color) {
+      context.fillStyle = color;
+      context.fillRect(x, y, w, h);
     }
 
-    function getText() {
-      return text[getLanguage()];
+    function drawCharacter(context, s, size = 160) {
+      context.clearRect(0, 0, size, size);
+      context.imageSmoothingEnabled = false;
+
+      const scale = size / 160;
+      context.save();
+      context.scale(scale, scale);
+
+      const outline = "#2b211c";
+      const skin = s.skin;
+      const hair = s.hair;
+      const clothes = s.clothes;
+
+      // shadow
+      pixelRect(context, 49, 140, 62, 8, "rgba(40,45,30,.28)");
+
+      // legs
+      pixelRect(context, 60, 112, 16, 28, outline);
+      pixelRect(context, 84, 112, 16, 28, outline);
+      pixelRect(context, 64, 116, 10, 22, "#394c68");
+      pixelRect(context, 86, 116, 10, 22, "#394c68");
+
+      // shoes
+      pixelRect(context, 56, 136, 24, 8, outline);
+      pixelRect(context, 82, 136, 24, 8, outline);
+      pixelRect(context, 60, 136, 18, 5, "#6b4228");
+      pixelRect(context, 84, 136, 18, 5, "#6b4228");
+
+      // hair behind
+      if (["bob", "long", "pony"].includes(s.hairStyle)) {
+        pixelRect(context, 46, 38, 68, 58, outline);
+        pixelRect(context, 50, 42, 60, 54, hair);
+      }
+
+      if (s.hairStyle === "long") {
+        pixelRect(context, 46, 82, 14, 38, outline);
+        pixelRect(context, 100, 82, 14, 38, outline);
+        pixelRect(context, 50, 82, 10, 34, hair);
+        pixelRect(context, 100, 82, 10, 34, hair);
+      }
+
+      if (s.hairStyle === "pony") {
+        pixelRect(context, 108, 48, 18, 42, outline);
+        pixelRect(context, 112, 52, 10, 34, hair);
+      }
+
+      // body outline
+      pixelRect(context, 48, 88, 64, 42, outline);
+
+      if (s.outfit === "dress") {
+        pixelRect(context, 52, 92, 56, 34, clothes);
+        pixelRect(context, 44, 120, 72, 14, outline);
+        pixelRect(context, 48, 120, 64, 10, clothes);
+      } else {
+        pixelRect(context, 52, 92, 56, 34, clothes);
+      }
+
+      // arms
+      pixelRect(context, 38, 92, 14, 34, outline);
+      pixelRect(context, 108, 92, 14, 34, outline);
+      pixelRect(context, 42, 96, 10, 28, skin);
+      pixelRect(context, 108, 96, 10, 28, skin);
+
+      // outfit details
+      if (s.outfit === "hoodie") {
+        pixelRect(context, 60, 92, 40, 8, "#f0e5c3");
+        pixelRect(context, 74, 100, 4, 17, "#f0e5c3");
+        pixelRect(context, 84, 100, 4, 17, "#f0e5c3");
+        pixelRect(context, 66, 116, 28, 7, outline);
+      }
+
+      if (s.outfit === "overalls") {
+        pixelRect(context, 56, 92, 48, 10, "#f0e5c3");
+        pixelRect(context, 60, 96, 8, 26, clothes);
+        pixelRect(context, 92, 96, 8, 26, clothes);
+        pixelRect(context, 66, 104, 28, 22, "#4d6f9d");
+      }
+
+      if (s.outfit === "tunic") {
+        pixelRect(context, 78, 92, 4, 34, "#e5d2a2");
+        pixelRect(context, 52, 112, 56, 6, "#7b4c27");
+      }
+
+      if (s.outfit === "smart") {
+        pixelRect(context, 68, 92, 24, 28, "#f5edd8");
+        pixelRect(context, 77, 96, 6, 22, "#9f3c37");
+      }
+
+      // neck
+      pixelRect(context, 68, 80, 24, 14, outline);
+      pixelRect(context, 72, 80, 16, 14, skin);
+
+      // ears
+      pixelRect(context, 42, 50, 12, 26, outline);
+      pixelRect(context, 106, 50, 12, 26, outline);
+      pixelRect(context, 46, 54, 8, 18, skin);
+      pixelRect(context, 106, 54, 8, 18, skin);
+
+      // head
+      pixelRect(context, 50, 34, 60, 52, outline);
+      pixelRect(context, 54, 38, 52, 44, skin);
+
+      // front hair
+      if (s.hairStyle === "short") {
+        pixelRect(context, 50, 30, 60, 18, outline);
+        pixelRect(context, 54, 34, 52, 14, hair);
+        pixelRect(context, 58, 44, 12, 8, hair);
+      }
+
+      if (s.hairStyle === "spiky") {
+        pixelRect(context, 50, 34, 60, 16, outline);
+        pixelRect(context, 54, 38, 52, 12, hair);
+        pixelRect(context, 54, 26, 10, 12, hair);
+        pixelRect(context, 68, 22, 10, 16, hair);
+        pixelRect(context, 82, 24, 10, 14, hair);
+        pixelRect(context, 96, 28, 10, 10, hair);
+      }
+
+      if (s.hairStyle === "side") {
+        pixelRect(context, 50, 30, 60, 18, outline);
+        pixelRect(context, 54, 34, 52, 14, hair);
+        pixelRect(context, 54, 44, 28, 8, hair);
+      }
+
+      if (s.hairStyle === "bob") {
+        pixelRect(context, 50, 30, 60, 20, outline);
+        pixelRect(context, 54, 34, 52, 16, hair);
+        pixelRect(context, 50, 44, 12, 38, hair);
+        pixelRect(context, 98, 44, 12, 38, hair);
+      }
+
+      if (s.hairStyle === "long") {
+        pixelRect(context, 50, 30, 60, 20, outline);
+        pixelRect(context, 54, 34, 52, 16, hair);
+      }
+
+      if (s.hairStyle === "pony") {
+        pixelRect(context, 50, 30, 60, 20, outline);
+        pixelRect(context, 54, 34, 52, 16, hair);
+      }
+
+      // eyes
+      pixelRect(context, 66, 58, 8, 10, outline);
+      pixelRect(context, 88, 58, 8, 10, outline);
+      pixelRect(context, 68, 58, 3, 3, "#ffffff");
+      pixelRect(context, 90, 58, 3, 3, "#ffffff");
+
+      // cheeks
+      pixelRect(context, 58, 70, 8, 4, "#d87d74");
+      pixelRect(context, 96, 70, 8, 4, "#d87d74");
+
+      // mouth
+      pixelRect(context, 74, 74, 14, 4, outline);
+      pixelRect(context, 78, 78, 6, 3, "#ffffff");
+
+      context.restore();
     }
 
-    function esc(value) {
-      return String(value).replace(/[&<>"']/g, function(char) {
-        return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[char];
-      });
+    function createMiniCanvas(customState) {
+      const mini = document.createElement("canvas");
+      mini.width = 80;
+      mini.height = 80;
+      mini.className = "mini-canvas";
+      const miniCtx = mini.getContext("2d");
+      miniCtx.imageSmoothingEnabled = false;
+      drawCharacter(miniCtx, customState, 80);
+      return mini;
     }
 
-    function createHair(style, color) {
-      const c = "#" + color;
-
-      const styles = {
-        short: `
-          <path d="M112 144 Q122 73 180 71 Q239 72 249 143
-                   Q225 121 198 116 Q161 107 112 144Z"
-                fill="${c}" stroke="#3a261f" stroke-width="6"/>
-          <path d="M119 122 Q145 87 182 84 Q220 85 244 122"
-                fill="none" stroke="${c}" stroke-width="26" stroke-linecap="round"/>`,
-
-        curly: `
-          <g fill="${c}" stroke="#3a261f" stroke-width="5">
-            <circle cx="126" cy="116" r="27"/><circle cx="151" cy="91" r="28"/>
-            <circle cx="183" cy="83" r="29"/><circle cx="216" cy="94" r="28"/>
-            <circle cx="238" cy="121" r="27"/><circle cx="111" cy="143" r="23"/>
-            <circle cx="248" cy="145" r="23"/>
-          </g>`,
-
-        side: `
-          <path d="M105 148 Q111 77 178 68 Q236 65 257 135
-                   Q223 111 183 117 Q139 122 105 148Z"
-                fill="${c}" stroke="#3a261f" stroke-width="6"/>
-          <path d="M176 73 Q146 99 117 130" fill="none"
-                stroke="#3a261f" stroke-width="6" stroke-linecap="round"/>`,
-
-        bob: `
-          <path d="M101 151 Q101 69 180 66 Q259 69 259 153
-                   L248 225 Q226 202 214 164
-                   Q180 183 144 164 Q132 202 111 225Z"
-                fill="${c}" stroke="#3a261f" stroke-width="6"/>`,
-
-        long: `
-          <path d="M96 151 Q99 63 180 62 Q262 65 265 153
-                   L257 300 Q231 288 219 225
-                   Q205 174 180 170 Q154 174 141 225
-                   Q129 288 103 300Z"
-                fill="${c}" stroke="#3a261f" stroke-width="6"/>`,
-
-        ponytail: `
-          <path d="M103 150 Q106 70 179 66 Q245 68 257 143
-                   Q221 113 181 116 Q140 116 103 150Z"
-                fill="${c}" stroke="#3a261f" stroke-width="6"/>
-          <path d="M242 108 Q292 107 285 172 Q280 219 246 239
-                   Q263 185 242 108Z"
-                fill="${c}" stroke="#3a261f" stroke-width="6"/>`
-      };
-
-      return styles[style] || styles.short;
+    function updatePreview() {
+      drawCharacter(ctx, state, 160);
+      playerNameDisplay.textContent = state.name.trim() || t.defaultName;
     }
 
-    function createClothes(style, color) {
-      const c = "#" + color;
-      const dark = "#3d4a55";
-      const light = "#fff1d4";
-
-      const styles = {
-        hoodie: `
-          <path d="M107 282 Q180 249 253 282 L281 449 L79 449Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M137 278 Q180 317 223 278 Q218 247 180 244 Q142 247 137 278Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M159 294 L154 342 M201 294 L206 342"
-                stroke="${light}" stroke-width="6" stroke-linecap="round"/>
-          <rect x="144" y="357" width="72" height="45" rx="20"
-                fill="none" stroke="#493020" stroke-width="6"/>`,
-
-        overalls: `
-          <path d="M107 282 Q180 249 253 282 L281 449 L79 449Z"
-                fill="${light}" stroke="#493020" stroke-width="7"/>
-          <path d="M125 302 L235 302 L244 449 L116 449Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M130 281 L151 354 M230 281 L209 354"
-                stroke="${c}" stroke-width="18" stroke-linecap="round"/>
-          <rect x="151" y="333" width="58" height="48" rx="8"
-                fill="${c}" stroke="#493020" stroke-width="6"/>`,
-
-        tshirt: `
-          <path d="M108 284 L139 265 Q180 289 221 265 L252 284
-                   L282 336 L247 356 L244 449 L116 449 L113 356
-                   L78 336Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M150 270 Q180 299 210 270"
-                fill="none" stroke="#493020" stroke-width="6"/>`,
-
-        sweater: `
-          <path d="M107 282 Q180 248 253 282 L281 449 L79 449Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M142 271 Q180 315 218 271"
-                fill="${light}" stroke="#493020" stroke-width="6"/>
-          <path d="M108 340 H252 M112 384 H248"
-                stroke="rgba(255,255,255,.45)" stroke-width="8"/>`,
-
-        tunic: `
-          <path d="M112 277 Q180 251 248 277 L265 449 L95 449Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M179 274 V449" stroke="#493020" stroke-width="6"/>
-          <path d="M139 292 Q180 319 221 292"
-                fill="none" stroke="${light}" stroke-width="8"/>
-          <path d="M104 360 H256" stroke="#8a5b2e" stroke-width="15"/>
-          <circle cx="180" cy="360" r="14" fill="#e8c85d" stroke="#493020" stroke-width="5"/>`,
-
-        smart: `
-          <path d="M107 282 Q180 249 253 282 L281 449 L79 449Z"
-                fill="${c}" stroke="#493020" stroke-width="7"/>
-          <path d="M145 269 L180 319 L215 269 L225 449 L135 449Z"
-                fill="${light}" stroke="#493020" stroke-width="6"/>
-          <path d="M145 269 L180 319 L159 345 L124 289Z"
-                fill="${c}" stroke="#493020" stroke-width="5"/>
-          <path d="M215 269 L180 319 L201 345 L236 289Z"
-                fill="${c}" stroke="#493020" stroke-width="5"/>
-          <path d="M180 319 L167 355 L180 384 L193 355Z"
-                fill="#b3433d" stroke="#493020" stroke-width="4"/>`
-      };
-
-      return styles[style] || styles.hoodie;
-    }
-
-    function avatarMarkup(custom = {}, small = false) {
-      const s = { ...state, ...custom };
-      const skin = "#" + s.skinColor;
-      const eye = "#3b2a24";
-      const outline = "#493020";
-
-      return `
-        <defs>
-          <linearGradient id="legShade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#4c6480"/>
-            <stop offset="1" stop-color="#35485f"/>
-          </linearGradient>
-        </defs>
-
-        <!-- back hair -->
-        ${["bob","long","ponytail"].includes(s.hairStyle) ? createHair(s.hairStyle, s.hairColor) : ""}
-
-        <!-- legs -->
-        <path d="M120 423 L174 423 L170 487 L112 487Z"
-              fill="url(#legShade)" stroke="${outline}" stroke-width="7"/>
-        <path d="M186 423 L240 423 L248 487 L190 487Z"
-              fill="url(#legShade)" stroke="${outline}" stroke-width="7"/>
-
-        <!-- shoes -->
-        <path d="M107 474 Q143 462 174 477 L174 495 L104 495Z"
-              fill="#5f4029" stroke="${outline}" stroke-width="6"/>
-        <path d="M186 477 Q218 462 253 474 L256 495 L186 495Z"
-              fill="#5f4029" stroke="${outline}" stroke-width="6"/>
-
-        <!-- ears -->
-        <ellipse cx="106" cy="171" rx="22" ry="30" fill="${skin}" stroke="${outline}" stroke-width="6"/>
-        <ellipse cx="254" cy="171" rx="22" ry="30" fill="${skin}" stroke="${outline}" stroke-width="6"/>
-
-        <!-- neck -->
-        <path d="M151 231 L209 231 L216 282 Q180 304 144 282Z"
-              fill="${skin}" stroke="${outline}" stroke-width="7"/>
-
-        <!-- body clothes -->
-        ${createClothes(s.clothesStyle, s.clothesColor)}
-
-        <!-- arms -->
-        <path d="M104 296 Q72 329 73 410 Q75 432 95 425 L122 342Z"
-              fill="${skin}" stroke="${outline}" stroke-width="7"/>
-        <path d="M256 296 Q288 329 287 410 Q285 432 265 425 L238 342Z"
-              fill="${skin}" stroke="${outline}" stroke-width="7"/>
-
-        <!-- face -->
-        <ellipse cx="180" cy="165" rx="76" ry="91"
-                 fill="${skin}" stroke="${outline}" stroke-width="7"/>
-
-        <!-- front hair -->
-        ${!["bob","long","ponytail"].includes(s.hairStyle) ? createHair(s.hairStyle, s.hairColor) : `
-          <path d="M108 144 Q119 83 180 76 Q240 83 252 143
-                   Q222 120 190 118 Q154 116 108 144Z"
-                fill="#${s.hairColor}" stroke="${outline}" stroke-width="6"/>
-        `}
-
-        <!-- eyebrows -->
-        <path d="M135 151 Q151 140 165 151" fill="none" stroke="${eye}" stroke-width="7" stroke-linecap="round"/>
-        <path d="M195 151 Q209 140 225 151" fill="none" stroke="${eye}" stroke-width="7" stroke-linecap="round"/>
-
-        <!-- eyes -->
-        <ellipse cx="151" cy="172" rx="10" ry="13" fill="${eye}"/>
-        <ellipse cx="209" cy="172" rx="10" ry="13" fill="${eye}"/>
-        <circle cx="154" cy="168" r="3" fill="white"/>
-        <circle cx="212" cy="168" r="3" fill="white"/>
-
-        <!-- nose -->
-        <path d="M180 177 Q171 199 183 201" fill="none" stroke="#a66d50" stroke-width="5" stroke-linecap="round"/>
-
-        <!-- smile -->
-        <path d="M151 216 Q180 239 209 216"
-              fill="#fff8e9" stroke="${outline}" stroke-width="6" stroke-linejoin="round"/>
-
-        <!-- cheeks -->
-        <ellipse cx="133" cy="205" rx="13" ry="7" fill="#ef8f86" opacity=".45"/>
-        <ellipse cx="227" cy="205" rx="13" ry="7" fill="#ef8f86" opacity=".45"/>
-
-        <!-- optional details -->
-        ${s.gender === "girl" ? `
-          <circle cx="105" cy="187" r="6" fill="#f2cf60" stroke="${outline}" stroke-width="3"/>
-          <circle cx="255" cy="187" r="6" fill="#f2cf60" stroke="${outline}" stroke-width="3"/>
-        ` : ""}
-
-        <!-- backpack straps -->
-        <path d="M120 302 Q104 335 111 384 M240 302 Q256 335 249 384"
-              fill="none" stroke="#70482d" stroke-width="8" opacity=".75"/>
-      `;
-    }
-
-    function updateAvatar() {
-      avatarSvg.innerHTML = avatarMarkup();
-      characterName.textContent = state.name.trim() || getText().defaultName;
-    }
-
-    function makeSvgPreview(custom) {
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute("viewBox", "70 55 220 315");
-      svg.innerHTML = avatarMarkup(custom, true);
-      return svg;
-    }
-
-    function createImageChoice(value, label, custom, selected) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "choice-card" + (selected ? " selected" : "");
-      button.dataset.value = value;
-      button.setAttribute("aria-pressed", selected ? "true" : "false");
-
-      const preview = document.createElement("span");
-      preview.className = "choice-preview";
-      preview.appendChild(makeSvgPreview(custom));
-
-      const labelElement = document.createElement("span");
-      labelElement.className = "choice-label";
-      labelElement.textContent = label;
-
-      button.append(preview, labelElement);
-      return button;
-    }
-
-    function createColourChoice(value, label, selected) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "colour-choice" + (selected ? " selected" : "");
-      button.dataset.value = value;
-
-      const circle = document.createElement("span");
-      circle.className = "colour-circle";
-      circle.style.backgroundColor = "#" + value;
-
-      const labelElement = document.createElement("span");
-      labelElement.className = "colour-label";
-      labelElement.textContent = label;
-
-      button.append(circle, labelElement);
-      return button;
-    }
-
-    function saveCharacter() {
+    function saveState() {
       localStorage.setItem("bibleKidsCharacter", JSON.stringify(state));
-      localStorage.setItem("bibleKidsGender", state.gender);
-      localStorage.setItem("bibleKidsSkinColor", state.skinColor);
-      localStorage.setItem("bibleKidsHairStyle", state.hairStyle);
-      localStorage.setItem("bibleKidsHairColour", state.hairColor);
-      localStorage.setItem("bibleKidsOutfit", state.clothesStyle);
-      localStorage.setItem("bibleKidsClothesColour", state.clothesColor);
       localStorage.setItem("bibleKidsPlayerName", state.name.trim());
     }
 
-    function selectAndRefresh(key, value) {
+    function selectValue(key, value) {
       state[key] = value;
-      saveCharacter();
-      updateAvatar();
+
+      if (key === "gender" && value === "girl" && state.hairStyle === "short") {
+        state.hairStyle = "bob";
+      }
+
+      if (key === "gender" && value === "boy" && ["long", "pony"].includes(state.hairStyle)) {
+        state.hairStyle = "short";
+      }
+
+      saveState();
+      updatePreview();
       renderStep();
     }
 
-    function renderGenderStep() {
+    function renderImageChoices(key, list) {
       choices.className = "choices";
 
-      genderOptions.forEach(option => {
-        const button = createImageChoice(
-          option.value,
-          getText().labels[option.labelKey],
-          { gender:option.value, hairStyle:option.hairStyle },
-          state.gender === option.value
-        );
+      list.forEach(item => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice" + (state[key] === item.value ? " selected" : "");
 
-        button.addEventListener("click", () => {
-          state.gender = option.value;
-          state.hairStyle = option.hairStyle;
-          saveCharacter();
-          updateAvatar();
-          renderStep();
-        });
+        const previewState = { ...state, [key]: item.value };
 
-        choices.appendChild(button);
+        if (key === "gender") {
+          previewState.hairStyle = item.value === "girl" ? "bob" : "short";
+        }
+
+        btn.appendChild(createMiniCanvas(previewState));
+
+        const label = document.createElement("div");
+        label.textContent = t.labels[item.label];
+        btn.appendChild(label);
+
+        btn.addEventListener("click", () => selectValue(key, item.value));
+        choices.appendChild(btn);
       });
     }
 
-    function renderSkinStep() {
-      choices.className = "choices colour-choices";
+    function renderColourChoices(key, list) {
+      choices.className = "choices";
 
-      skinOptions.forEach(option => {
-        const button = createColourChoice(
-          option.value,
-          getText().labels[option.labelKey],
-          state.skinColor === option.value
-        );
+      list.forEach(item => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice" + (state[key] === item.value ? " selected" : "");
 
-        button.addEventListener("click", () => selectAndRefresh("skinColor", option.value));
-        choices.appendChild(button);
-      });
-    }
+        const swatch = document.createElement("div");
+        swatch.className = "swatch";
+        swatch.style.background = item.value;
 
-    function renderHairStyleStep() {
-      choices.className = "choices compact";
+        const label = document.createElement("div");
+        label.textContent = t.labels[item.label];
 
-      hairStyleOptions.forEach(option => {
-        const button = createImageChoice(
-          option.value,
-          getText().labels[option.labelKey],
-          { hairStyle:option.value },
-          state.hairStyle === option.value
-        );
-
-        button.addEventListener("click", () => selectAndRefresh("hairStyle", option.value));
-        choices.appendChild(button);
-      });
-    }
-
-    function renderHairColourStep() {
-      choices.className = "choices colour-choices";
-
-      hairColourOptions.forEach(option => {
-        const button = createColourChoice(
-          option.value,
-          getText().labels[option.labelKey],
-          state.hairColor === option.value
-        );
-
-        button.addEventListener("click", () => selectAndRefresh("hairColor", option.value));
-        choices.appendChild(button);
-      });
-    }
-
-    function renderClothesStep() {
-      choices.className = "choices compact";
-
-      clothesStyleOptions.forEach(option => {
-        const button = createImageChoice(
-          option.value,
-          getText().labels[option.labelKey],
-          { clothesStyle:option.value },
-          state.clothesStyle === option.value
-        );
-
-        button.addEventListener("click", () => selectAndRefresh("clothesStyle", option.value));
-        choices.appendChild(button);
-      });
-    }
-
-    function renderClothesColourStep() {
-      choices.className = "choices colour-choices";
-
-      clothesColourOptions.forEach(option => {
-        const button = createColourChoice(
-          option.value,
-          getText().labels[option.labelKey],
-          state.clothesColor === option.value
-        );
-
-        button.addEventListener("click", () => selectAndRefresh("clothesColor", option.value));
-        choices.appendChild(button);
+        btn.append(swatch, label);
+        btn.addEventListener("click", () => selectValue(key, item.value));
+        choices.appendChild(btn);
       });
     }
 
     function renderNameStep() {
       choices.className = "";
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "name-step";
+      const box = document.createElement("div");
+      box.className = "name-box";
 
       const label = document.createElement("label");
-      label.className = "name-label";
-      label.htmlFor = "playerName";
-      label.textContent = getText().labels.nameLabel;
+      label.textContent = t.labels.enterName;
+      label.htmlFor = "nameInput";
 
       const input = document.createElement("input");
-      input.type = "text";
-      input.id = "playerName";
-      input.className = "name-input";
+      input.id = "nameInput";
       input.maxLength = 18;
-      input.autocomplete = "off";
-      input.placeholder = getText().labels.namePlaceholder;
+      input.placeholder = t.labels.placeholder;
       input.value = state.name;
 
-      const note = document.createElement("p");
-      note.className = "name-note";
-      note.textContent = getText().labels.nameNote;
-
       input.addEventListener("input", () => {
-        state.name = input.value.replace(/[<>]/g, "").slice(0,18);
+        state.name = input.value.replace(/[<>]/g, "").slice(0, 18);
         input.value = state.name;
-        saveCharacter();
-        updateAvatar();
-        updateNavigation();
+        saveState();
+        updatePreview();
+        updateButtons();
       });
 
-      input.addEventListener("keydown", event => {
-        if (event.key === "Enter" && isCurrentStepComplete()) finishCharacter();
-      });
-
-      wrapper.append(label, input, note);
-      choices.appendChild(wrapper);
-
-      setTimeout(() => input.focus(), 60);
+      box.append(label, input);
+      choices.appendChild(box);
+      setTimeout(() => input.focus(), 50);
     }
 
     function renderStep() {
-      avatarStage.classList.toggle("focus-head", [1,2,3].includes(currentStep));
-
-      const question = getText().questions[currentStep];
-      questionHeading.textContent = question[0];
-      questionHelp.textContent = question[1];
+      const [title, help] = t.steps[currentStep];
+      questionTitle.textContent = title;
+      questionHelp.textContent = help;
       choices.innerHTML = "";
 
-      if (currentStep === 0) renderGenderStep();
-      if (currentStep === 1) renderSkinStep();
-      if (currentStep === 2) renderHairStyleStep();
-      if (currentStep === 3) renderHairColourStep();
-      if (currentStep === 4) renderClothesStep();
-      if (currentStep === 5) renderClothesColourStep();
+      if (currentStep === 0) renderImageChoices("gender", options.gender);
+      if (currentStep === 1) renderColourChoices("skin", options.skin);
+      if (currentStep === 2) renderImageChoices("hairStyle", options.hairStyle);
+      if (currentStep === 3) renderColourChoices("hair", options.hair);
+      if (currentStep === 4) renderImageChoices("outfit", options.outfit);
+      if (currentStep === 5) renderColourChoices("clothes", options.clothes);
       if (currentStep === 6) renderNameStep();
 
-      updateNavigation();
-      updateProgress();
+      progressText.textContent = language === "zh-HK"
+        ? `第 ${currentStep + 1}／${TOTAL_STEPS} 步`
+        : `Step ${currentStep + 1} / ${TOTAL_STEPS}`;
+
+      updateButtons();
     }
 
-    function isCurrentStepComplete() {
+    function stepComplete() {
       if (currentStep === 0) return state.gender !== "";
       if (currentStep === 6) return state.name.trim().length > 0;
       return true;
     }
 
-    function updateNavigation() {
-      previousButton.textContent = getText().previous;
-      nextButton.textContent = currentStep === totalSteps - 1 ? getText().finish : getText().next;
-      nextButton.disabled = !isCurrentStepComplete();
+    function updateButtons() {
+      backBtn.textContent = t.back;
+      nextBtn.textContent = currentStep === TOTAL_STEPS - 1 ? t.finish : t.next;
+      nextBtn.disabled = !stepComplete();
     }
 
-    function updateProgress() {
-      progressText.textContent = getLanguage() === "zh-HK"
-        ? `第 ${currentStep + 1}／${totalSteps} 步`
-        : `Step ${currentStep + 1} / ${totalSteps}`;
-
-      progressDots.innerHTML = "";
-
-      for (let index = 0; index < totalSteps; index += 1) {
-        const dot = document.createElement("span");
-        dot.className = "progress-dot";
-        if (index < currentStep) dot.classList.add("complete");
-        if (index === currentStep) dot.classList.add("current");
-        progressDots.appendChild(dot);
-      }
-    }
-
-    previousButton.addEventListener("click", () => {
+    backBtn.addEventListener("click", () => {
       if (currentStep === 0) {
         window.location.href = "index.html";
         return;
       }
 
-      currentStep -= 1;
+      currentStep--;
       renderStep();
     });
 
-    nextButton.addEventListener("click", () => {
-      if (!isCurrentStepComplete()) return;
+    nextBtn.addEventListener("click", () => {
+      if (!stepComplete()) return;
 
-      if (currentStep < totalSteps - 1) {
-        currentStep += 1;
+      if (currentStep < TOTAL_STEPS - 1) {
+        currentStep++;
         renderStep();
-        return;
+      } else {
+        saveState();
+        window.location.href = "map.html";
       }
-
-      finishCharacter();
     });
 
-    function finishCharacter() {
-      if (!state.gender || !state.name.trim()) return;
-
-      saveCharacter();
-      nextButton.disabled = true;
-      document.body.classList.add("leaving");
-
-      setTimeout(() => {
-        window.location.href = "map.html";
-      }, 850);
-    }
-
-    function loadCharacter() {
-      const saved = localStorage.getItem("bibleKidsCharacter");
-      if (!saved) return;
-
+    function loadSavedState() {
       try {
-        const savedState = JSON.parse(saved);
-
-        if (savedState && typeof savedState === "object") {
-          if (savedState.topVariant && !savedState.hairStyle) {
-            savedState.hairStyle = savedState.topVariant;
-          }
-
-          if (savedState.clothesVariant && !savedState.clothesStyle) {
-            savedState.clothesStyle = savedState.clothesVariant;
-          }
-
-          Object.assign(state, savedState);
+        const saved = JSON.parse(localStorage.getItem("bibleKidsCharacter"));
+        if (saved && typeof saved === "object") {
+          Object.assign(state, saved);
         }
       } catch (error) {
         console.warn("Could not load saved character.", error);
       }
     }
 
-    function applyLanguage() {
-      const language = getLanguage();
-      const languageText = text[language];
-
-      document.documentElement.lang = language;
-      $("topTitle").textContent = languageText.topTitle;
-      $("previewTitle").textContent = languageText.previewTitle;
-      $("focusLabel").textContent = languageText.focusLabel;
-    }
-
-    window.addEventListener("load", () => {
-      loadCharacter();
-      applyLanguage();
-      updateAvatar();
-      renderStep();
-    });
+    loadSavedState();
+    updatePreview();
+    renderStep();
   </script>
 </body>
 </html>
