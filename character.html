@@ -1,201 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bible Kids Adventure</title>
-<style>
-:root{--ink:#2f241b;--paper:#fff6d9;--wood:#8a4f27;--wood-dark:#4a2815;--wood-light:#bd7541;--gold:#f4c75d}
-*{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Arial,sans-serif;color:var(--ink);background:#315a36}button,input{font:inherit}
-.screen{display:none;min-height:100vh;padding:24px}.screen.active{display:grid;place-items:center}
-.panel{width:min(1050px,100%);padding:28px;border:8px solid var(--wood-dark);border-radius:26px;background:repeating-linear-gradient(90deg,var(--paper) 0,var(--paper) 34px,#faedc5 34px,#faedc5 68px);box-shadow:inset 0 0 0 5px var(--wood-light),0 20px 50px #0005}
-.center{text-align:center}.eyebrow{font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#315a36}.hero h1,.panel h1{font-size:clamp(2.4rem,7vw,5rem);margin:.2em 0}.wood{border:4px solid var(--wood-dark);border-radius:12px;padding:13px 22px;color:#fff;font-weight:900;cursor:pointer;background:repeating-linear-gradient(0deg,var(--wood-light) 0,var(--wood-light) 9px,var(--wood) 9px,var(--wood) 18px);box-shadow:0 6px 0 #3a1f11}.wood:active{transform:translateY(4px);box-shadow:0 2px 0 #3a1f11}
-.character-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:30px 0}.card{position:relative;border:5px solid var(--wood-dark);border-radius:22px;padding:18px 12px;background:radial-gradient(circle at 50% 24%,#fffdf3 0 32%,transparent 33%),linear-gradient(#fff9e4,#efdfad);box-shadow:0 8px 0 #61351c,0 16px 25px #51321f22;cursor:pointer;transition:.18s transform,.18s filter}.card:hover{transform:translateY(-4px);filter:brightness(1.03)}.card.selected{outline:6px solid var(--gold);transform:translateY(-8px)}.card.selected:before{content:'★';position:absolute;right:10px;top:8px;color:#e7ad24;font-size:1.5rem;text-shadow:0 2px white}.card canvas{width:170px;max-width:100%;image-rendering:pixelated;filter:drop-shadow(0 8px 4px #51321f35)}.name{display:block;font-size:1.2rem;font-weight:900}.role{display:block;font-size:.85rem;opacity:.75}
-.form{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap}.form input{padding:12px 14px;border:4px solid var(--wood-dark);border-radius:10px;background:#fff8df}.error{min-height:20px;color:#a22;font-weight:700}
-.map-shell{width:min(980px,100%)}.map-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;padding:14px 18px;border:5px solid var(--wood-dark);border-radius:16px;background:var(--paper)}.map-head h2{margin:0}.game-wrap{border:8px solid var(--wood-dark);border-radius:16px;overflow:hidden;box-shadow:0 18px 35px #0006;background:#78b65b}.game-wrap canvas{display:block;width:100%;height:auto;image-rendering:pixelated}.controls{text-align:center;margin-top:14px}.controls button{width:58px;height:52px;margin:3px;border:4px solid var(--wood-dark);border-radius:10px;background:var(--wood);color:white;font-weight:900;box-shadow:0 5px 0 #3a1f11;touch-action:none}
-@media(max-width:800px){.character-grid{grid-template-columns:repeat(2,1fr)}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Your Character | Bible Kids Adventure</title>
+  <style>
+    :root{--wood-dark:#4f2c18;--wood-medium:#80502b;--cream:#fff4cf;--paper:#f7e4b6;--green:#4f8f46;--green-dark:#2e612f;--gold:#f3c956;--text-dark:#342111}
+    *{box-sizing:border-box}html,body{min-height:100%;margin:0}body{font-family:"Trebuchet MS",Arial,sans-serif;color:var(--text-dark);background:linear-gradient(rgba(31,74,43,.2),rgba(31,74,43,.28)),url("assets/backgrounds/character-background.png") center/cover no-repeat fixed}button,input{font:inherit}.screen{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:30px 18px}.panel{width:min(1100px,100%);padding:30px;border:7px solid var(--wood-dark);border-radius:24px;background:linear-gradient(rgba(255,244,207,.95),rgba(247,228,182,.95));box-shadow:0 11px 0 #321c0f,0 22px 35px rgba(0,0,0,.35)}.header{margin-bottom:28px;text-align:center}.game-name{margin:0 0 5px;color:var(--green-dark);font-size:.9rem;font-weight:900;letter-spacing:2px;text-transform:uppercase}h1{margin:0;color:var(--wood-dark);font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;text-shadow:0 3px 0 rgba(255,255,255,.8)}.instruction{margin:12px 0 0;font-size:1.05rem;font-weight:700}.character-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.character-card{position:relative;min-width:0;padding:13px 11px 16px;cursor:pointer;border:5px solid var(--wood-medium);border-radius:18px;color:var(--text-dark);background:linear-gradient(180deg,#fff9e3 0%,#efd29b 100%);box-shadow:0 7px 0 var(--wood-dark),0 12px 17px rgba(64,38,17,.25);transition:transform 150ms ease,border-color 150ms ease,box-shadow 150ms ease}.character-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 11px 0 var(--wood-dark),0 17px 21px rgba(64,38,17,.3)}.character-card.selected{transform:translateY(-7px) scale(1.025);border-color:var(--gold);background:linear-gradient(180deg,#fffdeb 0%,#f5d36d 100%);box-shadow:0 10px 0 var(--green-dark),0 17px 23px rgba(64,38,17,.34)}.character-card.selected::after{content:"SELECTED";position:absolute;top:-16px;left:50%;transform:translateX(-50%);padding:5px 12px;border:3px solid var(--green-dark);border-radius:999px;color:#fff;background:var(--green);font-size:.7rem;font-weight:900;letter-spacing:1px}.portrait{width:100%;aspect-ratio:1/1;display:flex;justify-content:center;align-items:flex-end;overflow:hidden;border:4px solid var(--wood-dark);border-radius:14px;background:radial-gradient(circle at 50% 35%,#fff7cf 0%,#badf94 58%,#75a95f 100%)}.portrait img{width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated}.character-card h2{margin:11px 0 2px;color:var(--wood-dark);font-size:1.4rem}.character-card p{min-height:38px;margin:0;font-size:.88rem;font-weight:700}.feature{display:inline-block;margin-top:8px;padding:5px 9px;border:2px solid rgba(79,44,24,.25);border-radius:999px;background:rgba(255,255,255,.55);font-size:.75rem;font-weight:900}.player-section{max-width:470px;margin:30px auto 0;text-align:center}.player-section label{display:block;margin-bottom:8px;color:var(--wood-dark);font-size:1.15rem;font-weight:900}#playerName{width:100%;padding:13px 16px;border:4px solid var(--wood-medium);border-radius:13px;outline:none;color:var(--text-dark);background:#fffdf4;font-size:1.08rem;font-weight:800;text-align:center}#playerName:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(79,143,70,.2)}.message{min-height:25px;margin:8px 0;color:#a02520;font-size:.9rem;font-weight:900}.start-button{width:min(100%,330px);padding:14px 22px;cursor:pointer;border:4px solid var(--green-dark);border-radius:14px;color:#fff;background:linear-gradient(180deg,#6caf5b 0%,#3e7e39 100%);font-size:1.15rem;font-weight:900;box-shadow:0 7px 0 #224c25,0 12px 17px rgba(28,65,31,.28);transition:transform 120ms ease,box-shadow 120ms ease}.start-button:hover{transform:translateY(-2px);box-shadow:0 9px 0 #224c25,0 15px 18px rgba(28,65,31,.3)}.start-button:active{transform:translateY(5px);box-shadow:0 2px 0 #224c25,0 5px 8px rgba(28,65,31,.24)}@media(max-width:850px){.character-grid{grid-template-columns:repeat(2,1fr)}.panel{padding:27px 20px}}@media(max-width:480px){.screen{padding:17px 9px}.panel{padding:24px 12px;border-width:5px;border-radius:18px}.character-grid{gap:12px}.character-card{padding:9px 7px 12px;border-width:4px}.character-card h2{font-size:1.08rem}.character-card p{min-height:32px;font-size:.72rem}.feature{padding:4px 6px;font-size:.66rem}}
+  </style>
 </head>
 <body>
-<section id="home" class="screen active">
-  <div class="panel hero center">
-    <p class="eyebrow">A Bible RPG Adventure</p>
-    <h1>Bible Kids Adventure</h1>
-    <p>Explore the world, meet Bible characters, and discover God’s story.</p>
-    <button class="wood" id="startBtn">Start Adventure</button>
-  </div>
-</section>
-
-<section id="select" class="screen">
-  <div class="panel center">
-    <p class="eyebrow">Choose Your Hero</p>
-    <h1 style="font-size:clamp(2rem,5vw,3.4rem)">Choose Your Character</h1>
-    <div class="character-grid">
-      <button class="card selected" data-id="samuel"><canvas width="256" height="288"></canvas><span class="name">Samuel</span><span class="role">Brave Explorer</span></button>
-      <button class="card" data-id="caleb"><canvas width="256" height="288"></canvas><span class="name">Caleb</span><span class="role">Faithful Adventurer</span></button>
-      <button class="card" data-id="hannah"><canvas width="256" height="288"></canvas><span class="name">Hannah</span><span class="role">Kind Girl Adventurer</span></button>
-      <button class="card" data-id="esther"><canvas width="256" height="288"></canvas><span class="name">Esther</span><span class="role">Courageous Girl Leader</span></button>
-    </div>
-    <form class="form" id="nameForm">
-      <input id="playerName" maxlength="14" placeholder="Enter your name" required>
-      <button class="wood" type="submit">Start Adventure</button>
-    </form>
-    <p class="error" id="error"></p>
-  </div>
-</section>
-
-<section id="map" class="screen">
-  <div class="map-shell">
-    <div class="map-head"><div><small class="eyebrow">Genesis Village</small><h2 id="welcome">Welcome</h2></div><button class="wood" id="changeBtn">Change Character</button></div>
-    <div class="game-wrap"><canvas id="game" width="768" height="512"></canvas></div>
-    <div class="controls">
-      <button data-dir="up">▲</button><br>
-      <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
-    </div>
-  </div>
-</section>
-
-<script>
-const STYLES={
- samuel:{skin:'#e2a071',skinShadow:'#bd734f',hair:'#6a402d',hairLight:'#8b5a3e',shirt:'#497dad',dark:'#294f79',accent:'#d9c5a1',trousers:'#76503a',shoes:'#3d2b23',item:'scarf'},
- caleb:{skin:'#b8754e',skinShadow:'#8f5137',hair:'#29252a',hairLight:'#48424c',shirt:'#5c874d',dark:'#365b34',accent:'#b5a56e',trousers:'#8c6842',shoes:'#342821',item:'cape'},
- hannah:{skin:'#f0bb91',skinShadow:'#ca866a',hair:'#865339',hairLight:'#a96f4e',shirt:'#d97998',dark:'#9b4f6d',accent:'#f7d6df',trousers:'#a75f7c',shoes:'#593a32',item:'braids',girl:true},
- esther:{skin:'#bd7e59',skinShadow:'#94573f',hair:'#382a2b',hairLight:'#5b4241',shirt:'#6e89ba',dark:'#425b88',accent:'#b9d1f2',trousers:'#526a94',shoes:'#3b2c27',item:'longhair',girl:true}
-};
-function px(c,x,y,w,h,color,s=1){c.fillStyle=color;c.fillRect(x*s,y*s,w*s,h*s)}
-function rr(c,x,y,w,h,r,color,stroke=null,line=1){
- c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=color;c.fill();
- if(stroke){c.strokeStyle=stroke;c.lineWidth=line;c.stroke()}
-}
-function eye(c,x,y,lookX=0){
- c.fillStyle='#30251f';c.beginPath();c.ellipse(x,y,7,9,0,0,Math.PI*2);c.fill();
- c.fillStyle='#fff';c.beginPath();c.ellipse(x-2+lookX,y-3,2.7,3.2,0,0,Math.PI*2);c.fill();
- c.fillStyle='#86b8d4';c.beginPath();c.ellipse(x+2,y+4,2.5,2,0,0,Math.PI*2);c.fill();
-}
-function drawChar(c,st,dir='down',frame=0,ox=0,oy=0,s=1){
- c.save();c.translate(ox,oy);c.scale(s,s);c.imageSmoothingEnabled=false;
- const walk=frame===1?-2:frame===2?2:0;
- const bob=frame===0?0:1;
-
- // Soft RPG shadow
- c.fillStyle='rgba(54,35,25,.22)';
- c.beginPath();c.ellipse(32,63,22,6,0,0,Math.PI*2);c.fill();
-
- // Legs and boots
- rr(c,18+walk,49+bob,10,13,4,st.trousers);
- rr(c,36-walk,49+bob,10,13,4,st.trousers);
- rr(c,15+walk,58+bob,15,7,4,st.shoes);
- rr(c,34-walk,58+bob,15,7,4,st.shoes);
-
- // Body
- rr(c,13,34+bob,38,22,10,st.shirt,st.dark,2);
- px(c,14,48+bob,36,6,st.dark);
- px(c,30,35+bob,4,18,st.accent);
- if(st.girl){
-   c.fillStyle=st.shirt;c.beginPath();c.moveTo(15,47+bob);c.lineTo(49,47+bob);c.lineTo(55,59+bob);c.lineTo(9,59+bob);c.closePath();c.fill();
-   px(c,12,53+bob,40,3,st.accent);
- }
-
- // Arms
- rr(c,7,36+bob-walk,11,20,6,st.skin,st.skinShadow,1.5);
- rr(c,46,36+bob+walk,11,20,6,st.skin,st.skinShadow,1.5);
- rr(c,9,35+bob-walk,10,11,5,st.shirt);
- rr(c,45,35+bob+walk,10,11,5,st.shirt);
-
- // Neck
- rr(c,26,29+bob,12,9,4,st.skin);
-
- // Oversized chibi head
- rr(c,10,5+bob,44,33,15,st.skin,st.skinShadow,1.5);
-
- // Hair silhouette by direction
- if(dir==='up'){
-   rr(c,9,4+bob,46,30,15,st.hair);
-   px(c,13,27+bob,38,9,st.hair);
-   px(c,19,32+bob,26,5,st.hairLight);
- }else{
-   rr(c,8,2+bob,48,17,14,st.hair);
-   rr(c,7,9+bob,11,19,7,st.hair);
-   rr(c,46,9+bob,11,19,7,st.hair);
-   px(c,13,7+bob,9,7,st.hairLight);
-   px(c,23,4+bob,9,8,st.hairLight);
-   px(c,34,7+bob,8,7,st.hairLight);
- }
-
- if(dir!=='up'){
-   if(dir==='left'){
-     eye(c,23,23+bob,-1);
-     c.strokeStyle='#7c403e';c.lineWidth=2;c.beginPath();c.arc(23,31+bob,4,.25,2.65);c.stroke();
-   }else if(dir==='right'){
-     eye(c,41,23+bob,1);
-     c.strokeStyle='#7c403e';c.lineWidth=2;c.beginPath();c.arc(41,31+bob,4,.49,2.9);c.stroke();
-   }else{
-     eye(c,23,23+bob,-.5);eye(c,41,23+bob,.5);
-     // Slightly sad, gentle mouth
-     c.strokeStyle='#8b4d4b';c.lineWidth=2;c.beginPath();c.arc(32,33+bob,5,3.55,5.88);c.stroke();
-     // Blush
-     c.fillStyle='rgba(217,103,105,.34)';
-     c.beginPath();c.ellipse(16,30+bob,4,2,0,0,Math.PI*2);c.fill();
-     c.beginPath();c.ellipse(48,30+bob,4,2,0,0,Math.PI*2);c.fill();
-   }
- }
-
- // Character-specific accessories
- if(st.item==='scarf'){
-   rr(c,13,32+bob,38,8,4,st.dark);
-   px(c,15,38+bob,8,15,st.dark);
- }
- if(st.item==='cape'){
-   c.fillStyle=st.dark;c.beginPath();c.moveTo(9,36+bob);c.lineTo(4,59+bob);c.lineTo(18,54+bob);c.closePath();c.fill();
-   c.beginPath();c.moveTo(55,36+bob);c.lineTo(60,59+bob);c.lineTo(46,54+bob);c.closePath();c.fill();
- }
- if(st.item==='braids' && dir!=='up'){
-   rr(c,7,24+bob,8,25,4,st.hair);
-   rr(c,49,24+bob,8,25,4,st.hair);
-   rr(c,8,43+bob,7,7,3,st.accent);
-   rr(c,49,43+bob,7,7,3,st.accent);
- }
- if(st.item==='longhair'){
-   if(dir==='up'){
-     rr(c,8,8+bob,48,38,16,st.hair);
-     px(c,13,36+bob,38,15,st.hair);
-     px(c,20,43+bob,24,8,st.hairLight);
-   }else{
-     rr(c,6,16+bob,11,35,6,st.hair);
-     rr(c,47,16+bob,11,35,6,st.hair);
-     rr(c,10,10+bob,44,18,12,st.hair);
-     px(c,12,13+bob,10,6,st.hairLight);
-     c.fillStyle=st.accent;
-     c.beginPath();c.moveTo(44,8+bob);c.lineTo(58,3+bob);c.lineTo(54,16+bob);c.closePath();c.fill();
-     c.beginPath();c.moveTo(44,8+bob);c.lineTo(54,20+bob);c.lineTo(39,15+bob);c.closePath();c.fill();
-     rr(c,44,7+bob,7,7,3,st.dark);
-   }
- }
- if(st.item==='bow' && dir!=='up'){
-   c.fillStyle=st.accent;
-   c.beginPath();c.moveTo(45,7+bob);c.lineTo(57,3+bob);c.lineTo(54,14+bob);c.closePath();c.fill();
-   c.beginPath();c.moveTo(45,7+bob);c.lineTo(53,18+bob);c.lineTo(40,14+bob);c.closePath();c.fill();
-   rr(c,44,6+bob,6,6,3,st.dark);
- }
-
- c.restore();
-}
-document.querySelectorAll('.card').forEach(card=>{const cv=card.querySelector('canvas');const pc=cv.getContext('2d');pc.clearRect(0,0,cv.width,cv.height);drawChar(pc,STYLES[card.dataset.id],'down',0,0,0,4);card.onclick=()=>{document.querySelectorAll('.card').forEach(x=>x.classList.remove('selected'));card.classList.add('selected');selected=card.dataset.id}});
-let selected=localStorage.getItem('selectedCharacter')||'samuel';document.querySelectorAll('.card').forEach(c=>c.classList.toggle('selected',c.dataset.id===selected));
-const screens=[...document.querySelectorAll('.screen')];function show(id){screens.forEach(s=>s.classList.toggle('active',s.id===id))}
-startBtn.onclick=()=>show('select');changeBtn.onclick=()=>show('select');
-nameForm.onsubmit=e=>{e.preventDefault();const n=playerName.value.trim();if(n.length<2){error.textContent='Please enter at least 2 letters.';return}localStorage.setItem('playerName',n);localStorage.setItem('selectedCharacter',selected);welcome.textContent='Welcome, '+n;error.textContent='';show('map')};
-
-const cv=document.getElementById('game'),ctx=cv.getContext('2d'),T=32,keys=new Set();ctx.imageSmoothingEnabled=false;const p={x:352,y:320,speed:2.6,dir:'down',frame:0,clock:0};
-const obs=[{x:64,y:64,w:192,h:128},{x:480,y:64,w:192,h:128},{x:96,y:352,w:160,h:96},{x:544,y:352,w:128,h:96},{x:0,y:0,w:768,h:32},{x:0,y:480,w:768,h:32},{x:0,y:0,w:32,h:512},{x:736,y:0,w:32,h:512}];
-function overlap(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}function can(x,y){const h={x:x+8,y:y+22,w:18,h:15};return !obs.some(o=>overlap(h,o))}
-function house(x,y,roof){ctx.fillStyle='#5b371f';ctx.fillRect(x,y+42,192,86);ctx.fillStyle='#f1d89e';ctx.fillRect(x+8,y+48,176,72);ctx.fillStyle=roof;ctx.beginPath();ctx.moveTo(x-8,y+52);ctx.lineTo(x+96,y);ctx.lineTo(x+200,y+52);ctx.fill();ctx.fillStyle='#54321f';ctx.fillRect(x+78,y+78,36,42)}
-function tree(x,y){ctx.fillStyle='#70452a';ctx.fillRect(x+13,y+22,10,24);ctx.fillStyle='#3b7f46';ctx.fillRect(x,y+12,36,16);ctx.fillRect(x+8,y,20,34)}
-function drawMap(){for(let r=0;r<16;r++)for(let c=0;c<24;c++){ctx.fillStyle=(c>=10&&c<=13||r>=7&&r<=9)?((r+c)%2?'#d8bb78':'#c8a865'):((r+c)%2?'#79b95d':'#72af56');ctx.fillRect(c*T,r*T,T,T)}house(64,64,'#c96b4b');house(480,64,'#5878b8');house(96,352,'#9c65a7');house(544,352,'#d38a43');for(let x=0;x<768;x+=48){tree(x,0);tree(x,466)}for(let y=38;y<470;y+=54){tree(0,y);tree(730,y)}ctx.fillStyle='#3b708b';ctx.fillRect(264,390,202,74);ctx.fillStyle='#67b4da';ctx.fillRect(272,398,186,58)}
-function update(dt){let dx=0,dy=0;if(keys.has('arrowup')||keys.has('w')){dy-=p.speed;p.dir='up'}if(keys.has('arrowdown')||keys.has('s')){dy+=p.speed;p.dir='down'}if(keys.has('arrowleft')||keys.has('a')){dx-=p.speed;p.dir='left'}if(keys.has('arrowright')||keys.has('d')){dx+=p.speed;p.dir='right'}if(dx&&dy){dx*=.707;dy*=.707}if(can(p.x+dx,p.y))p.x+=dx;if(can(p.x,p.y+dy))p.y+=dy;if(dx||dy){p.clock+=dt;if(p.clock>150){p.clock=0;p.frame=(p.frame+1)%3}}else p.frame=0}
-function draw(){ctx.clearRect(0,0,768,512);drawMap();drawChar(ctx,STYLES[localStorage.getItem('selectedCharacter')||selected],p.dir,p.frame,Math.round(p.x-16),Math.round(p.y-28),1)}let last=performance.now();function loop(now){update(Math.min(40,now-last));last=now;draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
-addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(k)){e.preventDefault();keys.add(k)}});addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
-document.querySelectorAll('[data-dir]').forEach(b=>{const k='arrow'+b.dataset.dir;b.onpointerdown=e=>{e.preventDefault();keys.add(k)};b.onpointerup=b.onpointerleave=b.onpointercancel=e=>{e.preventDefault();keys.delete(k)}});
-</script>
+  <main class="screen">
+    <section class="panel">
+      <header class="header">
+        <p class="game-name">Bible Kids Adventure</p>
+        <h1>Choose Your Character</h1>
+        <p class="instruction">Choose an adventurer and enter your name.</p>
+      </header>
+      <div class="character-grid">
+        <button class="character-card" type="button" data-character="samuel"><div class="portrait"><img src="assets/characters/samuel-card.png" alt="Samuel"></div><h2>Samuel</h2><p>Brave Explorer</p><span class="feature">Blue scarf</span></button>
+        <button class="character-card" type="button" data-character="caleb"><div class="portrait"><img src="assets/characters/caleb-card.png" alt="Caleb"></div><h2>Caleb</h2><p>Faithful Adventurer</p><span class="feature">Green cape</span></button>
+        <button class="character-card" type="button" data-character="hannah"><div class="portrait"><img src="assets/characters/hannah-card.png" alt="Hannah"></div><h2>Hannah</h2><p>Kind Helper</p><span class="feature">Pink ribbons</span></button>
+        <button class="character-card" type="button" data-character="esther"><div class="portrait"><img src="assets/characters/esther-card.png" alt="Esther"></div><h2>Esther</h2><p>Confident Leader</p><span class="feature">Blue bow</span></button>
+      </div>
+      <section class="player-section">
+        <label for="playerName">What is your name?</label>
+        <input id="playerName" type="text" maxlength="15" autocomplete="off" placeholder="Enter your name">
+        <p class="message" id="message" aria-live="polite"></p>
+        <button class="start-button" id="startButton" type="button">Start Adventure</button>
+      </section>
+    </section>
+  </main>
+  <script>
+    "use strict";
+    const characterCards=document.querySelectorAll(".character-card");
+    const playerNameInput=document.getElementById("playerName");
+    const startButton=document.getElementById("startButton");
+    const message=document.getElementById("message");
+    let selectedCharacter="";
+    characterCards.forEach(card=>{card.addEventListener("click",()=>{characterCards.forEach(otherCard=>otherCard.classList.remove("selected"));card.classList.add("selected");selectedCharacter=card.dataset.character;message.textContent="";});});
+    function startAdventure(){const playerName=playerNameInput.value.trim();if(!selectedCharacter){message.textContent="Please choose a character first.";return;}if(!playerName){message.textContent="Please enter your name.";playerNameInput.focus();return;}const playerData={playerName,selectedCharacter};localStorage.setItem("bibleKidsPlayer",JSON.stringify(playerData));localStorage.setItem("playerName",playerName);localStorage.setItem("selectedCharacter",selectedCharacter);window.location.href="map.html";}
+    startButton.addEventListener("click",startAdventure);
+    playerNameInput.addEventListener("keydown",event=>{if(event.key==="Enter")startAdventure();});
+  </script>
 </body>
 </html>
