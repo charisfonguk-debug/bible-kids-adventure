@@ -2,687 +2,200 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bible Kids Adventure - Character Creator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bible Kids Adventure</title>
 <style>
-:root{
-  --ink:#2b221b;
-  --cream:#fff2c9;
-  --paper:#f3d997;
-  --wood:#8a532f;
-  --wood-dark:#3d281c;
-  --green:#5f9648;
-  --green-light:#8fc66a;
-  --gold:#e8bd55;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:Arial,"Microsoft JhengHei",sans-serif;
-  color:var(--ink);
-  background:#7fbc68;
-}
-button,input{font:inherit}
-button{cursor:pointer}
-
-.world{
-  min-height:100vh;
-  padding:18px;
-  display:grid;
-  place-items:center;
-  position:relative;
-  overflow:hidden;
-  background:
-    linear-gradient(#9fd3f2 0 52%,#7ec461 52% 100%);
-}
-.world:before{
-  content:"";
-  position:absolute;
-  inset:auto 0 18% 0;
-  height:18%;
-  background:
-    linear-gradient(135deg,transparent 0 18%,#6cab52 18% 50%,transparent 50%),
-    linear-gradient(35deg,transparent 0 22%,#5a9447 22% 54%,transparent 54%);
-  opacity:.9;
-}
-.world:after{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:0;height:22%;
-  background:
-    repeating-linear-gradient(90deg,transparent 0 24px,rgba(46,105,43,.24) 24px 27px,transparent 27px 48px),
-    linear-gradient(#6aae4f,#4f8c40);
-}
-.cloud{
-  position:absolute;
-  width:100px;height:28px;
-  background:white;
-  border-radius:30px;
-  opacity:.85;
-}
-.cloud:before,.cloud:after{
-  content:"";
-  position:absolute;
-  background:white;
-  border-radius:50%;
-}
-.cloud:before{width:38px;height:38px;left:18px;bottom:4px}
-.cloud:after{width:48px;height:48px;right:12px;bottom:2px}
-.c1{top:9%;left:8%}
-.c2{top:19%;right:9%;transform:scale(.75)}
-
-.tree{
-  position:absolute;
-  bottom:13%;
-  width:78px;height:118px;
-}
-.tree:before{
-  content:"";
-  position:absolute;
-  width:18px;height:52px;
-  left:30px;bottom:0;
-  background:#6c472b;
-  border:4px solid #3f2c20;
-}
-.tree:after{
-  content:"";
-  position:absolute;
-  width:78px;height:72px;
-  left:0;top:0;
-  border-radius:45%;
-  background:#4d8a3e;
-  border:5px solid #315f2d;
-  box-shadow:17px 20px 0 -3px #5b9b47,-15px 21px 0 -5px #5b9b47;
-}
-.t1{left:3%}
-.t2{right:3%;transform:scale(.86)}
-
-.game{
-  position:relative;
-  z-index:2;
-  width:min(1080px,96vw);
-  min-height:680px;
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-  border:7px solid var(--wood-dark);
-  border-radius:18px;
-  overflow:hidden;
-  background:var(--wood);
-  box-shadow:0 10px 0 #271910,0 25px 55px rgba(0,0,0,.32);
-}
-.header{
-  padding:15px;
-  text-align:center;
-  color:var(--cream);
-  border-bottom:6px solid var(--wood-dark);
-  background:
-    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 12px),
-    linear-gradient(#a86a3c,#744326);
-  text-shadow:3px 3px 0 #4c2c1a;
-}
-.header h1{margin:0;font-size:clamp(25px,3.7vw,42px)}
-
-.main{
-  display:grid;
-  grid-template-columns:.9fr 1.1fr;
-  min-height:0;
-}
-.preview{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  border-right:6px solid var(--wood-dark);
-  background:
-    linear-gradient(rgba(255,255,255,.08),rgba(0,0,0,.03)),
-    repeating-linear-gradient(90deg,#79ad5a 0 22px,#82b965 22px 44px);
-}
-.preview-title{
-  margin:0 0 14px;
-  padding:8px 15px;
-  background:var(--paper);
-  border:4px solid var(--wood-dark);
-  border-radius:8px;
-  box-shadow:0 5px 0 #4d301e;
-  font-weight:900;
-}
-.scene{
-  width:min(100%,340px);
-  aspect-ratio:1;
-  display:grid;
-  place-items:center;
-  position:relative;
-  overflow:hidden;
-  border:6px solid var(--wood-dark);
-  border-radius:12px;
-  background:
-    linear-gradient(#c7eafa 0 58%,#8fc86d 58% 100%);
-  box-shadow:0 8px 0 #3a2518,inset 0 0 0 4px rgba(255,255,255,.22);
-}
-.scene:before{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:18%;
-  height:13%;
-  background:repeating-linear-gradient(90deg,#518f43 0 4px,transparent 4px 11px);
-  clip-path:polygon(0 72%,6% 30%,12% 70%,20% 28%,28% 68%,36% 36%,43% 74%,52% 28%,60% 70%,69% 30%,78% 68%,87% 25%,94% 64%,100% 35%,100% 100%,0 100%);
-}
-.scene:after{
-  content:"";
-  position:absolute;
-  left:50%;bottom:14%;
-  width:100px;height:18px;
-  transform:translateX(-50%);
-  background:rgba(47,69,39,.25);
-  border-radius:50%;
-}
-canvas{
-  width:256px;
-  height:256px;
-  image-rendering:pixelated;
-  image-rendering:crisp-edges;
-  z-index:2;
-}
-.nameplate{
-  margin-top:16px;
-  min-width:180px;
-  padding:9px 16px;
-  text-align:center;
-  font-size:20px;
-  font-weight:900;
-  background:var(--paper);
-  border:4px solid var(--wood-dark);
-  border-radius:8px;
-  box-shadow:0 5px 0 #4d301e;
-}
-.options{
-  padding:22px;
-  background:linear-gradient(135deg,#654029,#43291c);
-}
-.paper{
-  height:100%;
-  min-height:500px;
-  padding:25px;
-  border:5px solid #68442a;
-  border-radius:12px;
-  background:
-    repeating-linear-gradient(3deg,rgba(100,70,35,.045) 0 1px,transparent 1px 10px),
-    linear-gradient(#fff0c0,#efd28d);
-  box-shadow:0 7px 0 #342116;
-}
-.question{
-  margin:0;
-  text-align:center;
-  color:#a1482c;
-  font-size:clamp(27px,3.3vw,40px);
-}
-.help{
-  margin:8px 0 20px;
-  text-align:center;
-  font-weight:700;
-  color:#6d5136;
-}
-.choices{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:13px;
-}
-.choice{
-  min-height:96px;
-  padding:11px 8px;
-  border:4px solid #543520;
-  border-radius:10px;
-  background:linear-gradient(#fff9df,#f3deb0);
-  box-shadow:0 5px 0 #3e281a;
-  color:var(--ink);
-  font-weight:900;
-  transition:transform .12s ease,filter .12s ease;
-}
-.choice:hover{transform:translateY(-3px);filter:brightness(1.03)}
-.choice:active{transform:translateY(2px);box-shadow:0 2px 0 #3e281a}
-.choice.selected{
-  outline:5px solid #6da24e;
-  outline-offset:2px;
-  background:#edf7c9;
-}
-.swatch{
-  width:48px;height:48px;
-  margin:0 auto 8px;
-  border:4px solid #4d301f;
-  border-radius:8px;
-  box-shadow:inset 0 0 0 3px rgba(255,255,255,.18);
-}
-.icon{
-  width:56px;height:56px;
-  margin:0 auto 8px;
-  display:grid;
-  place-items:center;
-  font-size:30px;
-}
-.namebox{
-  width:min(100%,440px);
-  margin:90px auto 0;
-  text-align:center;
-  font-weight:900;
-}
-.namebox input{
-  width:100%;
-  margin-top:12px;
-  padding:15px;
-  border:4px solid #543520;
-  border-radius:10px;
-  background:#fffdf0;
-  font-size:21px;
-  font-weight:900;
-  text-align:center;
-  outline:none;
-}
-.namebox input:focus{outline:5px solid #75a956;outline-offset:2px}
-
-.footer{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:12px;
-  align-items:center;
-  padding:12px 16px;
-  border-top:6px solid var(--wood-dark);
-  background:linear-gradient(#9d6037,#6d4025);
-}
-.nav{
-  min-height:52px;
-  padding:10px 18px;
-  border:4px solid #3f281a;
-  border-radius:9px;
-  background:linear-gradient(#efca6c,#b77732);
-  box-shadow:0 5px 0 #2d1c12;
-  color:white;
-  font-weight:900;
-  text-shadow:2px 2px 0 #58331e;
-}
-.nav:active{transform:translateY(2px);box-shadow:0 2px 0 #2d1c12}
-.nav:disabled{opacity:.45;cursor:not-allowed}
-.back{justify-self:start}.next{justify-self:end}
-.progress{color:#fff0cb;font-weight:900;text-align:center;text-shadow:2px 2px 0 #4b2b19}
-
-@media(max-width:790px){
-  .world{padding:8px}
-  .game{width:100%;min-height:0}
-  .main{grid-template-columns:1fr}
-  .preview{border-right:0;border-bottom:6px solid var(--wood-dark);padding:18px}
-  .scene{width:250px}
-  canvas{width:208px;height:208px}
-  .paper{min-height:430px;padding:20px 14px}
-  .choices{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .options{padding:14px}
-  .footer{padding:10px 7px}
-  .nav{padding:9px 10px;font-size:14px}
-}
+:root{--ink:#2f241b;--paper:#fff6d9;--wood:#8a4f27;--wood-dark:#4a2815;--wood-light:#bd7541;--gold:#f4c75d}
+*{box-sizing:border-box}html,body{min-height:100%}body{margin:0;font-family:Arial,sans-serif;color:var(--ink);background:#315a36}button,input{font:inherit}
+.screen{display:none;min-height:100vh;padding:24px}.screen.active{display:grid;place-items:center}
+.panel{width:min(1050px,100%);padding:28px;border:8px solid var(--wood-dark);border-radius:26px;background:repeating-linear-gradient(90deg,var(--paper) 0,var(--paper) 34px,#faedc5 34px,#faedc5 68px);box-shadow:inset 0 0 0 5px var(--wood-light),0 20px 50px #0005}
+.center{text-align:center}.eyebrow{font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#315a36}.hero h1,.panel h1{font-size:clamp(2.4rem,7vw,5rem);margin:.2em 0}.wood{border:4px solid var(--wood-dark);border-radius:12px;padding:13px 22px;color:#fff;font-weight:900;cursor:pointer;background:repeating-linear-gradient(0deg,var(--wood-light) 0,var(--wood-light) 9px,var(--wood) 9px,var(--wood) 18px);box-shadow:0 6px 0 #3a1f11}.wood:active{transform:translateY(4px);box-shadow:0 2px 0 #3a1f11}
+.character-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:30px 0}.card{position:relative;border:5px solid var(--wood-dark);border-radius:22px;padding:18px 12px;background:radial-gradient(circle at 50% 24%,#fffdf3 0 32%,transparent 33%),linear-gradient(#fff9e4,#efdfad);box-shadow:0 8px 0 #61351c,0 16px 25px #51321f22;cursor:pointer;transition:.18s transform,.18s filter}.card:hover{transform:translateY(-4px);filter:brightness(1.03)}.card.selected{outline:6px solid var(--gold);transform:translateY(-8px)}.card.selected:before{content:'★';position:absolute;right:10px;top:8px;color:#e7ad24;font-size:1.5rem;text-shadow:0 2px white}.card canvas{width:170px;max-width:100%;image-rendering:pixelated;filter:drop-shadow(0 8px 4px #51321f35)}.name{display:block;font-size:1.2rem;font-weight:900}.role{display:block;font-size:.85rem;opacity:.75}
+.form{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap}.form input{padding:12px 14px;border:4px solid var(--wood-dark);border-radius:10px;background:#fff8df}.error{min-height:20px;color:#a22;font-weight:700}
+.map-shell{width:min(980px,100%)}.map-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;padding:14px 18px;border:5px solid var(--wood-dark);border-radius:16px;background:var(--paper)}.map-head h2{margin:0}.game-wrap{border:8px solid var(--wood-dark);border-radius:16px;overflow:hidden;box-shadow:0 18px 35px #0006;background:#78b65b}.game-wrap canvas{display:block;width:100%;height:auto;image-rendering:pixelated}.controls{text-align:center;margin-top:14px}.controls button{width:58px;height:52px;margin:3px;border:4px solid var(--wood-dark);border-radius:10px;background:var(--wood);color:white;font-weight:900;box-shadow:0 5px 0 #3a1f11;touch-action:none}
+@media(max-width:800px){.character-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<main class="world">
-  <div class="cloud c1"></div>
-  <div class="cloud c2"></div>
-  <div class="tree t1"></div>
-  <div class="tree t2"></div>
+<section id="home" class="screen active">
+  <div class="panel hero center">
+    <p class="eyebrow">A Bible RPG Adventure</p>
+    <h1>Bible Kids Adventure</h1>
+    <p>Explore the world, meet Bible characters, and discover God’s story.</p>
+    <button class="wood" id="startBtn">Start Adventure</button>
+  </div>
+</section>
 
-  <section class="game">
-    <header class="header">
-      <h1>Create Your Adventure Character!</h1>
-    </header>
+<section id="select" class="screen">
+  <div class="panel center">
+    <p class="eyebrow">Choose Your Hero</p>
+    <h1 style="font-size:clamp(2rem,5vw,3.4rem)">Choose Your Character</h1>
+    <div class="character-grid">
+      <button class="card selected" data-id="samuel"><canvas width="256" height="288"></canvas><span class="name">Samuel</span><span class="role">Brave Explorer</span></button>
+      <button class="card" data-id="caleb"><canvas width="256" height="288"></canvas><span class="name">Caleb</span><span class="role">Faithful Adventurer</span></button>
+      <button class="card" data-id="hannah"><canvas width="256" height="288"></canvas><span class="name">Hannah</span><span class="role">Kind Girl Adventurer</span></button>
+      <button class="card" data-id="esther"><canvas width="256" height="288"></canvas><span class="name">Esther</span><span class="role">Courageous Girl Leader</span></button>
+    </div>
+    <form class="form" id="nameForm">
+      <input id="playerName" maxlength="14" placeholder="Enter your name" required>
+      <button class="wood" type="submit">Start Adventure</button>
+    </form>
+    <p class="error" id="error"></p>
+  </div>
+</section>
 
-    <section class="main">
-      <div class="preview">
-        <p class="preview-title">Your Character</p>
-        <div class="scene">
-          <canvas id="character" width="64" height="64"></canvas>
-        </div>
-        <div class="nameplate" id="nameDisplay">Young Explorer</div>
-      </div>
-
-      <div class="options">
-        <section class="paper">
-          <h2 class="question" id="question">Boy or Girl?</h2>
-          <p class="help" id="help">Choose your character.</p>
-          <div class="choices" id="choices"></div>
-        </section>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <button class="nav back" id="backBtn">← Home</button>
-      <div class="progress" id="progress">Step 1 / 7</div>
-      <button class="nav next" id="nextBtn" disabled>Next →</button>
-    </footer>
-  </section>
-</main>
+<section id="map" class="screen">
+  <div class="map-shell">
+    <div class="map-head"><div><small class="eyebrow">Genesis Village</small><h2 id="welcome">Welcome</h2></div><button class="wood" id="changeBtn">Change Character</button></div>
+    <div class="game-wrap"><canvas id="game" width="768" height="512"></canvas></div>
+    <div class="controls">
+      <button data-dir="up">▲</button><br>
+      <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
+    </div>
+  </div>
+</section>
 
 <script>
-const canvas=document.getElementById("character");
-const ctx=canvas.getContext("2d");
-ctx.imageSmoothingEnabled=false;
-
-const choices=document.getElementById("choices");
-const question=document.getElementById("question");
-const help=document.getElementById("help");
-const progress=document.getElementById("progress");
-const backBtn=document.getElementById("backBtn");
-const nextBtn=document.getElementById("nextBtn");
-const nameDisplay=document.getElementById("nameDisplay");
-
-let step=0;
-
-const state={
-  gender:"",
-  skin:"#dda06f",
-  hairStyle:"short",
-  hair:"#5a3525",
-  outfit:"shirt",
-  clothes:"#3f78b5",
-  name:""
+const STYLES={
+ samuel:{skin:'#e2a071',skinShadow:'#bd734f',hair:'#6a402d',hairLight:'#8b5a3e',shirt:'#497dad',dark:'#294f79',accent:'#d9c5a1',trousers:'#76503a',shoes:'#3d2b23',item:'scarf'},
+ caleb:{skin:'#b8754e',skinShadow:'#8f5137',hair:'#29252a',hairLight:'#48424c',shirt:'#5c874d',dark:'#365b34',accent:'#b5a56e',trousers:'#8c6842',shoes:'#342821',item:'cape'},
+ hannah:{skin:'#f0bb91',skinShadow:'#ca866a',hair:'#865339',hairLight:'#a96f4e',shirt:'#d97998',dark:'#9b4f6d',accent:'#f7d6df',trousers:'#a75f7c',shoes:'#593a32',item:'braids',girl:true},
+ esther:{skin:'#bd7e59',skinShadow:'#94573f',hair:'#382a2b',hairLight:'#5b4241',shirt:'#6e89ba',dark:'#425b88',accent:'#b9d1f2',trousers:'#526a94',shoes:'#3b2c27',item:'longhair',girl:true}
 };
-
-const steps=[
-  ["gender","Boy or Girl?","Choose your character."],
-  ["skin","Choose Skin Tone","Pick the skin tone you like."],
-  ["hairStyle","Choose Hairstyle","Choose a hairstyle."],
-  ["hair","Choose Hair Colour","Choose a hair colour."],
-  ["outfit","Choose Clothes","Choose an outfit."],
-  ["clothes","Choose Clothes Colour","Choose the main colour."],
-  ["name","What Is Your Name?","Enter your adventure name."]
-];
-
-const data={
-  gender:[
-    ["boy","Boy","👦"],
-    ["girl","Girl","👧"]
-  ],
-  skin:[
-    ["#f2c29b","Light"],
-    ["#dda06f","Warm"],
-    ["#bf7448","Tan"],
-    ["#8c4f35","Brown"],
-    ["#56372b","Deep"]
-  ],
-  hairStyle:[
-    ["short","Short","✂"],
-    ["spiky","Spiky","▲"],
-    ["side","Side","◢"],
-    ["bob","Bob","●"],
-    ["long","Long","▮"],
-    ["pony","Ponytail","➰"]
-  ],
-  hair:[
-    ["#241b18","Black"],
-    ["#5a3525","Dark Brown"],
-    ["#8a4f2c","Chestnut"],
-    ["#d0a84d","Golden"],
-    ["#9e4b32","Auburn"],
-    ["#bb3d28","Red"]
-  ],
-  outfit:[
-    ["shirt","Shirt","👕"],
-    ["hoodie","Hoodie","🧥"],
-    ["overalls","Overalls","🧰"],
-    ["tunic","Tunic","🗺"],
-    ["dress","Dress","👗"],
-    ["smart","Smart","🎀"]
-  ],
-  clothes:[
-    ["#3f78b5","Blue"],
-    ["#4f8a52","Green"],
-    ["#b84b43","Red"],
-    ["#d8b448","Yellow"],
-    ["#c76d96","Pink"],
-    ["#737b84","Grey"]
-  ]
-};
-
-function rect(x,y,w,h,color){
-  ctx.fillStyle=color;
-  ctx.fillRect(x,y,w,h);
+function px(c,x,y,w,h,color,s=1){c.fillStyle=color;c.fillRect(x*s,y*s,w*s,h*s)}
+function rr(c,x,y,w,h,r,color,stroke=null,line=1){
+ c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=color;c.fill();
+ if(stroke){c.strokeStyle=stroke;c.lineWidth=line;c.stroke()}
 }
-
-function drawCharacter(){
-  ctx.clearRect(0,0,64,64);
-
-  const skin=state.skin;
-  const hair=state.hair;
-  const clothes=state.clothes;
-  const outline="#2b211b";
-
-  rect(18,56,28,4,"rgba(0,0,0,.18)");
-
-  rect(22,44,7,12,outline);
-  rect(35,44,7,12,outline);
-  rect(23,45,5,10,"#40536f");
-  rect(36,45,5,10,"#40536f");
-
-  rect(20,54,11,4,outline);
-  rect(33,54,11,4,outline);
-  rect(21,54,9,3,"#6e4529");
-  rect(34,54,9,3,"#6e4529");
-
-  if(["bob","long","pony"].includes(state.hairStyle)){
-    rect(17,13,30,24,outline);
-    rect(18,14,28,23,hair);
-  }
-
-  if(state.hairStyle==="long"){
-    rect(16,28,7,19,outline);
-    rect(41,28,7,19,outline);
-    rect(17,28,5,18,hair);
-    rect(42,28,5,18,hair);
-  }
-
-  if(state.hairStyle==="pony"){
-    rect(46,18,8,18,outline);
-    rect(47,19,6,16,hair);
-  }
-
-  rect(18,35,28,13,outline);
-  rect(19,36,26,11,clothes);
-
-  if(state.outfit==="dress"){
-    rect(15,46,34,7,outline);
-    rect(16,46,32,6,clothes);
-  }
-
-  rect(14,36,5,12,outline);
-  rect(45,36,5,12,outline);
-  rect(15,37,4,10,skin);
-  rect(45,37,4,10,skin);
-
-  if(state.outfit==="hoodie"){
-    rect(24,36,16,3,"#f2e4c6");
-    rect(28,39,2,7,"#f2e4c6");
-    rect(35,39,2,7,"#f2e4c6");
-  }
-
-  if(state.outfit==="overalls"){
-    rect(23,36,4,9,"#f2e4c6");
-    rect(37,36,4,9,"#f2e4c6");
-    rect(27,40,10,8,"#4f6f99");
-  }
-
-  if(state.outfit==="tunic"){
-    rect(31,36,2,11,"#ead5a5");
-    rect(19,43,26,2,"#7a4b2a");
-  }
-
-  if(state.outfit==="smart"){
-    rect(26,36,12,9,"#f6eed9");
-    rect(31,38,2,7,"#9f4038");
-  }
-
-  rect(27,31,10,6,outline);
-  rect(28,31,8,6,skin);
-
-  rect(17,19,5,10,outline);
-  rect(42,19,5,10,outline);
-  rect(18,20,4,8,skin);
-  rect(42,20,4,8,skin);
-
-  rect(20,13,24,20,outline);
-  rect(21,14,22,18,skin);
-
-  if(state.hairStyle==="short"){
-    rect(20,10,24,8,outline);
-    rect(21,11,22,7,hair);
-  }
-  if(state.hairStyle==="spiky"){
-    rect(20,11,24,7,outline);
-    rect(21,12,22,6,hair);
-    rect(21,7,4,5,hair);
-    rect(27,5,4,7,hair);
-    rect(33,7,4,5,hair);
-    rect(39,8,4,4,hair);
-  }
-  if(state.hairStyle==="side"){
-    rect(20,10,24,8,outline);
-    rect(21,11,22,7,hair);
-    rect(21,16,11,4,hair);
-  }
-  if(state.hairStyle==="bob"){
-    rect(20,10,24,9,outline);
-    rect(21,11,22,8,hair);
-    rect(18,16,5,16,hair);
-    rect(41,16,5,16,hair);
-  }
-  if(state.hairStyle==="long"||state.hairStyle==="pony"){
-    rect(20,10,24,9,outline);
-    rect(21,11,22,8,hair);
-  }
-
-  rect(25,22,4,4,outline);
-  rect(35,22,4,4,outline);
-  rect(26,22,1,1,"white");
-  rect(36,22,1,1,"white");
-
-  rect(23,28,4,2,"#d78379");
-  rect(38,28,4,2,"#d78379");
-  rect(29,28,7,2,outline);
-
-  if(state.gender==="girl"){
-    rect(42,13,4,4,outline);
-    rect(43,14,2,2,"#e7bb4e");
-  }
+function eye(c,x,y,lookX=0){
+ c.fillStyle='#30251f';c.beginPath();c.ellipse(x,y,7,9,0,0,Math.PI*2);c.fill();
+ c.fillStyle='#fff';c.beginPath();c.ellipse(x-2+lookX,y-3,2.7,3.2,0,0,Math.PI*2);c.fill();
+ c.fillStyle='#86b8d4';c.beginPath();c.ellipse(x+2,y+4,2.5,2,0,0,Math.PI*2);c.fill();
 }
+function drawChar(c,st,dir='down',frame=0,ox=0,oy=0,s=1){
+ c.save();c.translate(ox,oy);c.scale(s,s);c.imageSmoothingEnabled=false;
+ const walk=frame===1?-2:frame===2?2:0;
+ const bob=frame===0?0:1;
 
-function save(){
-  localStorage.setItem("bibleKidsCharacter",JSON.stringify(state));
-  localStorage.setItem("bibleKidsPlayerName",state.name.trim());
+ // Soft RPG shadow
+ c.fillStyle='rgba(54,35,25,.22)';
+ c.beginPath();c.ellipse(32,63,22,6,0,0,Math.PI*2);c.fill();
+
+ // Legs and boots
+ rr(c,18+walk,49+bob,10,13,4,st.trousers);
+ rr(c,36-walk,49+bob,10,13,4,st.trousers);
+ rr(c,15+walk,58+bob,15,7,4,st.shoes);
+ rr(c,34-walk,58+bob,15,7,4,st.shoes);
+
+ // Body
+ rr(c,13,34+bob,38,22,10,st.shirt,st.dark,2);
+ px(c,14,48+bob,36,6,st.dark);
+ px(c,30,35+bob,4,18,st.accent);
+ if(st.girl){
+   c.fillStyle=st.shirt;c.beginPath();c.moveTo(15,47+bob);c.lineTo(49,47+bob);c.lineTo(55,59+bob);c.lineTo(9,59+bob);c.closePath();c.fill();
+   px(c,12,53+bob,40,3,st.accent);
+ }
+
+ // Arms
+ rr(c,7,36+bob-walk,11,20,6,st.skin,st.skinShadow,1.5);
+ rr(c,46,36+bob+walk,11,20,6,st.skin,st.skinShadow,1.5);
+ rr(c,9,35+bob-walk,10,11,5,st.shirt);
+ rr(c,45,35+bob+walk,10,11,5,st.shirt);
+
+ // Neck
+ rr(c,26,29+bob,12,9,4,st.skin);
+
+ // Oversized chibi head
+ rr(c,10,5+bob,44,33,15,st.skin,st.skinShadow,1.5);
+
+ // Hair silhouette by direction
+ if(dir==='up'){
+   rr(c,9,4+bob,46,30,15,st.hair);
+   px(c,13,27+bob,38,9,st.hair);
+   px(c,19,32+bob,26,5,st.hairLight);
+ }else{
+   rr(c,8,2+bob,48,17,14,st.hair);
+   rr(c,7,9+bob,11,19,7,st.hair);
+   rr(c,46,9+bob,11,19,7,st.hair);
+   px(c,13,7+bob,9,7,st.hairLight);
+   px(c,23,4+bob,9,8,st.hairLight);
+   px(c,34,7+bob,8,7,st.hairLight);
+ }
+
+ if(dir!=='up'){
+   if(dir==='left'){
+     eye(c,23,23+bob,-1);
+     c.strokeStyle='#7c403e';c.lineWidth=2;c.beginPath();c.arc(23,31+bob,4,.25,2.65);c.stroke();
+   }else if(dir==='right'){
+     eye(c,41,23+bob,1);
+     c.strokeStyle='#7c403e';c.lineWidth=2;c.beginPath();c.arc(41,31+bob,4,.49,2.9);c.stroke();
+   }else{
+     eye(c,23,23+bob,-.5);eye(c,41,23+bob,.5);
+     // Slightly sad, gentle mouth
+     c.strokeStyle='#8b4d4b';c.lineWidth=2;c.beginPath();c.arc(32,33+bob,5,3.55,5.88);c.stroke();
+     // Blush
+     c.fillStyle='rgba(217,103,105,.34)';
+     c.beginPath();c.ellipse(16,30+bob,4,2,0,0,Math.PI*2);c.fill();
+     c.beginPath();c.ellipse(48,30+bob,4,2,0,0,Math.PI*2);c.fill();
+   }
+ }
+
+ // Character-specific accessories
+ if(st.item==='scarf'){
+   rr(c,13,32+bob,38,8,4,st.dark);
+   px(c,15,38+bob,8,15,st.dark);
+ }
+ if(st.item==='cape'){
+   c.fillStyle=st.dark;c.beginPath();c.moveTo(9,36+bob);c.lineTo(4,59+bob);c.lineTo(18,54+bob);c.closePath();c.fill();
+   c.beginPath();c.moveTo(55,36+bob);c.lineTo(60,59+bob);c.lineTo(46,54+bob);c.closePath();c.fill();
+ }
+ if(st.item==='braids' && dir!=='up'){
+   rr(c,7,24+bob,8,25,4,st.hair);
+   rr(c,49,24+bob,8,25,4,st.hair);
+   rr(c,8,43+bob,7,7,3,st.accent);
+   rr(c,49,43+bob,7,7,3,st.accent);
+ }
+ if(st.item==='longhair'){
+   if(dir==='up'){
+     rr(c,8,8+bob,48,38,16,st.hair);
+     px(c,13,36+bob,38,15,st.hair);
+     px(c,20,43+bob,24,8,st.hairLight);
+   }else{
+     rr(c,6,16+bob,11,35,6,st.hair);
+     rr(c,47,16+bob,11,35,6,st.hair);
+     rr(c,10,10+bob,44,18,12,st.hair);
+     px(c,12,13+bob,10,6,st.hairLight);
+     c.fillStyle=st.accent;
+     c.beginPath();c.moveTo(44,8+bob);c.lineTo(58,3+bob);c.lineTo(54,16+bob);c.closePath();c.fill();
+     c.beginPath();c.moveTo(44,8+bob);c.lineTo(54,20+bob);c.lineTo(39,15+bob);c.closePath();c.fill();
+     rr(c,44,7+bob,7,7,3,st.dark);
+   }
+ }
+ if(st.item==='bow' && dir!=='up'){
+   c.fillStyle=st.accent;
+   c.beginPath();c.moveTo(45,7+bob);c.lineTo(57,3+bob);c.lineTo(54,14+bob);c.closePath();c.fill();
+   c.beginPath();c.moveTo(45,7+bob);c.lineTo(53,18+bob);c.lineTo(40,14+bob);c.closePath();c.fill();
+   rr(c,44,6+bob,6,6,3,st.dark);
+ }
+
+ c.restore();
 }
+document.querySelectorAll('.card').forEach(card=>{const cv=card.querySelector('canvas');const pc=cv.getContext('2d');pc.clearRect(0,0,cv.width,cv.height);drawChar(pc,STYLES[card.dataset.id],'down',0,0,0,4);card.onclick=()=>{document.querySelectorAll('.card').forEach(x=>x.classList.remove('selected'));card.classList.add('selected');selected=card.dataset.id}});
+let selected=localStorage.getItem('selectedCharacter')||'samuel';document.querySelectorAll('.card').forEach(c=>c.classList.toggle('selected',c.dataset.id===selected));
+const screens=[...document.querySelectorAll('.screen')];function show(id){screens.forEach(s=>s.classList.toggle('active',s.id===id))}
+startBtn.onclick=()=>show('select');changeBtn.onclick=()=>show('select');
+nameForm.onsubmit=e=>{e.preventDefault();const n=playerName.value.trim();if(n.length<2){error.textContent='Please enter at least 2 letters.';return}localStorage.setItem('playerName',n);localStorage.setItem('selectedCharacter',selected);welcome.textContent='Welcome, '+n;error.textContent='';show('map')};
 
-function selectValue(key,value){
-  state[key]=value;
-  save();
-  drawCharacter();
-  renderStep();
-}
-
-function renderStep(){
-  const [key,titleText,helpText]=steps[step];
-  question.textContent=titleText;
-  help.textContent=helpText;
-  choices.innerHTML="";
-  choices.className="choices";
-
-  if(key==="name"){
-    choices.className="";
-    const wrap=document.createElement("div");
-    wrap.className="namebox";
-
-    const label=document.createElement("label");
-    label.textContent="Enter your name";
-
-    const input=document.createElement("input");
-    input.placeholder="Type your name";
-    input.maxLength=18;
-    input.value=state.name;
-
-    input.addEventListener("input",()=>{
-      state.name=input.value.replace(/[<>]/g,"").slice(0,18);
-      input.value=state.name;
-      nameDisplay.textContent=state.name.trim()||"Young Explorer";
-      save();
-      updateButtons();
-    });
-
-    wrap.append(label,input);
-    choices.appendChild(wrap);
-    setTimeout(()=>input.focus(),50);
-  }else{
-    data[key].forEach(item=>{
-      const [value,label,icon]=item;
-      const button=document.createElement("button");
-      button.type="button";
-      button.className="choice"+(state[key]===value?" selected":"");
-
-      if(["skin","hair","clothes"].includes(key)){
-        const swatch=document.createElement("div");
-        swatch.className="swatch";
-        swatch.style.background=value;
-        button.appendChild(swatch);
-      }else{
-        const iconBox=document.createElement("div");
-        iconBox.className="icon";
-        iconBox.textContent=icon||"★";
-        button.appendChild(iconBox);
-      }
-
-      const text=document.createElement("div");
-      text.textContent=label;
-      button.appendChild(text);
-
-      button.addEventListener("click",()=>selectValue(key,value));
-      choices.appendChild(button);
-    });
-  }
-
-  progress.textContent=`Step ${step+1} / 7`;
-  updateButtons();
-}
-
-function updateButtons(){
-  backBtn.textContent=step===0?"← Home":"← Back";
-  nextBtn.textContent=step===6?"Begin Adventure →":"Next →";
-  nextBtn.disabled=(step===0&&!state.gender)||(step===6&&!state.name.trim());
-}
-
-backBtn.addEventListener("click",()=>{
-  if(step===0){
-    location.href="index.html";
-  }else{
-    step--;
-    renderStep();
-  }
-});
-
-nextBtn.addEventListener("click",()=>{
-  if(nextBtn.disabled)return;
-
-  if(step<6){
-    step++;
-    renderStep();
-  }else{
-    save();
-    location.href="map.html";
-  }
-});
-
-try{
-  const saved=JSON.parse(localStorage.getItem("bibleKidsCharacter"));
-  if(saved&&typeof saved==="object"){
-    Object.assign(state,saved);
-  }
-}catch(error){}
-
-nameDisplay.textContent=state.name.trim()||"Young Explorer";
-drawCharacter();
-renderStep();
+const cv=document.getElementById('game'),ctx=cv.getContext('2d'),T=32,keys=new Set();ctx.imageSmoothingEnabled=false;const p={x:352,y:320,speed:2.6,dir:'down',frame:0,clock:0};
+const obs=[{x:64,y:64,w:192,h:128},{x:480,y:64,w:192,h:128},{x:96,y:352,w:160,h:96},{x:544,y:352,w:128,h:96},{x:0,y:0,w:768,h:32},{x:0,y:480,w:768,h:32},{x:0,y:0,w:32,h:512},{x:736,y:0,w:32,h:512}];
+function overlap(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}function can(x,y){const h={x:x+8,y:y+22,w:18,h:15};return !obs.some(o=>overlap(h,o))}
+function house(x,y,roof){ctx.fillStyle='#5b371f';ctx.fillRect(x,y+42,192,86);ctx.fillStyle='#f1d89e';ctx.fillRect(x+8,y+48,176,72);ctx.fillStyle=roof;ctx.beginPath();ctx.moveTo(x-8,y+52);ctx.lineTo(x+96,y);ctx.lineTo(x+200,y+52);ctx.fill();ctx.fillStyle='#54321f';ctx.fillRect(x+78,y+78,36,42)}
+function tree(x,y){ctx.fillStyle='#70452a';ctx.fillRect(x+13,y+22,10,24);ctx.fillStyle='#3b7f46';ctx.fillRect(x,y+12,36,16);ctx.fillRect(x+8,y,20,34)}
+function drawMap(){for(let r=0;r<16;r++)for(let c=0;c<24;c++){ctx.fillStyle=(c>=10&&c<=13||r>=7&&r<=9)?((r+c)%2?'#d8bb78':'#c8a865'):((r+c)%2?'#79b95d':'#72af56');ctx.fillRect(c*T,r*T,T,T)}house(64,64,'#c96b4b');house(480,64,'#5878b8');house(96,352,'#9c65a7');house(544,352,'#d38a43');for(let x=0;x<768;x+=48){tree(x,0);tree(x,466)}for(let y=38;y<470;y+=54){tree(0,y);tree(730,y)}ctx.fillStyle='#3b708b';ctx.fillRect(264,390,202,74);ctx.fillStyle='#67b4da';ctx.fillRect(272,398,186,58)}
+function update(dt){let dx=0,dy=0;if(keys.has('arrowup')||keys.has('w')){dy-=p.speed;p.dir='up'}if(keys.has('arrowdown')||keys.has('s')){dy+=p.speed;p.dir='down'}if(keys.has('arrowleft')||keys.has('a')){dx-=p.speed;p.dir='left'}if(keys.has('arrowright')||keys.has('d')){dx+=p.speed;p.dir='right'}if(dx&&dy){dx*=.707;dy*=.707}if(can(p.x+dx,p.y))p.x+=dx;if(can(p.x,p.y+dy))p.y+=dy;if(dx||dy){p.clock+=dt;if(p.clock>150){p.clock=0;p.frame=(p.frame+1)%3}}else p.frame=0}
+function draw(){ctx.clearRect(0,0,768,512);drawMap();drawChar(ctx,STYLES[localStorage.getItem('selectedCharacter')||selected],p.dir,p.frame,Math.round(p.x-16),Math.round(p.y-28),1)}let last=performance.now();function loop(now){update(Math.min(40,now-last));last=now;draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
+addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(['arrowup','arrowdown','arrowleft','arrowright','w','a','s','d'].includes(k)){e.preventDefault();keys.add(k)}});addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
+document.querySelectorAll('[data-dir]').forEach(b=>{const k='arrow'+b.dataset.dir;b.onpointerdown=e=>{e.preventDefault();keys.add(k)};b.onpointerup=b.onpointerleave=b.onpointercancel=e=>{e.preventDefault();keys.delete(k)}});
 </script>
 </body>
 </html>
