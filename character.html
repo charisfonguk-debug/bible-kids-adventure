@@ -1,47 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Choose Your Character | Bible Kids Adventure</title>
-  <style>
-    :root{--wood-dark:#4f2c18;--wood-medium:#80502b;--cream:#fff4cf;--paper:#f7e4b6;--green:#4f8f46;--green-dark:#2e612f;--gold:#f3c956;--text-dark:#342111}
-    *{box-sizing:border-box}html,body{min-height:100%;margin:0}body{font-family:"Trebuchet MS",Arial,sans-serif;color:var(--text-dark);background:linear-gradient(rgba(31,74,43,.2),rgba(31,74,43,.28)),url("assets/backgrounds/character-background.png") center/cover no-repeat fixed}button,input{font:inherit}.screen{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:30px 18px}.panel{width:min(1100px,100%);padding:30px;border:7px solid var(--wood-dark);border-radius:24px;background:linear-gradient(rgba(255,244,207,.95),rgba(247,228,182,.95));box-shadow:0 11px 0 #321c0f,0 22px 35px rgba(0,0,0,.35)}.header{margin-bottom:28px;text-align:center}.game-name{margin:0 0 5px;color:var(--green-dark);font-size:.9rem;font-weight:900;letter-spacing:2px;text-transform:uppercase}h1{margin:0;color:var(--wood-dark);font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;text-shadow:0 3px 0 rgba(255,255,255,.8)}.instruction{margin:12px 0 0;font-size:1.05rem;font-weight:700}.character-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.character-card{position:relative;min-width:0;padding:13px 11px 16px;cursor:pointer;border:5px solid var(--wood-medium);border-radius:18px;color:var(--text-dark);background:linear-gradient(180deg,#fff9e3 0%,#efd29b 100%);box-shadow:0 7px 0 var(--wood-dark),0 12px 17px rgba(64,38,17,.25);transition:transform 150ms ease,border-color 150ms ease,box-shadow 150ms ease}.character-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 11px 0 var(--wood-dark),0 17px 21px rgba(64,38,17,.3)}.character-card.selected{transform:translateY(-7px) scale(1.025);border-color:var(--gold);background:linear-gradient(180deg,#fffdeb 0%,#f5d36d 100%);box-shadow:0 10px 0 var(--green-dark),0 17px 23px rgba(64,38,17,.34)}.character-card.selected::after{content:"SELECTED";position:absolute;top:-16px;left:50%;transform:translateX(-50%);padding:5px 12px;border:3px solid var(--green-dark);border-radius:999px;color:#fff;background:var(--green);font-size:.7rem;font-weight:900;letter-spacing:1px}.portrait{width:100%;aspect-ratio:1/1;display:flex;justify-content:center;align-items:flex-end;overflow:hidden;border:4px solid var(--wood-dark);border-radius:14px;background:radial-gradient(circle at 50% 35%,#fff7cf 0%,#badf94 58%,#75a95f 100%)}.portrait img{width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated}.character-card h2{margin:11px 0 2px;color:var(--wood-dark);font-size:1.4rem}.character-card p{min-height:38px;margin:0;font-size:.88rem;font-weight:700}.feature{display:inline-block;margin-top:8px;padding:5px 9px;border:2px solid rgba(79,44,24,.25);border-radius:999px;background:rgba(255,255,255,.55);font-size:.75rem;font-weight:900}.player-section{max-width:470px;margin:30px auto 0;text-align:center}.player-section label{display:block;margin-bottom:8px;color:var(--wood-dark);font-size:1.15rem;font-weight:900}#playerName{width:100%;padding:13px 16px;border:4px solid var(--wood-medium);border-radius:13px;outline:none;color:var(--text-dark);background:#fffdf4;font-size:1.08rem;font-weight:800;text-align:center}#playerName:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(79,143,70,.2)}.message{min-height:25px;margin:8px 0;color:#a02520;font-size:.9rem;font-weight:900}.start-button{width:min(100%,330px);padding:14px 22px;cursor:pointer;border:4px solid var(--green-dark);border-radius:14px;color:#fff;background:linear-gradient(180deg,#6caf5b 0%,#3e7e39 100%);font-size:1.15rem;font-weight:900;box-shadow:0 7px 0 #224c25,0 12px 17px rgba(28,65,31,.28);transition:transform 120ms ease,box-shadow 120ms ease}.start-button:hover{transform:translateY(-2px);box-shadow:0 9px 0 #224c25,0 15px 18px rgba(28,65,31,.3)}.start-button:active{transform:translateY(5px);box-shadow:0 2px 0 #224c25,0 5px 8px rgba(28,65,31,.24)}@media(max-width:850px){.character-grid{grid-template-columns:repeat(2,1fr)}.panel{padding:27px 20px}}@media(max-width:480px){.screen{padding:17px 9px}.panel{padding:24px 12px;border-width:5px;border-radius:18px}.character-grid{gap:12px}.character-card{padding:9px 7px 12px;border-width:4px}.character-card h2{font-size:1.08rem}.character-card p{min-height:32px;font-size:.72rem}.feature{padding:4px 6px;font-size:.66rem}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Character | Bible Kids Adventure</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap');
+
+:root {
+  --ink:#30251d;
+  --paper:#fff7dc;
+  --paper2:#efddb0;
+  --wood:#96592f;
+  --wood-dark:#4b2a18;
+  --wood-light:#c57b43;
+  --gold:#f4c85b;
+}
+
+* { box-sizing:border-box; }
+
+html, body {
+  min-height:100%;
+  margin:0;
+}
+
+body {
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:28px 18px;
+  color:var(--ink);
+  font-family:"Nunito",system-ui,sans-serif;
+  background:
+    linear-gradient(rgba(22,48,31,.15),rgba(22,48,31,.28)),
+    url("home-background.png") center/cover fixed no-repeat;
+}
+
+.character-panel {
+  width:min(1120px,100%);
+  padding:28px;
+  border:8px solid var(--wood-dark);
+  border-radius:28px;
+  background:
+    linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,0)),
+    repeating-linear-gradient(90deg,var(--paper) 0,var(--paper) 38px,#f8ebc6 38px,#f8ebc6 76px);
+  box-shadow:
+    0 24px 70px rgba(35,24,15,.38),
+    inset 0 0 0 5px var(--wood-light);
+}
+
+.heading {
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.heading .eyebrow {
+  margin:0 0 7px;
+  color:#365e32;
+  font-size:.82rem;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.heading h1 {
+  margin:0;
+  font-size:clamp(2.1rem,5vw,3.8rem);
+  line-height:1;
+  text-shadow:0 3px 0 white;
+}
+
+.heading p {
+  margin:12px 0 0;
+  font-weight:700;
+}
+
+.character-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+}
+
+.card {
+  position:relative;
+  display:grid;
+  justify-items:center;
+  gap:5px;
+  min-width:0;
+  padding:17px 10px 18px;
+  border:5px solid var(--wood-dark);
+  border-radius:22px;
+  color:var(--ink);
+  cursor:pointer;
+  background:
+    radial-gradient(circle at 50% 25%,#fffef7 0 31%,transparent 32%),
+    linear-gradient(#fff9e5,#ead59f);
+  box-shadow:0 8px 0 #63371d,0 16px 26px rgba(45,29,18,.18);
+  transition:transform .16s ease,filter .16s ease;
+}
+
+.card:hover {
+  transform:translateY(-4px);
+  filter:brightness(1.025);
+}
+
+.card.selected {
+  outline:6px solid var(--gold);
+  transform:translateY(-8px);
+}
+
+.card.selected::before {
+  content:"★";
+  position:absolute;
+  top:8px;
+  right:10px;
+  color:#e8ad23;
+  font-size:1.55rem;
+  text-shadow:0 2px white;
+}
+
+.card canvas {
+  width:170px;
+  max-width:100%;
+  image-rendering:pixelated;
+  filter:drop-shadow(0 8px 4px rgba(81,50,31,.18));
+}
+
+.name {
+  font-size:1.22rem;
+  font-weight:900;
+}
+
+.role {
+  min-height:38px;
+  text-align:center;
+  font-size:.84rem;
+  font-weight:800;
+  opacity:.75;
+}
+
+.form {
+  display:grid;
+  grid-template-columns:auto minmax(180px,330px) auto;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:31px;
+}
+
+.form label {
+  font-weight:900;
+}
+
+.form input {
+  width:100%;
+  padding:13px 16px;
+  border:4px solid var(--wood-dark);
+  border-radius:12px;
+  outline:none;
+  background:#fff9e5;
+  box-shadow:inset 0 3px 0 rgba(0,0,0,.08);
+}
+
+.form input:focus {
+  outline:4px solid var(--gold);
+}
+
+.start-button {
+  padding:12px 22px;
+  border:4px solid var(--wood-dark);
+  border-radius:12px;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  background:
+    linear-gradient(rgba(255,255,255,.15),transparent),
+    repeating-linear-gradient(0deg,var(--wood-light) 0,var(--wood-light) 9px,var(--wood) 9px,var(--wood) 18px);
+  box-shadow:0 6px 0 #392012;
+}
+
+.start-button:active {
+  transform:translateY(4px);
+  box-shadow:0 2px 0 #392012;
+}
+
+.message {
+  grid-column:1/-1;
+  min-height:20px;
+  margin:0;
+  color:#a03028;
+  text-align:center;
+  font-weight:900;
+}
+
+@media (max-width:850px) {
+  .character-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .form { grid-template-columns:1fr; }
+  .form label { text-align:center; }
+}
+
+@media (max-width:480px) {
+  body { padding:12px 8px; }
+  .character-panel { padding:22px 12px; }
+  .character-grid { gap:12px; }
+  .card canvas { width:135px; }
+}
+</style>
 </head>
 <body>
-  <main class="screen">
-    <section class="panel">
-      <header class="header">
-        <p class="game-name">Bible Kids Adventure</p>
-        <h1>Choose Your Character</h1>
-        <p class="instruction">Choose an adventurer and enter your name.</p>
-      </header>
-      <div class="character-grid">
-        <button class="character-card" type="button" data-character="samuel"><div class="portrait"><img src="assets/characters/samuel-card.png" alt="Samuel"></div><h2>Samuel</h2><p>Brave Explorer</p><span class="feature">Blue scarf</span></button>
-        <button class="character-card" type="button" data-character="caleb"><div class="portrait"><img src="assets/characters/caleb-card.png" alt="Caleb"></div><h2>Caleb</h2><p>Faithful Adventurer</p><span class="feature">Green cape</span></button>
-        <button class="character-card" type="button" data-character="hannah"><div class="portrait"><img src="assets/characters/hannah-card.png" alt="Hannah"></div><h2>Hannah</h2><p>Kind Helper</p><span class="feature">Pink ribbons</span></button>
-        <button class="character-card" type="button" data-character="esther"><div class="portrait"><img src="assets/characters/esther-card.png" alt="Esther"></div><h2>Esther</h2><p>Confident Leader</p><span class="feature">Blue bow</span></button>
-      </div>
-      <section class="player-section">
-        <label for="playerName">What is your name?</label>
-        <input id="playerName" type="text" maxlength="15" autocomplete="off" placeholder="Enter your name">
-        <p class="message" id="message" aria-live="polite"></p>
-        <button class="start-button" id="startButton" type="button">Start Adventure</button>
-      </section>
-    </section>
-  </main>
-  <script>
-    "use strict";
-    const characterCards=document.querySelectorAll(".character-card");
-    const playerNameInput=document.getElementById("playerName");
-    const startButton=document.getElementById("startButton");
-    const message=document.getElementById("message");
-    let selectedCharacter="";
-    characterCards.forEach(card=>{card.addEventListener("click",()=>{characterCards.forEach(otherCard=>otherCard.classList.remove("selected"));card.classList.add("selected");selectedCharacter=card.dataset.character;message.textContent="";});});
-    function startAdventure(){const playerName=playerNameInput.value.trim();if(!selectedCharacter){message.textContent="Please choose a character first.";return;}if(!playerName){message.textContent="Please enter your name.";playerNameInput.focus();return;}const playerData={playerName,selectedCharacter};localStorage.setItem("bibleKidsPlayer",JSON.stringify(playerData));localStorage.setItem("playerName",playerName);localStorage.setItem("selectedCharacter",selectedCharacter);window.location.href="map.html";}
-    startButton.addEventListener("click",startAdventure);
-    playerNameInput.addEventListener("keydown",event=>{if(event.key==="Enter")startAdventure();});
-  </script>
+<main class="character-panel">
+  <header class="heading">
+    <p class="eyebrow">Bible Kids Adventure</p>
+    <h1>Choose Your Character</h1>
+    <p>Choose one adventurer, type your name, and begin.</p>
+  </header>
+
+  <section class="character-grid">
+    <button class="card selected" type="button" data-id="samuel">
+      <canvas width="256" height="288"></canvas>
+      <span class="name">Samuel</span>
+      <span class="role">Brave explorer</span>
+    </button>
+
+    <button class="card" type="button" data-id="caleb">
+      <canvas width="256" height="288"></canvas>
+      <span class="name">Caleb</span>
+      <span class="role">Faithful adventurer</span>
+    </button>
+
+    <button class="card" type="button" data-id="hannah">
+      <canvas width="256" height="288"></canvas>
+      <span class="name">Hannah</span>
+      <span class="role">Kind and caring</span>
+    </button>
+
+    <button class="card" type="button" data-id="esther">
+      <canvas width="256" height="288"></canvas>
+      <span class="name">Esther</span>
+      <span class="role">Wise and courageous</span>
+    </button>
+  </section>
+
+  <form class="form" id="character-form">
+    <label for="player-name">Your name</label>
+    <input id="player-name" maxlength="14" autocomplete="off" placeholder="Enter your name" required>
+    <button class="start-button" type="submit">Start Adventure</button>
+    <p class="message" id="message"></p>
+  </form>
+</main>
+
+<script>
+const STYLES={
+ samuel:{skin:'#e2a071',skinShadow:'#bd734f',hair:'#6a402d',hairLight:'#8b5a3e',shirt:'#497dad',dark:'#294f79',accent:'#d9c5a1',trousers:'#76503a',shoes:'#3d2b23',item:'scarf'},
+ caleb:{skin:'#b8754e',skinShadow:'#8f5137',hair:'#29252a',hairLight:'#48424c',shirt:'#5c874d',dark:'#365b34',accent:'#b5a56e',trousers:'#8c6842',shoes:'#342821',item:'cape'},
+ hannah:{skin:'#f0bb91',skinShadow:'#ca866a',hair:'#865339',hairLight:'#a96f4e',shirt:'#d97998',dark:'#9b4f6d',accent:'#f7d6df',trousers:'#a75f7c',shoes:'#593a32',item:'braids',girl:true},
+ esther:{skin:'#bd7e59',skinShadow:'#94573f',hair:'#382a2b',hairLight:'#5b4241',shirt:'#6e89ba',dark:'#425b88',accent:'#b9d1f2',trousers:'#526a94',shoes:'#3b2c27',item:'longhair',girl:true}
+};
+function px(c,x,y,w,h,color,s=1){c.fillStyle=color;c.fillRect(x*s,y*s,w*s,h*s)}
+function rr(c,x,y,w,h,r,color,stroke=null,line=1){
+ c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=color;c.fill();
+ if(stroke){c.strokeStyle=stroke;c.lineWidth=line;c.stroke()}
+}
+function eye(c,x,y,lookX=0){
+ c.fillStyle='#30251f';c.beginPath();c.ellipse(x,y,7,9,0,0,Math.PI*2);c.fill();
+ c.fillStyle='#fff';c.beginPath();c.ellipse(x-2+lookX,y-3,2.7,3.2,0,0,Math.PI*2);c.fill();
+ c.fillStyle='#86b8d4';c.beginPath();c.ellipse(x+2,y+4,2.5,2,0,0,Math.PI*2);c.fill();
+}
+function drawChar(c,st,dir='down',frame=0,ox=0,oy=0,s=1){
+ c.save();c.translate(ox,oy);c.scale(s,s);c.imageSmoothingEnabled=false;
+ const walk=frame===1?-2:frame===2?2:0;
+ const bob=frame===0?0:1;
+
+ // Soft RPG shadow
+ c.fillStyle='rgba(54,35,25,.22)';
+ c.beginPath();c.ellipse(32,63,22,6,0,0,Math.PI*2);c.fill();
+
+ // Legs and boots
+ rr(c,18+walk,49+bob,10,13,4,st.trousers);
+ rr(c,36-walk,49+bob,10,13,4,st.trousers);
+ rr(c,15+walk,58+bob,15,7,4,st.shoes);
+ rr(c,34-walk,58+bob,15,7,4,st.shoes);
+
+ // Body
+ rr(c,13,34+bob,38,22,10,st.shirt,st.dark,2);
+ px(c,14,48+bob,36,6,st.dark);
+ px(c,30,35+bob,4,18,st.accent);
+ if(st.girl){
+   c.fillStyle=st.shirt;c.beginPath();c.moveTo(15,47+bob);c.lineTo(49,47+bob);c.lineTo(55,59+bob);c.lineTo(9,59+bob);c.closePath();c.fill();
+   px(c,12,53+bob,40,3,st.accent);
+ }
+
+ // Arms
+ rr(c,7,36+bob-walk,11,20,6,st.skin,st.skinShadow,1.5);
+ rr(c,46,36+bob+walk,11,20,6,st.skin,st.skinShadow,1.5);
+ rr(c,9,35+bob-walk,10,11,5,st.shirt);
+ rr(c,45,35+bob+walk,10,11,5,st.shirt);
+
+ // Neck
+ rr(c,26,29+bob,12,9,4,st.skin);
+
+ // Oversized chibi head
+ rr(c,10,5+bob,44,33,15,st.skin,st.skinShadow,1.5);
+
+ // Hair silhouette by direction
+ if(dir==='up'){
+   rr(c,9,4+bob,46,30,15,st.hair);
+   px(c,13,27+bob,38,9,st.hair);
+   px(c,19,32+bob,26,5,st.hairLight);
+ }else{
+   rr(c,8,2+bob,48,17,14,st.hair);
+   rr(c,7,9+bob,11,19,7,st.hair);
+   rr(c,46,9+bob,11,19,7,st.hair);
+   px(c,13,7+bob,9,7,st.hairLight);
+   px(c,23,4+bob,9,8,st.hairLight);
+   px(c,34,7+bob,8,7,st.hairLight);
+ }
+
+ if(dir!=='up'){
+   if(dir==='left'){
+     eye(c,23,23+bob,-1);
+     c.strokeStyle='#7c403e';c.lineWidth=2;c.beginPath();c.arc(23,31+bob,4,.25,2.65);c.stroke();
+   }else if(dir==='right'){
+     eye(c,41,23+bob,1);
+     c.strokeStyle='#7c403e';c.lineWidth=2;c.beginPath();c.arc(41,31+bob,4,.49,2.9);c.stroke();
+   }else{
+     eye(c,23,23+bob,-.5);eye(c,41,23+bob,.5);
+     // Slightly sad, gentle mouth
+     c.strokeStyle='#8b4d4b';c.lineWidth=2;c.beginPath();c.arc(32,33+bob,5,3.55,5.88);c.stroke();
+     // Blush
+     c.fillStyle='rgba(217,103,105,.34)';
+     c.beginPath();c.ellipse(16,30+bob,4,2,0,0,Math.PI*2);c.fill();
+     c.beginPath();c.ellipse(48,30+bob,4,2,0,0,Math.PI*2);c.fill();
+   }
+ }
+
+ // Character-specific accessories
+ if(st.item==='scarf'){
+   rr(c,13,32+bob,38,8,4,st.dark);
+   px(c,15,38+bob,8,15,st.dark);
+ }
+ if(st.item==='cape'){
+   c.fillStyle=st.dark;c.beginPath();c.moveTo(9,36+bob);c.lineTo(4,59+bob);c.lineTo(18,54+bob);c.closePath();c.fill();
+   c.beginPath();c.moveTo(55,36+bob);c.lineTo(60,59+bob);c.lineTo(46,54+bob);c.closePath();c.fill();
+ }
+ if(st.item==='braids' && dir!=='up'){
+   rr(c,7,24+bob,8,25,4,st.hair);
+   rr(c,49,24+bob,8,25,4,st.hair);
+   rr(c,8,43+bob,7,7,3,st.accent);
+   rr(c,49,43+bob,7,7,3,st.accent);
+ }
+ if(st.item==='longhair'){
+   if(dir==='up'){
+     rr(c,8,8+bob,48,38,16,st.hair);
+     px(c,13,36+bob,38,15,st.hair);
+     px(c,20,43+bob,24,8,st.hairLight);
+   }else{
+     rr(c,6,16+bob,11,35,6,st.hair);
+     rr(c,47,16+bob,11,35,6,st.hair);
+     rr(c,10,10+bob,44,18,12,st.hair);
+     px(c,12,13+bob,10,6,st.hairLight);
+     c.fillStyle=st.accent;
+     c.beginPath();c.moveTo(44,8+bob);c.lineTo(58,3+bob);c.lineTo(54,16+bob);c.closePath();c.fill();
+     c.beginPath();c.moveTo(44,8+bob);c.lineTo(54,20+bob);c.lineTo(39,15+bob);c.closePath();c.fill();
+     rr(c,44,7+bob,7,7,3,st.dark);
+   }
+ }
+ if(st.item==='bow' && dir!=='up'){
+   c.fillStyle=st.accent;
+   c.beginPath();c.moveTo(45,7+bob);c.lineTo(57,3+bob);c.lineTo(54,14+bob);c.closePath();c.fill();
+   c.beginPath();c.moveTo(45,7+bob);c.lineTo(53,18+bob);c.lineTo(40,14+bob);c.closePath();c.fill();
+   rr(c,44,6+bob,6,6,3,st.dark);
+ }
+
+ c.restore();
+}
+
+let selected = localStorage.getItem("selectedCharacter") || "samuel";
+const cards = [...document.querySelectorAll(".card")];
+
+cards.forEach(card => {
+  const canvas = card.querySelector("canvas");
+  const preview = canvas.getContext("2d");
+  preview.clearRect(0,0,canvas.width,canvas.height);
+  drawChar(preview, STYLES[card.dataset.id], "down", 0, 0, 0, 4);
+
+  card.classList.toggle("selected", card.dataset.id === selected);
+
+  card.addEventListener("click", () => {
+    selected = card.dataset.id;
+    cards.forEach(item => item.classList.toggle("selected", item === card));
+  });
+});
+
+const nameInput = document.querySelector("#player-name");
+const savedName = localStorage.getItem("playerName");
+if (savedName) nameInput.value = savedName;
+
+document.querySelector("#character-form").addEventListener("submit", event => {
+  event.preventDefault();
+  const playerName = nameInput.value.trim();
+
+  if (playerName.length < 2) {
+    document.querySelector("#message").textContent = "Please enter at least 2 letters.";
+    nameInput.focus();
+    return;
+  }
+
+  localStorage.setItem("selectedCharacter", selected);
+  localStorage.setItem("playerName", playerName);
+
+  // Change this filename if your game map uses a different name.
+  window.location.href = "map.html";
+});
+</script>
 </body>
 </html>
