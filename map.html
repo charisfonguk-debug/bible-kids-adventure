@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bible Kids Adventure — Genesis Village</title>
+<style>
+:root{--paper:#fff4cf;--wood:#8b532e;--dark:#4b2b18;--light:#bd7541}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#203a28}
+body{color:#30251f}.page{height:100vh;display:grid;grid-template-rows:auto 1fr auto;gap:8px;padding:8px;background:linear-gradient(#31583b,#1f3828)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border:5px solid var(--dark);border-radius:15px;background:var(--paper);box-shadow:inset 0 0 0 3px var(--light),0 6px 0 #1d110a}
+.top small{font-weight:900;letter-spacing:.14em;color:#477a42}.top h1{margin:2px 0 0;font-size:clamp(1.15rem,3vw,1.9rem)}.top p{margin:3px 0 0;font-size:.82rem;opacity:.72}
+button{font:inherit}.wood{border:4px solid var(--dark);border-radius:10px;padding:9px 13px;color:#fff;font-weight:900;background:var(--wood);box-shadow:0 5px 0 #321b0e;cursor:pointer}.wood:active{transform:translateY(3px);box-shadow:0 2px 0 #321b0e}
+.frame{position:relative;min-height:0;overflow:hidden;border:7px solid var(--dark);border-radius:17px;background:#75b55c;box-shadow:inset 0 0 0 3px var(--light),0 12px 26px #0006}
+canvas{display:block;width:100%;height:100%;image-rendering:pixelated;touch-action:none}
+.badge,.hint{position:absolute;border:3px solid #4b2b18;border-radius:999px;background:#fff4cfe8;font-weight:900;pointer-events:none}
+.badge{top:10px;left:50%;transform:translateX(-50%);padding:6px 14px;font-size:.75rem;letter-spacing:.08em}.hint{left:10px;bottom:10px;max-width:calc(100% - 20px);padding:7px 11px;border-radius:9px;font-size:.75rem}
+.controls{display:flex;justify-content:center;min-height:108px}.dpad{display:grid;grid-template-columns:55px 55px 55px;grid-template-rows:45px 45px;gap:5px}.move{border:4px solid var(--dark);border-radius:10px;background:var(--wood);color:#fff;font-size:1.15rem;font-weight:900;box-shadow:0 5px 0 #321b0e;touch-action:none}.move.active,.move:active{transform:translateY(3px);box-shadow:0 2px 0 #321b0e}.up{grid-column:2}.left{grid-column:1;grid-row:2}.down{grid-column:2;grid-row:2}.right{grid-column:3;grid-row:2}
+@media(min-width:900px){.page{grid-template-rows:auto 1fr}.controls{position:absolute;right:23px;bottom:18px;z-index:3;min-height:0;opacity:.92}}
+@media(max-width:560px){.top{border-width:4px}.top p{display:none}.wood{font-size:.75rem;padding:8px}.frame{border-width:5px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="top"><div><small>BIBLE KIDS ADVENTURE</small><h1 id="welcome">Genesis Village</h1><p>Explore the village and find the road to Eden.</p></div><button class="wood" id="change">Change Character</button></header>
+<section class="frame" id="frame"><canvas id="game"></canvas><div class="badge">GENESIS VILLAGE</div><div class="hint" id="hint">Use WASD, arrow keys, or the buttons below.</div></section>
+<section class="controls"><div class="dpad"><button class="move up" data-d="up">▲</button><button class="move left" data-d="left">◀</button><button class="move down" data-d="down">▼</button><button class="move right" data-d="right">▶</button></div></section>
+</main>
+<script>
+"use strict";
+const cv=document.getElementById("game"),ctx=cv.getContext("2d"),frame=document.getElementById("frame"),hint=document.getElementById("hint");
+const T=48,COLS=70,ROWS=52,WW=COLS*T,WH=ROWS*T,keys=new Set(),blocks=[],zones=[];
+let data={};try{data=JSON.parse(localStorage.getItem("bibleKidsPlayer")||"{}")}catch{}
+const name=localStorage.getItem("playerName")||data.playerName||"Adventurer";
+const chosen=localStorage.getItem("selectedCharacter")||data.selectedCharacter||"samuel";
+document.getElementById("welcome").textContent="Welcome, "+name+"!";
+document.getElementById("change").onclick=()=>location.href="character.html";
+const styles={
+samuel:{skin:"#e2a071",shadow:"#bd734f",hair:"#6a402d",hair2:"#8b5a3e",shirt:"#497dad",dark:"#294f79",accent:"#d9c5a1",pants:"#76503a",shoe:"#3d2b23",item:"scarf"},
+caleb:{skin:"#b8754e",shadow:"#8f5137",hair:"#29252a",hair2:"#48424c",shirt:"#5c874d",dark:"#365b34",accent:"#b5a56e",pants:"#8c6842",shoe:"#342821",item:"cape"},
+hannah:{skin:"#f0bb91",shadow:"#ca866a",hair:"#865339",hair2:"#a96f4e",shirt:"#c66f89",dark:"#8e4c65",accent:"#f2d8c1",pants:"#9f607b",shoe:"#593a32",item:"braids"},
+esther:{skin:"#bd7e59",shadow:"#94573f",hair:"#382a2b",hair2:"#5b4241",shirt:"#627da8",dark:"#405579",accent:"#a9c5e9",pants:"#4f6485",shoe:"#3b2c27",item:"bow"}};
+const p={x:+localStorage.getItem("mapPlayerX")||34*T,y:+localStorage.getItem("mapPlayerY")||39*T,w:30,h:24,s:245,dir:"down",anim:0,clock:0,save:0},cam={x:0,y:0};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+const hit=(x=p.x,y=p.y)=>({x:x-p.w/2,y:y-p.h/2,w:p.w,h:p.h});
+function add(x,y,w,h){blocks.push({x,y,w,h})}function zone(x,y,w,h,text){zones.push({x,y,w,h,text})}
+function can(x,y){const h=hit(x,y);if(h.x<T||h.y<T||h.x+h.w>WW-T||h.y+h.h>WH-T)return false;return !blocks.some(b=>overlap(h,b))}
+function rr(x,y,w,h,r,color,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=color;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1.5;ctx.stroke()}}
+function eye(x,y){ctx.fillStyle="#30251f";ctx.beginPath();ctx.ellipse(x,y,2.2,3.2,0,0,7);ctx.fill();ctx.fillStyle="#fff";ctx.fillRect(x-1,y-2,1,1)}
+function player(x,y){
+ const st=styles[chosen]||styles.samuel,step=p.anim===1?-2:p.anim===2?2:0,bob=p.anim?1:0;ctx.save();ctx.translate(Math.round(x),Math.round(y));
+ ctx.fillStyle="#32221655";ctx.beginPath();ctx.ellipse(0,20,17,5,0,0,7);ctx.fill();
+ rr(-13+step,8+bob,10,13,4,st.pants);rr(3-step,8+bob,10,13,4,st.pants);rr(-15+step,16+bob,14,7,3,st.shoe);rr(1-step,16+bob,14,7,3,st.shoe);
+ if(st.item==="cape"){ctx.fillStyle=st.dark;ctx.beginPath();ctx.moveTo(-17,-6);ctx.lineTo(-20,14);ctx.lineTo(-7,9);ctx.fill();ctx.beginPath();ctx.moveTo(17,-6);ctx.lineTo(20,14);ctx.lineTo(7,9);ctx.fill()}
+ rr(-18,-7+bob,36,21,8,st.shirt,st.dark);ctx.fillStyle=st.accent;ctx.fillRect(-2,-5+bob,4,17);rr(-24,-5+bob-step,9,18,5,st.skin);rr(15,-5+bob+step,9,18,5,st.skin);rr(-21,-40+bob,42,31,13,st.skin,st.shadow);
+ if(p.dir==="up"){rr(-22,-42+bob,44,28,13,st.hair);ctx.fillStyle=st.hair2;ctx.fillRect(-13,-18+bob,26,5)}
+ else{rr(-23,-43+bob,46,17,12,st.hair);rr(-23,-35+bob,10,18,6,st.hair);rr(13,-35+bob,10,18,6,st.hair);ctx.fillStyle=st.hair2;ctx.fillRect(-15,-39+bob,8,5);ctx.fillRect(-4,-42+bob,9,6);ctx.fillRect(7,-39+bob,8,5);if(p.dir==="left")eye(-8,-25+bob);else if(p.dir==="right")eye(8,-25+bob);else{eye(-8,-25+bob);eye(8,-25+bob)}}
+ if(st.item==="scarf"){rr(-18,-11+bob,36,7,3,st.dark);ctx.fillStyle=st.dark;ctx.fillRect(-16,-5+bob,7,14)}
+ if(st.item==="braids"&&p.dir!=="up"){rr(-24,-23+bob,7,24,3,st.hair);rr(17,-23+bob,7,24,3,st.hair);ctx.fillStyle=st.accent;ctx.fillRect(-24,-3+bob,7,6);ctx.fillRect(17,-3+bob,7,6)}
+ if(st.item==="bow"&&p.dir!=="up"){ctx.fillStyle=st.accent;ctx.beginPath();ctx.moveTo(12,-40);ctx.lineTo(23,-45);ctx.lineTo(21,-33);ctx.fill();ctx.beginPath();ctx.moveTo(12,-40);ctx.lineTo(21,-29);ctx.lineTo(7,-33);ctx.fill()}
+ ctx.restore()
+}
+function grass(x,y,c,r){ctx.fillStyle=(c+r)%2?"#72ad58":"#78b75e";ctx.fillRect(x,y,T,T);if((c*19+r*31)%7===0){ctx.fillStyle="#31773866";ctx.fillRect(x+12,y+12,3,10);ctx.fillRect(x+18,y+9,3,13)}}
+function path(x,y,c,r){ctx.fillStyle=(c+r)%2?"#c9a866":"#d5b574";ctx.fillRect(x,y,T,T);ctx.fillStyle="#67492722";ctx.fillRect(x+8,y+11,7,3);ctx.fillRect(x+29,y+29,8,3)}
+function water(x,y,c,r){ctx.fillStyle=(c+r)%2?"#448fb9":"#4b9bc7";ctx.fillRect(x,y,T,T);ctx.fillStyle="#c9efff55";ctx.fillRect(x+7,y+12,22,3);ctx.fillRect(x+23,y+31,17,3)}
+function tree(wx,wy){const x=wx-cam.x,y=wy-cam.y;ctx.fillStyle="#5b3823";ctx.fillRect(x+18,y+35,14,31);ctx.fillStyle="#2f6d3c";for(const a of [[25,25,24],[10,35,18],[40,36,18]]){ctx.beginPath();ctx.arc(x+a[0],y+a[1],a[2],0,7);ctx.fill()}ctx.fillStyle="#4e914e";ctx.beginPath();ctx.arc(x+18,y+17,13,0,7);ctx.fill();add(wx+5,wy+17,40,48)}
+function house(wx,wy,roof,label){const x=wx-cam.x,y=wy-cam.y,w=190;ctx.fillStyle="#efd99e";ctx.fillRect(x+8,y+56,w-16,78);ctx.fillStyle="#5b3823";ctx.fillRect(x+75,y+88,41,46);ctx.fillStyle="#9ed2e1";ctx.fillRect(x+25,y+82,30,25);ctx.fillRect(x+136,y+82,30,25);ctx.fillStyle=roof;ctx.beginPath();ctx.moveTo(x-8,y+61);ctx.lineTo(x+w/2,y);ctx.lineTo(x+w+8,y+61);ctx.fill();ctx.fillStyle="#4a2b1b";ctx.font="bold 15px Arial";ctx.textAlign="center";ctx.fillText(label,x+w/2,y+155);add(wx,wy+18,w,118)}
+function well(wx,wy){const x=wx-cam.x,y=wy-cam.y;ctx.fillStyle="#b1a48e";ctx.beginPath();ctx.ellipse(x+40,y+39,35,18,0,0,7);ctx.fill();ctx.fillStyle="#345b68";ctx.beginPath();ctx.ellipse(x+40,y+39,24,11,0,0,7);ctx.fill();ctx.fillStyle="#65432d";ctx.fillRect(x+5,y-8,6,50);ctx.fillRect(x+69,y-8,6,50);ctx.fillRect(x+5,y-8,70,7);add(wx+3,wy+16,74,47);zone(wx-20,wy-5,120,90,"The village well gives fresh water to every family.")}
+function field(wx,wy,cols,rows){const x=wx-cam.x,y=wy-cam.y,w=cols*T,h=rows*T;ctx.fillStyle="#9e873d";ctx.fillRect(x,y,w,h);for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const px=x+c*T+24,py=y+r*T+24;ctx.strokeStyle="#e7c85d";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(px,py+14);ctx.lineTo(px,py-10);ctx.stroke()}add(wx,wy,w,h)}
+function sign(wx,wy,text){const x=wx-cam.x,y=wy-cam.y;ctx.fillStyle="#5c3822";ctx.fillRect(x+27,y+26,7,30);ctx.fillStyle="#ad6d3c";ctx.fillRect(x,y,62,34);ctx.fillStyle="#fff2c9";ctx.font="bold 10px Arial";ctx.textAlign="center";ctx.fillText(text,x+31,y+21);add(wx,wy,62,40);zone(wx-20,wy-25,102,92,"Sign: "+text)}
+function map(){
+ blocks.length=0;zones.length=0;const vw=cv.logicalWidth,vh=cv.logicalHeight,sc=Math.max(0,Math.floor(cam.x/T)-1),ec=Math.min(COLS,Math.ceil((cam.x+vw)/T)+1),sr=Math.max(0,Math.floor(cam.y/T)-1),er=Math.min(ROWS,Math.ceil((cam.y+vh)/T)+1);
+ for(let r=sr;r<er;r++)for(let c=sc;c<ec;c++){const wx=c*T,wy=r*T,x=wx-cam.x,y=wy-cam.y,road=(c>=32&&c<=36)||(r>=24&&r<=27)||(r>=38&&c>=33&&c<=35),river=c>=47&&c<=51&&r>=5&&r<=45,bridge=river&&r>=25&&r<=27;if(river&&!bridge){water(x,y,c,r);add(wx,wy,T,T)}else if(road||bridge)path(x,y,c,r);else grass(x,y,c,r)}
+ house(8*T,8*T,"#c96b4b","Family House");house(20*T,9*T,"#5b7db7","Scripture House");house(9*T,29*T,"#9a67a6","Village Shop");house(24*T,31*T,"#d28a45","Guest House");house(55*T,12*T,"#bf664e","River House");well(33*T,23*T);field(4*T,18*T,7,5);field(56*T,31*T,7,5);sign(34*T,37*T,"TO EDEN");sign(44*T,25*T,"RIVER");
+ const tp=[];for(let c=1;c<69;c+=2){tp.push([c*T,T],[c*T,49*T])}for(let r=3;r<49;r+=2){tp.push([T,r*T],[67*T,r*T])}[[14,5],[16,5],[18,5],[28,5],[30,6],[39,7],[42,8],[5,14],[7,14],[13,16],[15,17],[26,17],[28,18],[39,15],[41,15],[43,15],[53,20],[57,20],[62,21],[14,37],[17,38],[20,40],[27,43],[29,44],[39,42],[41,40],[44,39],[54,42],[60,43],[63,41]].forEach(a=>tp.push([a[0]*T,a[1]*T]));tp.forEach(a=>tree(a[0],a[1]));
+ zone(20*T,9*T,190,175,"The Scripture House teaches that God created the heavens and the earth.");zone(33*T,38*T,3*T,5*T,"The road continues south toward the Garden of Eden.")
+}
+function resize(){const r=frame.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);cv.width=Math.max(320,Math.floor(r.width*d));cv.height=Math.max(240,Math.floor(r.height*d));cv.style.width=r.width+"px";cv.style.height=r.height+"px";ctx.setTransform(d,0,0,d,0,0);cv.logicalWidth=r.width;cv.logicalHeight=r.height}
+function camera(){cam.x=clamp(p.x-cv.logicalWidth/2,0,Math.max(0,WW-cv.logicalWidth));cam.y=clamp(p.y-cv.logicalHeight/2,0,Math.max(0,WH-cv.logicalHeight))}
+function update(dt){let dx=0,dy=0;if(keys.has("arrowup")||keys.has("w")){dy--;p.dir="up"}if(keys.has("arrowdown")||keys.has("s")){dy++;p.dir="down"}if(keys.has("arrowleft")||keys.has("a")){dx--;p.dir="left"}if(keys.has("arrowright")||keys.has("d")){dx++;p.dir="right"}if(dx&&dy){dx*=Math.SQRT1_2;dy*=Math.SQRT1_2}const dist=p.s*dt/1000;if(can(p.x+dx*dist,p.y))p.x+=dx*dist;if(can(p.x,p.y+dy*dist))p.y+=dy*dist;if(dx||dy){p.clock+=dt;if(p.clock>130){p.clock=0;p.anim=(p.anim+1)%3}}else p.anim=0;p.save+=dt;if(p.save>1000){p.save=0;localStorage.setItem("mapPlayerX",Math.round(p.x));localStorage.setItem("mapPlayerY",Math.round(p.y))}camera();const z=zones.find(z=>overlap(hit(),z));hint.textContent=z?z.text:"Use WASD, arrow keys, or the buttons below."}
+function draw(){ctx.clearRect(0,0,cv.logicalWidth,cv.logicalHeight);map();player(p.x-cam.x,p.y-cam.y)}
+let last=performance.now();function loop(now){update(Math.min(40,now-last));last=now;draw();requestAnimationFrame(loop)}
+addEventListener("keydown",e=>{const k=e.key.toLowerCase();if(["arrowup","arrowdown","arrowleft","arrowright","w","a","s","d"].includes(k)){e.preventDefault();keys.add(k)}});addEventListener("keyup",e=>keys.delete(e.key.toLowerCase()));addEventListener("blur",()=>keys.clear());
+document.querySelectorAll(".move").forEach(b=>{const k="arrow"+b.dataset.d;const on=e=>{e.preventDefault();keys.add(k);b.classList.add("active")},off=e=>{e.preventDefault();keys.delete(k);b.classList.remove("active")};b.onpointerdown=on;b.onpointerup=b.onpointercancel=b.onpointerleave=off});
+addEventListener("resize",()=>{resize();camera()});resize();camera();requestAnimationFrame(loop);
+</script>
+</body>
+</html>
